@@ -17,7 +17,7 @@ public class Grille {
       //Attributs
     int taille=0;
     Case [][] ensCase;    
-//    HashSet<Integer> ensNumBloc = new HashSet();
+    //HashSet<Integer> ensNumBloc = new HashSet();
     List <Integer> listeBloc = new ArrayList<Integer>();
     
     //Constructeur
@@ -33,9 +33,7 @@ public class Grille {
         
         
         //Création du tableau de Cases
-        
         for (int i=0 ; i<this.taille ; i++){
-            
             for (int j=0 ; j<this.taille ; j++){
                 //Initialisation du booléen vide pour mettre à vide la case en bas à droite du puzzle
                 boolean vide = false;
@@ -44,21 +42,15 @@ public class Grille {
                 }
                 
                 //Tirage au sort du num du bloc
-               
-                 
                 if(!listeBloc.isEmpty()){
-                     int cmpt = aleatoire(this.listeBloc.size());
-                      System.out.println("cmpt" + cmpt);
+                    int cmpt = aleatoire(this.listeBloc.size());
                       
-                      num= this.listeBloc.get(cmpt);
-                      this.listeBloc.remove(cmpt);
-                      
+                    num= this.listeBloc.get(cmpt);
+                    this.listeBloc.remove(cmpt);
                 }
                 ensCase[i][j] = new Case (i, j, vide, num);
-                
             }
         }
-        
     }
     
     public int aleatoire(int taille){
@@ -100,10 +92,6 @@ public class Grille {
         int  tempy = num_bloc_y;   // du bloc qui va être déplacé 
         int videx= caseVide.getCoordx(); 
         int videy= caseVide.getCoordy(); 
-        System.out.println("casepasvidex"+tempx);
-        System.out.println("casepasvidey"+tempy);
-        System.out.println("casevidex"+caseVide.getCoordx());
-        System.out.println("casevidey"+caseVide.getCoordy());
         
         Case caseAdep = trouveCaseByCoord(tempx,tempy);
         System.out.println(caseAdep);
@@ -158,30 +146,26 @@ public class Grille {
         
         //Déplacement vers la gauche
         if (direction=='q' && casevide_y!=taille-1) {
-            //le bloc prend y-1, x+0
             //this.getNumBlocByCoord(casevide_x, casevide_y-1);
             num_bloc_x = casevide_x;
             num_bloc_y = casevide_y+1;
         }
         //Déplacement vers le bas
         else if (direction=='s' && casevide_x!=0) {
-            //le bloc prend y+0, x+1
             //this.getNumBlocByCoord(casevide_x+1, casevide_y);
             num_bloc_x = casevide_x-1;
             num_bloc_y = casevide_y;
         }
         //Déplacement vers la droite
         else if (direction=='d' && casevide_y!=0) {
-            //le bloc prend y+1, x+0
             //this.getNumBlocByCoord(casevide_x, casevide_y+1);
             num_bloc_x = casevide_x;
             num_bloc_y = casevide_y-1;
         }
         //Déplacement vers le haut
-        else if (direction=='z' && casevide_x!=0) {
-            //le bloc prend y+0, x-1
+        else if (direction=='z' && casevide_x!=taille-1) {
             //this.getNumBlocByCoord(casevide_x-1, casevide_y);
-            num_bloc_x = casevide_x-1;
+            num_bloc_x = casevide_x+1;
             num_bloc_y = casevide_y;
         }
         else {
@@ -199,21 +183,26 @@ public class Grille {
         return deplacement_ok; 
     }
     
-    private boolean verifVictoire () {
+    protected boolean verifVictoire () {
         int temp_num_bloc = 0;  //variable temp pour le num du bloc précédent
         boolean ordonne = true; //TRUE si les blocs sont dans l'ordre
         
         Case case_Vide= trouveCaseVide(); 
         
-        while (ordonne) {
-            for (int i=1 ; i<taille ; i++) {
-                for (int j=0 ; j<taille ; j++) {
+       
+        for (int i=0 ; i<taille ; i++) {
+            for (int j=0 ; j<taille ; j++) {
+                while (ordonne) {
                     Case c = trouveCaseByCoord(i, j);        
                     //on regarde si c'est une case vide qui n'est pas en bas à droite
                     if(case_Vide.getVide() && case_Vide.getCoordx()!=this.taille-1 && case_Vide.getCoordy()!=this.taille-1){
                         ordonne=false; 
                     }
                     //est-ce par ordre décroissant ?
+                    System.out.println("numbloc = " + c.getBloc().getNumBloc());
+                    System.out.println("temp num bloc = " + temp_num_bloc);
+                    System.out.println("ordonne = " + ordonne);
+                    
                     if (c.getBloc().getNumBloc() != temp_num_bloc+1){
                         ordonne = false;
                     }
@@ -241,9 +230,6 @@ public class Grille {
                 }
             }
         }
-        System.out.println("c"+c.toString());
-        System.out.println("ceg"+c.getCoordx());
-         System.out.println("ceg"+c.getCoordy());
         //Renvoie la case vide
         return (Case) c;
       
@@ -288,27 +274,12 @@ public class Grille {
         //Parcours de l'ensemble de cases
         for (int i=0 ; i<this.taille ; i++){            
             for (int j=0 ; j<this.taille ; j++){
-                grilleString = grilleString + " " + ensCase[i][j].toString();
+                grilleString = grilleString + "  " + ensCase[i][j].toString();
             }
             grilleString = grilleString + "\n";
         }
         return grilleString;
     }
     
-    public static void main(String[] args) {
-        Grille g = new Grille(3);        
-        System.out.println(g);
-        Scanner sc = new Scanner(System.in);  //Initialisation du scanner
-        for(int i=0;i<10;i++){   
-            System.out.println("saisie une lettre");
-            char d = sc.next().charAt(0);
-             System.out.println("c = "+d); //Saisie par le joueur
-            //Test si la saisie est valide
-             g.deplacement(d); 
-            g.toString(); 
-            System.out.println(g); 
-        }
-        
-        
-    }
+
 }
