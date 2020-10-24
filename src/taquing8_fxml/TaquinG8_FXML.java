@@ -22,8 +22,10 @@ public class TaquinG8_FXML extends Application {
           
     //Constructeur
     public TaquinG8_FXML() {
+                
         System.out.println(g);
-        Scanner sc = new Scanner(System.in);  //Initialisation du scanner
+        Scanner sc = new Scanner(System.in);
+        //Initialisation du scanner
         while(!g.verifVictoire()){   
             System.out.println("Saisissez une lettre"
                     + "\n d = droite"
@@ -36,6 +38,10 @@ public class TaquinG8_FXML extends Application {
             g.deplacement(d); 
             g.toString(); 
             System.out.println(g); 
+        }
+        
+        if(g.verifVictoire()){
+            System.out.println("finish !!!!");
         }
     }
             

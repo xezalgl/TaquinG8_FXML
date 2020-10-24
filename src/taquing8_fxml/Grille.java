@@ -192,22 +192,24 @@ public class Grille {
        
         for (int i=0 ; i<taille ; i++) {
             for (int j=0 ; j<taille ; j++) {
+                
                 while (ordonne) {
-                    Case c = trouveCaseByCoord(i, j);        
+                    Case c = trouveCaseByCoord(j, i);
+                    System.out.println(c);
+                   
                     //on regarde si c'est une case vide qui n'est pas en bas à droite
                     if(case_Vide.getVide() && case_Vide.getCoordx()!=this.taille-1 && case_Vide.getCoordy()!=this.taille-1){
-                        ordonne=false; 
+                        ordonne=false;
                     }
-                    //est-ce par ordre décroissant ?
-                    System.out.println("numbloc = " + c.getBloc().getNumBloc());
-                    System.out.println("temp num bloc = " + temp_num_bloc);
-                    System.out.println("ordonne = " + ordonne);
-                    
-                    if (c.getBloc().getNumBloc() != temp_num_bloc+1){
+                    else{
+                       if (c.getBloc().getNumBloc() != temp_num_bloc+1){
                         ordonne = false;
                     }
                     
-                    temp_num_bloc = c.getBloc().getNumBloc();
+                    temp_num_bloc = c.getBloc().getNumBloc();  
+                    }
+                                 
+                    
                 }
             }
         }
