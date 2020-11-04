@@ -183,39 +183,56 @@ public class Grille {
         return deplacement_ok; 
     }
     
-    protected boolean verifVictoire () {
+       protected boolean verifVictoire () {
         int temp_num_bloc = 0;  //variable temp pour le num du bloc précédent
         boolean ordonne = true; //TRUE si les blocs sont dans l'ordre
-        
+
         Case case_Vide= trouveCaseVide(); 
-        
-       
-        for (int i=0 ; i<taille ; i++) {
-            for (int j=0 ; j<taille ; j++) {
-                
-                while (ordonne) {
-                    Case c = trouveCaseByCoord(j, i);
-                    System.out.println(c);
-                   
+        System.out.println("c'est la case vide"+case_Vide);
+
+       while (ordonne) {
+           //si la case vide est au bon endroit on fait le test 
+           if(case_Vide.getCoordx()==this.taille-1 && case_Vide.getCoordy()==this.taille-1){
+        for (int i=0 ; i<taille && ordonne; i++) {
+            for (int j=0 ; j<taille && ordonne ; j++) {
+
+                //
+                    Case c = trouveCaseByCoord(i, j);
+                    //System.out.println("coucou c'est la case"+c);
+
                     //on regarde si c'est une case vide qui n'est pas en bas à droite
-                    if(case_Vide.getVide() && case_Vide.getCoordx()!=this.taille-1 && case_Vide.getCoordy()!=this.taille-1){
-                        ordonne=false;
-                    }
-                    else{
-                       if (c.getBloc().getNumBloc() != temp_num_bloc+1){
+                    if(j!=this.taille-1 || i!=this.taille-1){
+                       if (c.getBloc().getNumBloc() != temp_num_bloc+1  ){
                         ordonne = false;
+                           System.out.println("C'est pas bon");
                     }
-                    
-                    temp_num_bloc = c.getBloc().getNumBloc();  
+                       temp_num_bloc = c.getBloc().getNumBloc();
+                       } 
+
+
+                        System.out.println("coucou moi c'est le numéro de bloc"+temp_num_bloc);
+                        System.out.println(ordonne);
+                        
+
+
                     }
-                                 
-                    
-                }
+                }break;
             }
+           
+           else {
+               System.out.println("laaaaa");
+                ordonne = false;
+           }
+
         }
-        
-        
+        System.out.println(ordonne);
+       if (ordonne == true ){
+           System.out.println("C'est bon");
+       }
+
+
         return ordonne;
+    
     }
     
     /*
