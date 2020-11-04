@@ -18,12 +18,17 @@ import javafx.stage.Stage;
  */
 public class TaquinG8_FXML extends Application {
     //Attributs
-    Grille g  = new Grille (4);
+    Grille g  = new Grille (3);
           
     //Constructeur
     public TaquinG8_FXML() {
                 
+        
+        
         System.out.println(g);
+        
+        
+       
         Scanner sc = new Scanner(System.in);
         //Initialisation du scanner
         while(!g.verifVictoire()){   
