@@ -18,36 +18,11 @@ import javafx.stage.Stage;
  */
 public class TaquinG8_FXML extends Application {
     //Attributs
-    Grille g  = new Grille (3);
+
           
     //Constructeur
     public TaquinG8_FXML() {
-                
         
-        
-        System.out.println(g);
-        
-        
-       
-        Scanner sc = new Scanner(System.in);
-        //Initialisation du scanner
-        while(!g.verifVictoire()){   
-            System.out.println("Saisissez une lettre"
-                    + "\n d = droite"
-                    + "\n s = bas"
-                    + "\n q = gauche"
-                    + "\n z = haut");
-            char d = sc.next().charAt(0);
-            System.out.println("Vous avez saisie la direction : " + d); //Saisie par le joueur
-            //Test si la saisie est valide
-            g.deplacement(d); 
-            g.toString(); 
-            System.out.println(g); 
-        }
-        
-        if(g.verifVictoire()){
-            System.out.println("finish !!!!");
-        }
     }
             
     @Override
@@ -68,9 +43,8 @@ public class TaquinG8_FXML extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        TaquinG8_FXML jeu = new TaquinG8_FXML();
-        
-        //launch(args);
+
+        launch(args);
     }
     
 }
