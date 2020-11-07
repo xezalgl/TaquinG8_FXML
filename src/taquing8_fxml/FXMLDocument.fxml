@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="taquing8_fxml.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="taquing8_fxml.FXMLDocumentController">
     <children>
-        <Button fx:id="button" layoutX="126" layoutY="90" onAction="#handleButtonAction" text="Click Me!" />
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <GridPane fx:id="grille" gridLinesVisible="true" layoutY="132.0" onDragDetected="#handleButtonAction" prefHeight="464.0" prefWidth="502.0">
+      <GridPane fx:id="grille" gridLinesVisible="true" layoutY="132.0" onDragDetected="#handleButtonAction" prefHeight="464.0" prefWidth="502.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="132.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -24,6 +26,31 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Button fx:id="butto" layoutX="347.0" layoutY="77.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Button" />
+      <Accordion />
+      <MenuBar prefHeight="44.0" prefWidth="511.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem fx:id="console" mnemonicParsing="false" onAction="#playConsole" text="Jouer dans la console" />
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Button fx:id="start" layoutX="14.0" layoutY="49.0" mnemonicParsing="false" onAction="#run" text="Start" />
+      <Label fx:id="chronoAffiche" layoutX="444.0" layoutY="54.0" prefHeight="21.0" prefWidth="63.0" textOverrun="CENTER_WORD_ELLIPSIS">
+         <font>
+            <Font name="Courier New" size="25.0" />
+         </font></Label>
     </children>
 </AnchorPane>
