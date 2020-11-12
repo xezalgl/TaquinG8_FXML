@@ -5,6 +5,11 @@
  */
 package taquing8_fxml;
 
+import com.sun.javafx.geom.BaseBounds;
+import com.sun.javafx.geom.transform.BaseTransform;
+import com.sun.javafx.jmx.MXNodeAlgorithm;
+import com.sun.javafx.jmx.MXNodeAlgorithmContext;
+import com.sun.javafx.sg.prism.NGNode;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -15,6 +20,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -48,46 +54,12 @@ public class FXMLDocumentController {
     @FXML
     private GridPane grille;
 
+    //clic sur fichier "jouer dans la console"
     @FXML
     void playConsole(ActionEvent event) {
         start.setDisable(true);
-        System.out.println("Lancement du programme sans GUI");
-            Grille g  = new Grille (4);
-            
-            System.out.println(g);
-            Chrono chronos = new Chrono();
-            Timer chrono = new Timer();
-            chrono.schedule(new TimerTask(){
-                @Override
-                public void run(){
-                    chronos.setCmpt(chronos.getCmpt()+1);
-                }
-            },1000,1000);      
-        
-       
-            Scanner sc = new Scanner(System.in);
-            //Initialisation du scanner
-            while(!g.verifVictoire()){   
-                System.out.println("Saisissez une lettre"
-                        + "\n d = droite"
-                        + "\n s = bas"
-                        + "\n q = gauche"
-                        + "\n z = haut");
-                char d = sc.next().charAt(0);
-                System.out.println("Vous avez saisie la direction : " + d); //Saisie par le joueur
-                //Test si la saisie est valide
-                g.deplacement(d); 
-                g.toString();
-                System.out.println("Chrono :"+chronos.getCmpt()+" secondes.");
-                System.out.println(g); 
-        }
-        
-        if(g.verifVictoire()){
-            chronos.setFini(true);
-            int tempsTot=chronos.getCmpt();
-            System.out.println("finish !!!!");
-            System.out.println(tempsTot+" secondes");
-        }
+        MainsansGUI m = new MainsansGUI();
+        m.sansGUI();
     }
 
      @FXML
@@ -95,9 +67,35 @@ public class FXMLDocumentController {
 
     }
     
+    //retourne l'index dans le gridPane de la cese vide
+    private int trouveCaseVideGrid(Grille g){
+       Case caseVide = g.trouveCaseVide();
+        int xVide = caseVide.getCoordx();
+        int yVide = caseVide.getCoordy();
+        return xVide+1+(yVide*g.taille);
+    }
+    
+    //affiche la grille dans le GrrdPane de l'interface
+    private void grilleToGrid(Grille g, GridPane grid){
+        for(int i =0; i<g.getTaille(); i++){
+            for (int j = 0;j<g.getTaille();j++){                
+                String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc());
+                Label label = new Label(value);
+                grid.add(label, i, j);
+            }
+        }
+        grid.getChildren().remove(trouveCaseVideGrid(g));
+        
+        
+              
+    }
+    
+    //clic sur play
     @FXML
     void run(ActionEvent event) {
+        start.setDisable(true);
         Grille g = new Grille(4);
+        grilleToGrid(g,grille);        
         Task task = new Task<Void>() { // on définit une tâche parallèle pour mettre à jour la vue
         @Override
         public Void call() throws Exception { // implémentation de la méthode protected abstract V call() dans la classe Task

@@ -14,7 +14,13 @@ import java.util.Scanner;
 public class Joueur {
       private String pseudo="";  // represente le pseudo du joueur 
     private int deplacement; // le nombre de deplacement 
-    private int score; //le score 
+    private int score; //le score
+    
+    public Joueur(){
+        this.deplacement=0;
+        this.score=0;
+    }
+    
      public void setPseudo(){
   //jai repris notre ancienne méthode chez sahzamm 
         Scanner sc = new Scanner(System.in);  //Initialisation du scanner

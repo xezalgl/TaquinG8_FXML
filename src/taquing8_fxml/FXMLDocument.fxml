@@ -14,7 +14,7 @@
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <GridPane fx:id="grille" gridLinesVisible="true" layoutY="132.0" onDragDetected="#handleButtonAction" prefHeight="464.0" prefWidth="502.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="132.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />  
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -48,9 +48,9 @@
         </menus>
       </MenuBar>
       <Button fx:id="start" layoutX="14.0" layoutY="49.0" mnemonicParsing="false" onAction="#run" text="Start" />
-      <Label fx:id="chronoAffiche" layoutX="444.0" layoutY="54.0" prefHeight="21.0" prefWidth="63.0" textOverrun="CENTER_WORD_ELLIPSIS">
+      <Label fx:id="chronoAffiche" layoutX="353.0" layoutY="54.0" prefHeight="31.0" prefWidth="154.0" textOverrun="CENTER_WORD_ELLIPSIS">
          <font>
-            <Font name="Courier New" size="25.0" />
+            <Font name="Courier New" size="21.0" />
          </font></Label>
     </children>
 </AnchorPane>

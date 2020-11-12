@@ -21,14 +21,14 @@ public class Grille {
     List <Integer> listeBloc = new ArrayList<Integer>();
     
     //Constructeur
+    /*
+    constructeur de case : coords, num du bloc, booleen en bas à droite
+    */   
     public Grille(int t){
-        /*
-        constructeur de case : coords, num du bloc, booleen en bas à droite
-        */        
+             
         this.taille = t;
         this.ensCase = new Case[taille][taille];
         remplissageListeBloc(this.listeBloc);
-        System.out.println(this.listeBloc);
         int num = 0;
         
         
@@ -130,7 +130,7 @@ public class Grille {
         //Renvoie la case cherchée
         return c; 
     }
-    protected boolean deplacement (char direction){
+    protected boolean deplacement (char direction, Joueur j){
     //permet le déplacement d'une case dans la direction souhaitée si c'est possible
         //Récupération des coordonnées de la case vide
         Case caseVide = (Case) trouveCaseVide();
@@ -149,24 +149,28 @@ public class Grille {
             //this.getNumBlocByCoord(casevide_x, casevide_y-1);
             num_bloc_x = casevide_x;
             num_bloc_y = casevide_y+1;
+            j.setNbDeplacement();
         }
         //Déplacement vers le bas
         else if (direction=='s' && casevide_x!=0) {
             //this.getNumBlocByCoord(casevide_x+1, casevide_y);
             num_bloc_x = casevide_x-1;
             num_bloc_y = casevide_y;
+            j.setNbDeplacement();
         }
         //Déplacement vers la droite
         else if (direction=='d' && casevide_y!=0) {
             //this.getNumBlocByCoord(casevide_x, casevide_y+1);
             num_bloc_x = casevide_x;
             num_bloc_y = casevide_y-1;
+            j.setNbDeplacement();
         }
         //Déplacement vers le haut
         else if (direction=='z' && casevide_x!=taille-1) {
             //this.getNumBlocByCoord(casevide_x-1, casevide_y);
             num_bloc_x = casevide_x+1;
             num_bloc_y = casevide_y;
+            j.setNbDeplacement();
         }
         else {
             //le déplacement n'est pas possible
@@ -188,57 +192,33 @@ public class Grille {
         boolean ordonne = true; //TRUE si les blocs sont dans l'ordre
 
         Case case_Vide= trouveCaseVide(); 
-        System.out.println("c'est la case vide"+case_Vide);
-
        while (ordonne) {
            //si la case vide est au bon endroit on fait le test 
            if(case_Vide.getCoordx()==this.taille-1 && case_Vide.getCoordy()==this.taille-1){
         for (int i=0 ; i<taille && ordonne; i++) {
             for (int j=0 ; j<taille && ordonne ; j++) {
-
-                //
                     Case c = trouveCaseByCoord(i, j);
-                    //System.out.println("coucou c'est la case"+c);
-
                     //on regarde si c'est une case vide qui n'est pas en bas à droite
                     if(j!=this.taille-1 || i!=this.taille-1){
                        if (c.getBloc().getNumBloc() != temp_num_bloc+1  ){
                         ordonne = false;
-                           System.out.println("C'est pas bon");
                     }
                        temp_num_bloc = c.getBloc().getNumBloc();
-                       } 
-
-
-                        System.out.println("coucou moi c'est le numéro de bloc"+temp_num_bloc);
-                        System.out.println(ordonne);
-                        
-
-
+                       }                       
                     }
                 }break;
             }
-           
            else {
-               System.out.println("laaaaa");
                 ordonne = false;
            }
-
         }
-        System.out.println(ordonne);
-       if (ordonne == true ){
-           System.out.println("C'est bon");
-       }
-
-
-        return ordonne;
-    
+        return ordonne;    
     }
     
     /*
     Trouve la case vide et en renvoie une copie
     */
-    private Case trouveCaseVide() {
+    public Case trouveCaseVide() {
         Case c = null;
         //Parcours de l'ensemble des cases
         for (int i=0 ; i<taille ; i++){

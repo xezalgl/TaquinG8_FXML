@@ -14,15 +14,12 @@ import java.util.TimerTask;
  * @author nci
  */
 public class MainsansGUI {
-    public static void main(String[] args){
-        if (args.length==0) {
-            TaquinG8_FXML.main(args);
-        }
-        else{
-            MainsansGUI.main(args);
+    public void sansGUI(){
+        
             System.out.println("Lancement du programme sans GUI");
             Grille g  = new Grille (4);
-            
+            Joueur j = new Joueur();
+            j.setPseudo();
             System.out.println(g);
             Chrono chronos = new Chrono();
             Timer chrono = new Timer();
@@ -46,7 +43,7 @@ public class MainsansGUI {
                 char d = sc.next().charAt(0);
                 System.out.println("Vous avez saisie la direction : " + d); //Saisie par le joueur
                 //Test si la saisie est valide
-                g.deplacement(d); 
+                g.deplacement(d,j); 
                 g.toString();
                 System.out.println("Chrono :"+chronos.getCmpt()+" secondes.");
                 System.out.println(g); 
@@ -59,6 +56,5 @@ public class MainsansGUI {
             System.out.println(tempsTot+" secondes");
         }
         }
-    }
     
 }
