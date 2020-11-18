@@ -52,5 +52,8 @@
          <font>
             <Font name="Courier New" size="21.0" />
          </font></Label>
+      <Button fx:id="Z" layoutX="239.0" layoutY="39.0" mnemonicParsing="false" onAction="#Zclic" onKeyPressed="#Zpress" text="Z" />
+      <Button fx:id="Q" layoutX="210.0" layoutY="70.0" mnemonicParsing="false" onAction="#Qclic" onKeyPressed="#Qpress" text="Q" />
+      <Button fx:id="S" layoutX="239.0" layoutY="101.0" mnemonicParsing="false" onAction="#Sclic" onKeyPressed="#Spress" text="S" />
     </children>
 </AnchorPane>
