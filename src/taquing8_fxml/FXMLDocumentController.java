@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -38,9 +39,8 @@ import javafx.scene.layout.RowConstraints;
 
 public class FXMLDocumentController {
     
-    Chrono chronos = new Chrono();
-    
-        Grille g = new Grille(4);
+    Chrono chronos = new Chrono();    
+    Grille g = new Grille(4);
     Joueur j1 = new Joueur();
     
   @FXML
@@ -48,6 +48,9 @@ public class FXMLDocumentController {
 
     @FXML
     private Button S;
+    
+    @FXML
+    private Button D;
 
     @FXML
     private Label chronoAffiche;
@@ -89,20 +92,9 @@ public class FXMLDocumentController {
         return xVide+1+(yVide*g.taille);
     }
     
-    private void nettoyerGrid(Grille g, GridPane grid){
-        for(int i =0; i<g.getTaille()*g.getTaille(); i++){
-            try{
-            grid.getChildren().remove(i);
-            }
-            catch(IndexOutOfBoundsException e){
-                
-            }
-        }
-    }
     
     //affiche la grille dans le GrrdPane de l'interface
     private void grilleToGrid(Grille g, GridPane grid){
-//        grille.getChildren().removeAll();
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
                 try{
@@ -111,23 +103,21 @@ public class FXMLDocumentController {
                     grid.add(label, i, j);
                 }
                 catch (NullPointerException e){
-                    grid.getChildren().remove(trouveCaseVideGrid(g));
+                    
                 }
             }
         }
-        grid.getChildren().remove(trouveCaseVideGrid(g));             
+             
     }
-    
-    private void afficheDeplacement(Grille g, GridPane grid, char direction){
-        
-    }
-    
+       
     //clic sur play
     @FXML
     void run(ActionEvent event) {
         start.setDisable(true);
-//        Grille g = new Grille(4);
-        grilleToGrid(g,grille);        
+        Grille g = new Grille(4);
+        
+        grilleToGrid(g,grille);    
+        grille.getChildren().remove(g.taille*g.taille);
         Task task = new Task<Void>() { // on définit une tâche parallèle pour mettre à jour la vue
         @Override
         public Void call() throws Exception { // implémentation de la méthode protected abstract V call() dans la classe Task
@@ -137,6 +127,7 @@ public class FXMLDocumentController {
                     public void run(){ 
                             chronos.setCmpt(chronos.getCmpt()+1);
                             chronoAffiche.setText(Integer.toString(chronos.getCmpt())+" sec.");
+                            
                     }
                 }
                 );
@@ -158,8 +149,9 @@ public class FXMLDocumentController {
         
         g.deplacement("z".charAt(0), j1);
         System.out.println(g);
-//        nettoyerGrid(g, grille);
+        grille.getChildren().clear();
         grilleToGrid(g, grille);
+        
         
 
     }
@@ -171,28 +163,38 @@ public class FXMLDocumentController {
 
     @FXML
     void Qclic(ActionEvent event) {
-
+        g.deplacement("q".charAt(0), j1);
+        System.out.println(g);
+        grille.getChildren().clear();
+        grilleToGrid(g, grille);
     }
 
     @FXML
     void Qpress(ActionEvent event) {
 
     }
+    
+    @FXML
+    void Dclic(ActionEvent event) {
+        g.deplacement("d".charAt(0), j1);
+        System.out.println(g);
+        grille.getChildren().clear();
+        grilleToGrid(g, grille);
+    }
+
+    @FXML
+    void Dpress(ActionEvent event) {
+        
+    }
 
     @FXML
     void Sclic(ActionEvent event) {
 
         g.deplacement("s".charAt(0), j1);
-        System.out.println(g); 
+        System.out.println(g);
         grille.getChildren().clear();
-        grille.setGridLinesVisible(true);
-//        grille.getChildren().remove(2);
-//        nettoyerGrid(g, grille);
         grilleToGrid(g, grille);
         
-        
-        
-
     }
 
     @FXML
