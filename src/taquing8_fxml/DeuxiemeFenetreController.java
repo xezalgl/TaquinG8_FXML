@@ -28,8 +28,7 @@ import javafx.stage.Stage;
 //
 public class DeuxiemeFenetreController implements Initializable {
    //connexion
-    @FXML
-    private int y; 
+    
     @FXML
     private Button accesPage;
      @FXML
