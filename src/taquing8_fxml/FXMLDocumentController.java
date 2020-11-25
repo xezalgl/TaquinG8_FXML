@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -10,6 +10,7 @@ import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
 import com.sun.javafx.jmx.MXNodeAlgorithmContext;
 import com.sun.javafx.sg.prism.NGNode;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -19,17 +20,22 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.Stage;
 
 
 /**
@@ -66,6 +72,8 @@ public class FXMLDocumentController {
 
     @FXML
     private GridPane grille;
+    @FXML
+    private MenuItem console;
 
     
     
@@ -79,9 +87,24 @@ public class FXMLDocumentController {
         m.sansGUI();
     }
 
-     @FXML
-    void handleButtonAction(ActionEvent event) {
+     void handleButtonAction(ActionEvent event) {
 
+    }
+    
+    //creation multifenetre 
+    public void changementPage ( ActionEvent event ) throws IOException{
+        Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
+         Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
+         Stage fenetre = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
+         fenetre.setScene(deuxiemeF); //on affiche la deuxieme fenetre 
+         fenetre.show(); //ouverture de la
+    }
+    public void passageInscription (ActionEvent event) throws IOException{
+         Parent deuxieme  = FXMLLoader.load(getClass().getResource("Inscription.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
+         Scene deuxiemeFe = new Scene (deuxieme); //creation scene deuxieme fenetre 
+         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
+         window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
+         window.show();
     }
     
     //retourne l'index dans le gridPane de la cese vide
@@ -92,8 +115,7 @@ public class FXMLDocumentController {
         return xVide+1+(yVide*g.taille);
     }
     
-    
-    //affiche la grille dans le GrrdPane de l'interface
+    //affiche la grille dans le GridPane de l'interface
     private void grilleToGrid(Grille g, GridPane grid){
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
@@ -113,6 +135,7 @@ public class FXMLDocumentController {
     //clic sur play
     @FXML
     void run(ActionEvent event) {
+        System.out.println("test ");
         start.setDisable(true);
         Grille g = new Grille(4);
         
@@ -156,7 +179,6 @@ public class FXMLDocumentController {
 
     }
 
-    @FXML
     void Zpress(ActionEvent event) {
 
     }
@@ -169,7 +191,6 @@ public class FXMLDocumentController {
         grilleToGrid(g, grille);
     }
 
-    @FXML
     void Qpress(ActionEvent event) {
 
     }
@@ -182,7 +203,6 @@ public class FXMLDocumentController {
         grilleToGrid(g, grille);
     }
 
-    @FXML
     void Dpress(ActionEvent event) {
         
     }
@@ -197,10 +217,29 @@ public class FXMLDocumentController {
         
     }
 
-    @FXML
     void Spress(ActionEvent event) {
         
 
+    }
+
+    @FXML
+    private void handleButtonAction(MouseEvent event) {
+    }
+
+    @FXML
+    private void Zpress(KeyEvent event) {
+    }
+
+    @FXML
+    private void Qpress(KeyEvent event) {
+    }
+
+    @FXML
+    private void Spress(KeyEvent event) {
+    }
+
+    @FXML
+    private void Dpress(KeyEvent event) {
     }
 
 
