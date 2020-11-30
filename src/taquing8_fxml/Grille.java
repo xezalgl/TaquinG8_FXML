@@ -19,11 +19,12 @@ public class Grille {
     Case [][] ensCase;    
     //HashSet<Integer> ensNumBloc = new HashSet();
     List <Integer> listeBloc = new ArrayList<Integer>();
+  
     
-    //Constructeur
-    /*
-    constructeur de case : coords, num du bloc, booleen en bas à droite
-    */   
+    /**
+     * constructeur de la classe grille 
+     * @param t 
+     */
     public Grille(int t){
              
         this.taille = t;
@@ -52,13 +53,21 @@ public class Grille {
             }
         }
     }
+    /**
+     * Melange les 
+     * @param taille taille de la grille 
+     * @return un nombre 
+     */
     
     public int aleatoire(int taille){
         int max = taille-1;
         return (int)(Math.random() * (max));
         
     }
-    
+    /**
+     * accès en écriture à la taille de la grille 
+     * @param newTaille nouvelle taille de la grille 
+     */
     
     public void setTaille (int newTaille) {
     //Initialisation de l'attribut taille
@@ -67,13 +76,18 @@ public class Grille {
             this.taille = newTaille;
         }
     }
+    /**
+     * accès en lecture à la taille de la grille 
+     * @return la taille de la grille 
+     */
     
     public int getTaille () {
         return this.taille;
     }
     
-    /*
-    Remplissage de l'ensemble avec tous les numéros des blocs possibles
+    /**
+     * Remplissage de l'ensemble avec tous les numéros des blocs possibles
+     * @param List liste contenant les bloc 
     */
     private List remplissageListeBloc(List l) {
         for (int i=0 ; i<this.taille*taille-1; i++){
@@ -84,7 +98,13 @@ public class Grille {
         }
         return l;
     }
-    
+    /**
+     * Permet d'inverser les coordonées entre la case vide et le bloc 
+     * @param num_bloc_x recupère la coordonee du bloc en x 
+     * @param num_bloc_y recupère la coordonée du bloc en y 
+     * @param caseVide   recupère la case vide 
+     * @param d 
+     */
     private void inversionCoord(int num_bloc_x, int num_bloc_y, Case caseVide, char d){
         //Récupérer les coordonnées du bloc et de la case vide  dans des variables
         
@@ -115,7 +135,12 @@ public class Grille {
         */
         
     }
-    
+    /**
+     * Permet de trouver la case vide dans la grille 
+     * @param x coordonnée en x 
+     * @param y coordonée en y 
+     * @return recupère la case vide avec ses coordonées en x et y 
+     */
     private Case trouveCaseByCoord(int x, int y ){
         Case c = null;
         //Parcours de l'ensemble des cases
@@ -130,6 +155,12 @@ public class Grille {
         //Renvoie la case cherchée
         return c; 
     }
+    /**
+     * Permet le deplacement d'une case dans la direction souhaitée 
+     * @param direction direction saisie 
+     * @param j  joueur 
+     * @return 
+     */
     protected boolean deplacement (char direction, Joueur j){
     //permet le déplacement d'une case dans la direction souhaitée si c'est possible
         //Récupération des coordonnées de la case vide
@@ -186,7 +217,10 @@ public class Grille {
         
         return deplacement_ok; 
     }
-    
+    /**
+     * Verifie la fin de la fin de la partie 
+     * @return un booleen qui va nous permettre de verifier la victoire 
+     */
        protected boolean verifVictoire () {
         int temp_num_bloc = 0;  //variable temp pour le num du bloc précédent
         boolean ordonne = true; //TRUE si les blocs sont dans l'ordre
@@ -215,8 +249,9 @@ public class Grille {
         return ordonne;    
     }
     
-    /*
-    Trouve la case vide et en renvoie une copie
+    /**
+     * Trouve la case vide et en renvoie une copie
+     * @return la case vide 
     */
     public Case trouveCaseVide() {
         Case c = null;
@@ -233,12 +268,13 @@ public class Grille {
         return (Case) c;
       
     }
-    
-    /*
-    x : coordonnée en x du bloc voulu
-    y : coordonnée en y du bloc voulu
-    Parcours le HashSet de Bloc pour trouver le bloc qui a pour coord x et y et renvoie son numéro
-    */
+    /**
+     * Parcours le HashSet de Bloc pour trouver le bloc qui a pour coord x et y et renvoie son numéro
+     * @param x coordonnée en x du bloc voulu
+     * @param y coordonnée en y du bloc voulu
+     * @return renvoie le bloc 
+     */
+   
     private int getNumBlocByCoord(int x, int y) {
         /*
         //Déclaration et Initialisation
@@ -263,10 +299,10 @@ public class Grille {
         return 0;
     }
     
-    
-    /*
-    Permet de retourner la grille en chaine de caractère
-    */
+   /**
+  * redéfinition de la méthode toString de la classe Object qui permet l’affichage de l’objet Grille  
+  * @return affichage de la grille 
+  */
     @Override
     public String toString () {
         String grilleString = "";

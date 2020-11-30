@@ -42,6 +42,11 @@ public class DeuxiemeFenetreController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }   
+    /**
+     * passage à la fenetre de jeu si le joueur est bien connecté et présent dans la base de données 
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     public void passageDeuxiemeF (ActionEvent event ) throws IOException{
         String ps;
@@ -75,10 +80,12 @@ public class DeuxiemeFenetreController implements Initializable {
             saisieMdp.setStyle("-fx-text-fill: red ;"); 
         }
         
-        
-        
-       
     }
+    /**
+     * passage à la fenetre inscription si le joueur n'a pas de compte 
+     * @param event
+     * @throws IOException 
+     */
     @FXML 
      public void passageInscription (ActionEvent event ) throws IOException{
         Parent inscription  = FXMLLoader.load(getClass().getResource("Inscription.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
@@ -87,10 +94,5 @@ public class DeuxiemeFenetreController implements Initializable {
          inscriptionF.setScene(inscr); //on affiche la deuxieme fenetre 
          inscriptionF.show();
     }
-     @FXML
-     //conexion à la bdd 
-     public void connexionBdd(ActionEvent event){
-    
-        
-     }
+  
 }

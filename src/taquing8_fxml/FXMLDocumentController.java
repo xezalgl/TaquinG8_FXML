@@ -43,43 +43,64 @@ import javafx.stage.Stage;
  * @author hazal
  */
 
+
 public class FXMLDocumentController {
     
     Chrono chronos = new Chrono();    
     Grille g = new Grille(4);
     Joueur j1 = new Joueur();
-    
+  /**
+   * bouton gauche  
+   */  
   @FXML
     private Button Q;
-
+    /**
+   * bouton bas  
+   */  
     @FXML
     private Button S;
-    
+   /**
+   * bouton droit   
+   */  
     @FXML
     private Button D;
-
+ /**
+   * bouton affichage du chrono  
+   */  
     @FXML
     private Label chronoAffiche;
-
+ /**
+   * bouton debute la partie 
+   */  
     @FXML
     private Button start;
-
+ /**
+   * bouton haut  
+   */  
     @FXML
     private Button Z;
 
     @FXML
     private Label label;
-
+   /**
+   * grille d'affichage   
+   */  
     @FXML
     private GridPane grille;
     @FXML
+     /**
+   * barre   
+   */  
     private MenuItem console;
 
     
     
 
-
-    //clic sur fichier "jouer dans la console"
+     /**
+      * clic sur fichier "jouer dans la console"
+      * @param event action 
+      */
+  
     @FXML
     void playConsole(ActionEvent event) {
         start.setDisable(true);
@@ -91,7 +112,12 @@ public class FXMLDocumentController {
 
     }
     
-    //creation multifenetre 
+   
+     /**
+      * creation multifenetre qui permet de se connecter 
+      * @param event clique sur le bouton 
+      * @throws IOException 
+      */
     public void changementPage ( ActionEvent event ) throws IOException{
         Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
@@ -99,6 +125,11 @@ public class FXMLDocumentController {
          fenetre.setScene(deuxiemeF); //on affiche la deuxieme fenetre 
          fenetre.show(); //ouverture de la
     }
+    /**
+     * Creation multifenetre qui permet de s'inscrire 
+     * @param event
+     * @throws IOException 
+     */
     public void passageInscription (ActionEvent event) throws IOException{
          Parent deuxieme  = FXMLLoader.load(getClass().getResource("Inscription.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeFe = new Scene (deuxieme); //creation scene deuxieme fenetre 
@@ -107,15 +138,24 @@ public class FXMLDocumentController {
          window.show();
     }
     
-    //retourne l'index dans le gridPane de la cese vide
+    /**
+     * retourne l'index dans le gridPane de la cese vide
+     * @param g la grille 
+     * @return la grille 
+     */
+   
     private int trouveCaseVideGrid(Grille g){
        Case caseVide = g.trouveCaseVide();
         int xVide = caseVide.getCoordx();
         int yVide = caseVide.getCoordy();
         return xVide+1+(yVide*g.taille);
     }
-    
-    //affiche la grille dans le GridPane de l'interface
+    /**
+     * affiche la grille dans le GridPane de l'interface
+     * @param g grille 
+     * @param grid grille 
+     */
+   
     private void grilleToGrid(Grille g, GridPane grid){
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
@@ -132,7 +172,11 @@ public class FXMLDocumentController {
              
     }
        
-    //clic sur play
+    
+    /**
+     * clique sur démarrer permet de lancer le jeu 
+     * @param event action 
+     */
     @FXML
     void run(ActionEvent event) {
         System.out.println("test ");
@@ -166,7 +210,10 @@ public class FXMLDocumentController {
         th.start(); // et on exécute le Thread pour mettre à jour la vue (déplacement continu de la tuile horizontalement)
 
     }
-    
+    /**
+     * clique sur le bouton z qui permet de monter 
+     * @param event action 
+     */
     @FXML
     void Zclic(ActionEvent event) {
         
@@ -178,11 +225,17 @@ public class FXMLDocumentController {
         
 
     }
-
+/**
+     * saisie clavier sur le touche z qui permet de monter 
+     * @param event action 
+     */
     void Zpress(ActionEvent event) {
 
     }
-
+/**
+     * clique sur le bouton q qui permet d'aller à gauche  
+     * @param event action 
+     */
     @FXML
     void Qclic(ActionEvent event) {
         g.deplacement("q".charAt(0), j1);
@@ -190,11 +243,17 @@ public class FXMLDocumentController {
         grille.getChildren().clear();
         grilleToGrid(g, grille);
     }
-
+/**
+     * saisie clavier sur le touche q qui permet d'aller à gauche  
+     * @param event action 
+     */
     void Qpress(ActionEvent event) {
 
     }
-    
+    /**
+     * clique  sur le bouton d qui permet de monter 
+     * @param event action 
+     */
     @FXML
     void Dclic(ActionEvent event) {
         g.deplacement("d".charAt(0), j1);
@@ -202,11 +261,17 @@ public class FXMLDocumentController {
         grille.getChildren().clear();
         grilleToGrid(g, grille);
     }
-
+/**
+     * saisie clavier sur le touche d qui permet d'aller à droite 
+     * @param event action 
+     */
     void Dpress(ActionEvent event) {
         
     }
-
+/**
+     * clique sur le bouton s qui permet de descendre 
+     * @param event action 
+     */
     @FXML
     void Sclic(ActionEvent event) {
 
@@ -216,6 +281,10 @@ public class FXMLDocumentController {
         grilleToGrid(g, grille);
         
     }
+    /**
+     * saisie clavier sur le touche s qui permet de descendre 
+     * @param event action 
+     */
 
     void Spress(ActionEvent event) {
         
@@ -225,19 +294,31 @@ public class FXMLDocumentController {
     @FXML
     private void handleButtonAction(MouseEvent event) {
     }
-
+/**
+     * saisie clavier sur le touche z qui permet de monter 
+     * @param event action du clavier 
+     */
     @FXML
     private void Zpress(KeyEvent event) {
     }
-
+/**
+     * saisie clavier sur le touche q qui permet d'aller à gauche  
+     * @param event action du clavier 
+     */
     @FXML
     private void Qpress(KeyEvent event) {
     }
-
+/**
+     * saisie clavier sur le touche s qui permet de descendre  
+     * @param event action du clavier 
+     */
     @FXML
     private void Spress(KeyEvent event) {
     }
-
+/**
+     * saisie clavier sur le touche d qui permet d'aller à droite 
+     * @param event action du clavier 
+     */
     @FXML
     private void Dpress(KeyEvent event) {
     }

@@ -14,6 +14,7 @@ import java.util.TimerTask;
  * @author nci
  */
 public class MainsansGUI {
+    
     public void sansGUI(){
         
             System.out.println("Lancement du programme sans GUI");

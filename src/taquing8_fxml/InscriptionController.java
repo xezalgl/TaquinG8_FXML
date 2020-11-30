@@ -47,13 +47,17 @@ public class InscriptionController implements Initializable {
     public void Image (){
         
     }
-
+/**
+ * Création de multifenetre qui permet de s'inscrire 
+ * @param event
+ * @throws IOException 
+ */
     @FXML
     
         public void passageInscrip (ActionEvent event) throws IOException{
         String ps;
         String mdp ; 
-        //conexion base de donees 
+        //conexion à la base de donees 
         String host = "localhost";
         String port = "3309";
         String dbname = "taquin";
@@ -80,6 +84,7 @@ public class InscriptionController implements Initializable {
         } 
       
        else {
+           //si le pseudo existe déjà on mets les lettre à rouge 
             saisiePseudo.setStyle("-fx-text-fill: red ;") ; 
             saisieMdp.setStyle("-fx-text-fill: red ;"); 
        }
