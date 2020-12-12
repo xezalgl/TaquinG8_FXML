@@ -10,7 +10,10 @@ import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
 import com.sun.javafx.jmx.MXNodeAlgorithmContext;
 import com.sun.javafx.sg.prism.NGNode;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -30,12 +33,16 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import static javax.swing.text.StyleConstants.Background;
 
 
 /**
@@ -74,10 +81,13 @@ public class FXMLDocumentController {
     private GridPane grille;
     @FXML
     private MenuItem console;
-
     
-    
-
+    //Image à mettre dans l'interface pour jouer
+    Class<?> clazz = FXMLDocumentController.class;
+ 
+    InputStream input = clazz.getResourceAsStream("carte_electronique.png");
+ 
+    Image image = new Image(input);
 
     //clic sur fichier "jouer dans la console"
     @FXML
@@ -107,40 +117,51 @@ public class FXMLDocumentController {
          window.show();
     }
     
-    //retourne l'index dans le gridPane de la cese vide
-    private int trouveCaseVideGrid(Grille g){
-       Case caseVide = g.trouveCaseVide();
-        int xVide = caseVide.getCoordx();
-        int yVide = caseVide.getCoordy();
-        return xVide+1+(yVide*g.taille);
-    }
     
-    //affiche la grille dans le GridPane de l'interface
+    
+    //affiche la grille dans le GrrdPane de l'interface
     private void grilleToGrid(Grille g, GridPane grid){
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
-                try{
-                    String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc());
-                    Label label = new Label(value);
-                    grid.add(label, i, j);
+                if (g.ensCase[j][i].getVide()){
+                    Pane p = new Pane();
+                    p.setStyle("-fx-background-color:pink");
+                    grid.add(p, i, j);
                 }
-                catch (NullPointerException e){
-                    
+                else {
+                    String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc());
+                    System.out.println(value);
+                    Label label = new Label(value);
+                    Pane p = new Pane();
+                    p.getChildren().add(new ImageView (ajoutImagePane(Integer.parseInt(value))));  //On met l'image
+                    p.getChildren().addAll(label);
+                    //p.setStyle("-fx-background-color:black");
+                    grid.add(p, i, j);
                 }
             }
         }
-             
+        //Affichage de la grille
+        grid.setHgap(3.0);
+        grid.setVgap(3.0);
     }
-       
+      
+    //Ajout de l'image à l'interface graphique
+    private Image ajoutImagePane (int numBloc) { 
+        Image img = null;
+        
+        return img;
+    }
+    
     //clic sur play
     @FXML
     void run(ActionEvent event) {
-        System.out.println("test ");
         start.setDisable(true);
         Grille g = new Grille(4);
         
-        grilleToGrid(g,grille);    
-        grille.getChildren().remove(g.taille*g.taille);
+        grilleToGrid(g,grille);    //remplissage de la grille
+        grille.getChildren().remove(g.taille*g.taille); //suppresison de tous les éléments de la grille
+        
+        
         Task task = new Task<Void>() { // on définit une tâche parallèle pour mettre à jour la vue
         @Override
         public Void call() throws Exception { // implémentation de la méthode protected abstract V call() dans la classe Task
@@ -175,8 +196,6 @@ public class FXMLDocumentController {
         grille.getChildren().clear();
         grilleToGrid(g, grille);
         
-        
-
     }
 
     void Zpress(ActionEvent event) {
