@@ -5,6 +5,10 @@
  */
 package taquing8_fxml;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,7 +17,7 @@ import java.util.Scanner;
  *
  * @author hazal
  */
-public class Grille {
+public class Grille  implements Serializable{
       //Attributs
     int taille=0;
     Case [][] ensCase;    
@@ -279,6 +283,7 @@ public class Grille {
         }
         return grilleString;
     }
+
     
 
 }
