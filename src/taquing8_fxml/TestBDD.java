@@ -33,7 +33,7 @@ public class TestBDD {
 
 
          String host = "localhost";
-        String port = "3309";
+        String port = "3306";
         String dbname = "taquin";
         String username = "root";
         String password ="";

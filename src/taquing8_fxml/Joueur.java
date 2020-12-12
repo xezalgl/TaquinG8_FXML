@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @author hazal
  */
 public class Joueur {
-      private String pseudo="";  // represente le pseudo du joueur 
+    private String pseudo="";  // represente le pseudo du joueur 
     private int deplacement; // le nombre de deplacement 
     private int score; //le score
     
@@ -47,7 +47,7 @@ public class Joueur {
          }
      public void setNbDeplacement (){
          //permet d'incrementer +1
-         this.deplacement= deplacement+1; 
+         this.deplacement=getNbDeplacement()+1; 
      }
      public void creationProfil(){
          //mise a jour du profil et appelle saisie pseudo 

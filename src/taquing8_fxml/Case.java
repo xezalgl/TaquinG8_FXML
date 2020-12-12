@@ -5,11 +5,13 @@
  */
 package taquing8_fxml;
 
+import java.io.Serializable;
+
 /**
  *
  * @author hazal
  */
-public class Case {
+public class Case implements Serializable{
   private int x; 
     private int y;
     private boolean vide;

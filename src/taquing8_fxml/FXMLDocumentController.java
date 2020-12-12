@@ -10,6 +10,7 @@ import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
 import com.sun.javafx.jmx.MXNodeAlgorithmContext;
 import com.sun.javafx.sg.prism.NGNode;
+import static java.awt.SystemColor.window;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,8 +29,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
+import static javafx.scene.input.KeyCode.Q;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
@@ -48,7 +52,7 @@ public class FXMLDocumentController {
     Chrono chronos = new Chrono();    
     Grille g = new Grille(4);
     Joueur j1 = new Joueur();
-    
+
   @FXML
     private Button Q;
 
@@ -66,16 +70,22 @@ public class FXMLDocumentController {
 
     @FXML
     private Button Z;
-
+    
     @FXML
-    private Label label;
+    private Label deplacementLabel;
 
     @FXML
     private GridPane grille;
+    
     @FXML
     private MenuItem console;
 
+    @FXML
+    private MenuButton optionDeJeu;
     
+    InputStream input = clazz.getResourceAsStream("carte_electronique.png");
+    
+    Image image = new Image(input);
     
 
 
@@ -87,9 +97,7 @@ public class FXMLDocumentController {
         m.sansGUI();
     }
 
-     void handleButtonAction(ActionEvent event) {
 
-    }
     
     //creation multifenetre 
     public void changementPage ( ActionEvent event ) throws IOException{
@@ -107,54 +115,69 @@ public class FXMLDocumentController {
          window.show();
     }
     
-    //retourne l'index dans le gridPane de la cese vide
-    private int trouveCaseVideGrid(Grille g){
-       Case caseVide = g.trouveCaseVide();
-        int xVide = caseVide.getCoordx();
-        int yVide = caseVide.getCoordy();
-        return xVide+1+(yVide*g.taille);
-    }
     
     //affiche la grille dans le GridPane de l'interface
     private void grilleToGrid(Grille g, GridPane grid){
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
-                try{
-                    String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc());
-                    Label label = new Label(value);
-                    grid.add(label, i, j);
+                if (g.ensCase[j][i].getVide()){
+                    Pane p = new Pane();
+                    p.setStyle("-fx-background-color:pink");
+                    grid.add(p, i, j);
                 }
-                catch (NullPointerException e){
-                    
+                else {
+                    String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc());
+                    System.out.println(value);
+                    Label label = new Label(value);
+                    Pane p = new Pane();
+                    p.getChildren().add(new ImageView (ajoutImagePane(Integer.parseInt(value))));  //On met l'image
+                    p.getChildren().addAll(label);
+                    //p.setStyle("-fx-background-color:black");
+                    grid.add(p, i, j);
+                }
                 }
             }
+        //Affichage de la grille
+        grid.setHgap(3.0);
+        grid.setVgap(3.0);
         }
              
+    //Ajout de l'image à l'interface graphique
+    private Image ajoutImagePane (int numBloc) { 
+        Image img = null;
+    
+        return img;
     }
        
     //clic sur play
     @FXML
-    void run(ActionEvent event) {
-        System.out.println("test ");
-        start.setDisable(true);
-        Grille g = new Grille(4);
+    void run(ActionEvent event) throws InterruptedException {
+        start.setVisible(false);
         
-        grilleToGrid(g,grille);    
+        grilleToGrid(g,grille); 
+        chronos.setFini(false);
         grille.getChildren().remove(g.taille*g.taille);
+        //deux mouvement consécutif pour eviter une erreur d'affichage
+        g.deplacement("d".charAt(0), j1);
+        g.deplacement("q".charAt(0), j1);
+
+        grille.getChildren().clear();
+        grilleToGrid(g, grille);
         Task task = new Task<Void>() { // on définit une tâche parallèle pour mettre à jour la vue
         @Override
         public Void call() throws Exception { // implémentation de la méthode protected abstract V call() dans la classe Task
-            while (g.verifVictoire()==false){
+            while (chronos.isFini()==false){
+                if(g.verifVictoire()==true){
+                    chronos.setFini(true);
+                }
                 Platform.runLater(new Runnable() { // classe anonyme
                     @Override
                     public void run(){ 
                             chronos.setCmpt(chronos.getCmpt()+1);
-                            chronoAffiche.setText(Integer.toString(chronos.getCmpt())+" sec.");
-                            
+                            chronoAffiche.setText(Integer.toString(chronos.getCmpt())+" s.");
                     }
                 }
                 );
-
                 Thread.sleep(1000);
             }
             return null;
@@ -165,83 +188,87 @@ public class FXMLDocumentController {
         th.setDaemon(true); // le Thread s'exécutera en arrière-plan (démon informatique)
         th.start(); // et on exécute le Thread pour mettre à jour la vue (déplacement continu de la tuile horizontalement)
 
+        
     }
     
-    @FXML
-    void Zclic(ActionEvent event) {
-        
-        g.deplacement("z".charAt(0), j1);
-        System.out.println(g);
-        grille.getChildren().clear();
-        grilleToGrid(g, grille);
-        
-        
-
-    }
-
-    void Zpress(ActionEvent event) {
-
-    }
-
-    @FXML
-    void Qclic(ActionEvent event) {
-        g.deplacement("q".charAt(0), j1);
-        System.out.println(g);
-        grille.getChildren().clear();
-        grilleToGrid(g, grille);
-    }
-
-    void Qpress(ActionEvent event) {
-
-    }
-    
-    @FXML
-    void Dclic(ActionEvent event) {
-        g.deplacement("d".charAt(0), j1);
-        System.out.println(g);
-        grille.getChildren().clear();
-        grilleToGrid(g, grille);
-    }
-
-    void Dpress(ActionEvent event) {
-        
-    }
-
-    @FXML
-    void Sclic(ActionEvent event) {
-
-        g.deplacement("s".charAt(0), j1);
-        System.out.println(g);
-        grille.getChildren().clear();
-        grilleToGrid(g, grille);
-        
-    }
-
-    void Spress(ActionEvent event) {
-        
-
-    }
-
-    @FXML
-    private void handleButtonAction(MouseEvent event) {
-    }
-
+    //déplacement avec les touches
     @FXML
     private void Zpress(KeyEvent event) {
+        if (event.getCode()==KeyCode.Z){
+           deplacementFXML("z".charAt(0), j1);
+        }
+        if (event.getCode()==KeyCode.Q){
+           deplacementFXML("q".charAt(0), j1);
+        }
+        if (event.getCode()==KeyCode.S){
+           deplacementFXML("s".charAt(0), j1);
+        }
+        if (event.getCode()==KeyCode.D){
+           deplacementFXML("d".charAt(0), j1);
+        }
     }
 
     @FXML
-    private void Qpress(KeyEvent event) {
+    private void Qpress(KeyEvent event) {        
     }
 
     @FXML
-    private void Spress(KeyEvent event) {
+    private void Spress(KeyEvent event) {        
     }
 
     @FXML
     private void Dpress(KeyEvent event) {
+    } 
+    
+    //deplacement avec les bouton
+    @FXML
+    void Zclic(ActionEvent event) {        
+        deplacementFXML("z".charAt(0), j1);;
     }
 
+    @FXML
+    void Qclic(ActionEvent event) {
+        deplacementFXML("q".charAt(0), j1);
+    }
+    
+    @FXML
+    void Dclic(ActionEvent event) {
+        deplacementFXML("d".charAt(0), j1);
+    }
 
+    @FXML
+    void Sclic(ActionEvent event) {
+        deplacementFXML("s".charAt(0), j1);  
+    }
+    
+
+    
+    @FXML
+    void SaveAndQuit(ActionEvent event) {
+        chronos.setFini(true);       
+        //enregistrement serialisation
+        GrilleSer ser = new GrilleSer();
+        //retour fenetre menu
+        
+    }
+
+    @FXML
+    void Quit(ActionEvent event) throws IOException, ClassNotFoundException {
+        chronos.setFini(true);       
+        //fermeture de la fenetre
+        changementPage(event);
+    }
+
+    @FXML
+    void QuitAndNew(ActionEvent event) {
+        chronos.setFini(true);
+        start.setVisible(true);
+        chronos.setCmpt(0);
+        g=new Grille(4);
+    }
+    
+    @FXML
+    private void handleButtonAction(MouseEvent event) {
+    }
 }
 
