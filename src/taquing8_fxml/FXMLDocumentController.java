@@ -5,13 +5,18 @@
  */
 package taquing8_fxml;
 
+
+
+
 import com.sun.javafx.geom.BaseBounds;
 import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
 import com.sun.javafx.jmx.MXNodeAlgorithmContext;
 import com.sun.javafx.sg.prism.NGNode;
-import static java.awt.SystemColor.window;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -32,14 +37,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import static javafx.scene.input.KeyCode.Q;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import static javax.swing.text.StyleConstants.Background;
 
 
 /**
@@ -83,6 +91,8 @@ public class FXMLDocumentController {
     @FXML
     private MenuButton optionDeJeu;
     
+    //Image à mettre dans l'interface pour jouer
+    Class<?> clazz = FXMLDocumentController.class;
     InputStream input = clazz.getResourceAsStream("carte_electronique.png");
     
     Image image = new Image(input);
@@ -147,6 +157,13 @@ public class FXMLDocumentController {
         Image img = null;
     
         return img;
+    }
+    
+    private void deplacementFXML(char direction, Joueur j){
+        g.deplacement(direction, j);        
+        deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()-2));
+        grille.getChildren().clear();
+        grilleToGrid(g, grille);
     }
        
     //clic sur play
