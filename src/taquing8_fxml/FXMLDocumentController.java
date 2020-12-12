@@ -87,17 +87,13 @@ public class FXMLDocumentController {
     
     @FXML
     private MenuItem console;
-
-    @FXML
-    private MenuButton optionDeJeu;
     
     //Image à mettre dans l'interface pour jouer
     Class<?> clazz = FXMLDocumentController.class;
-    InputStream input = clazz.getResourceAsStream("joueur.png");
-    
+ 
+    InputStream input = clazz.getResourceAsStream("carte_electronique.png");
+ 
     Image image = new Image(input);
-    
-
 
     //clic sur fichier "jouer dans la console"
     @FXML
@@ -126,7 +122,8 @@ public class FXMLDocumentController {
     }
     
     
-    //affiche la grille dans le GridPane de l'interface
+    
+    //affiche la grille dans le GrrdPane de l'interface
     private void grilleToGrid(Grille g, GridPane grid){
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
@@ -165,7 +162,8 @@ public class FXMLDocumentController {
         grille.getChildren().clear();
         grilleToGrid(g, grille);
     }
-       
+
+    
     //clic sur play
     @FXML
     void run(ActionEvent event) throws InterruptedException {

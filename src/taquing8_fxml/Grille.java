@@ -184,6 +184,7 @@ public class Grille  implements Serializable{
         
         //Vérifie si le déplacement est possible
         if (deplacement_ok){
+            System.out.println(">>>>>>inversion coordonnée lancée vers : " + direction);
             //Si oui alors on inverse les coordonnées des cases adjacentes
             inversionCoord(num_bloc_x, num_bloc_y, caseVide, direction); 
         }
