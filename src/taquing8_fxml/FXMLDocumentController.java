@@ -93,7 +93,7 @@ public class FXMLDocumentController {
     
     //Image à mettre dans l'interface pour jouer
     Class<?> clazz = FXMLDocumentController.class;
-    InputStream input = clazz.getResourceAsStream("carte_electronique.png");
+    InputStream input = clazz.getResourceAsStream("joueur.png");
     
     Image image = new Image(input);
     
@@ -140,7 +140,7 @@ public class FXMLDocumentController {
                     System.out.println(value);
                     Label label = new Label(value);
                     Pane p = new Pane();
-                    p.getChildren().add(new ImageView (ajoutImagePane(Integer.parseInt(value))));  //On met l'image
+                    p.getChildren().add(new ImageView (image));  //On met l'image
                     p.getChildren().addAll(label);
                     //p.setStyle("-fx-background-color:black");
                     grid.add(p, i, j);
