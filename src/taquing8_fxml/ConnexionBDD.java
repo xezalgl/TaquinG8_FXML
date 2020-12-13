@@ -181,12 +181,55 @@ public class ConnexionBDD {
         } catch (Exception e) {
             System.out.println("Probleme avec l'insertion ");
         }
+        
     }
 
     
     
     
+   /**
+    * changement de pseudo 
+    * @param pseudo
+    * @param mdp
+    * @param newPseudo 
+    */
     
+    
+    public void updatePseudoBDD(String pseudo, String mdp, String newPseudo){
+        try {
+            this.openConnexion();
+            Statement stmt = con.createStatement();
+            String query = " UPDATE joueur SET pseudo = '" + newPseudo + "' WHERE pseudo='" + pseudo + "' AND mdp = '" + mdp + "' "; 
+              stmt.executeUpdate(query);
+            }catch (SQLException e){
+            System.out.println("problème avec le nouveau pseudo");
+    }
+
+    }
+
+  /**
+   * changement de mot de passe 
+   * @param pseudo
+   * @param mdp
+   * @param newMdp 
+   */
+
+    //changement de mot de passe
+    public void updateMdpBDD(String pseudo, String mdp, String newMdp){
+
+        try {
+            this.openConnexion();
+            Statement stmt = con.createStatement();
+            String query = " UPDATE joueur SET mdp = '" + newMdp + "' WHERE pseudo='" + pseudo + "' AND mdp = '" + mdp + "' ";
+              stmt.executeUpdate(query);
+
+
+
+            }catch (SQLException e){
+            System.out.println("problème avec le nouveau pseudo");
+    }
+
+    }
     
     
     
