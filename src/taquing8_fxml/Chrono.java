@@ -13,10 +13,12 @@ public class Chrono {
     private int cmpt=0;
     private boolean fini;
     
+    //costructeur
     public Chrono(){
         this.fini=false;
     }
-
+    
+    //getters et setters
     public int getCmpt() {
         return cmpt;
     }

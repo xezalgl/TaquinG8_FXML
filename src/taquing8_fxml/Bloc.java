@@ -25,17 +25,25 @@ public class Bloc implements Serializable {
     }
     
     
-    //Méthode qui permet de modifer la coordonnée x d'un bloc
+    /**
+     * Méthode qui permet de modifer la coordonnée x d'un bloc
+     * @param x int coordonée x à modifier
+     */
     public void setCoordx (int x){
         this.x=x; 
     }
-    
-    //Méthode qui permet de modifier la coordonnée y d'un bloc
+    /**
+     *Méthode qui permet de modifier la coordonnée y d'un bloc
+     * @param y int coordonnée y à modifier
+     */
     public void setCoordy(int y){
         this.y=y; 
     }
     
-    // Méthode qui permet de modifier le numéro d'un bloc 
+    /**
+     * Méthode qui permet de modifier le numéro d'un bloc
+     * @param num int numéro de la case à modifier 
+     */ 
     public void setNum(int num){
         this.n=num; 
     }

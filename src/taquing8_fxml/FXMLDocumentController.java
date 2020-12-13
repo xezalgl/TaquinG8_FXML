@@ -56,7 +56,7 @@ import static javax.swing.text.StyleConstants.Background;
  */
 
 public class FXMLDocumentController {
-    
+    //Initialisation des chrono,grille et joueur
     Chrono chronos = new Chrono();    
     Grille g = new Grille(4);
     Joueur j1 = new Joueur();
@@ -95,13 +95,14 @@ public class FXMLDocumentController {
  
     Image image = new Image(input);
 
-    //clic sur fichier "jouer dans la console"
-    @FXML
-    void playConsole(ActionEvent event) {
-        start.setDisable(true);
-        MainsansGUI m = new MainsansGUI();
-        m.sansGUI();
-    }
+    // à ajouter dans la fenetre choix je pense
+//    //clic sur fichier "jouer dans la console"
+//    @FXML
+//    void playConsole(ActionEvent event) {
+//        start.setDisable(true);
+//        MainsansGUI m = new MainsansGUI();
+//        m.sansGUI();
+//    }
 
 
     
@@ -123,7 +124,12 @@ public class FXMLDocumentController {
     
     
     
-    //affiche la grille dans le GrrdPane de l'interface
+
+    /**
+     * affiche la grille dans le GridPane de l'interface
+     * @param g Grille, object grille (courant)
+     * @param grid GridPane, représente la grille dans l'interface
+     */
     private void grilleToGrid(Grille g, GridPane grid){
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
@@ -149,13 +155,22 @@ public class FXMLDocumentController {
         grid.setVgap(3.0);
         }
              
-    //Ajout de l'image à l'interface graphique
+    /**
+     * Ajout de l'image à l'interface graphique 
+     * @param numBloc int, numéro du bloc à ajouter
+     * @return Image retourne l'image
+     */    
     private Image ajoutImagePane (int numBloc) { 
         Image img = null;
     
         return img;
     }
     
+    /**
+     * Effectue un déplacement sur la grille dans l'interface selon direction
+     * @param direction char, lettre du déplacement
+     * @param j Joueur, joueur effectuant le déplacement
+     */
     private void deplacementFXML(char direction, Joueur j){
         g.deplacement(direction, j);        
         deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()-2));
@@ -164,7 +179,11 @@ public class FXMLDocumentController {
     }
 
     
-    //clic sur play
+    /**
+     * Clic sur Start
+     * @param event
+     * @throws InterruptedException 
+     */
     @FXML
     void run(ActionEvent event) throws InterruptedException {
         start.setVisible(false);
@@ -206,7 +225,10 @@ public class FXMLDocumentController {
         
     }
     
-    //déplacement avec les touches
+    /**
+     * Déplacement avec les touche du clavier
+     * @param event 
+     */
     @FXML
     private void Zpress(KeyEvent event) {
         if (event.getCode()==KeyCode.Z){
@@ -235,7 +257,10 @@ public class FXMLDocumentController {
     private void Dpress(KeyEvent event) {
     } 
     
-    //deplacement avec les bouton
+    /**
+     * Déplacement avec les boutons de l'interface
+     * @param event 
+     */
     @FXML
     void Zclic(ActionEvent event) {        
         deplacementFXML("z".charAt(0), j1);;
@@ -257,7 +282,10 @@ public class FXMLDocumentController {
     }
     
 
-    
+    /**
+     * Clic sur Pause, arrete le chronos et enregistre la grille dans un fichier
+     * @param event 
+     */
     @FXML
     void SaveAndQuit(ActionEvent event) {
         chronos.setFini(true);       
@@ -267,13 +295,22 @@ public class FXMLDocumentController {
         
     }
 
+    /**
+     * Clic sur Quitter, arrete le chronos et ferme la fenêtre du jeu
+     * @param event
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     @FXML
     void Quit(ActionEvent event) throws IOException, ClassNotFoundException {
         chronos.setFini(true);       
         //fermeture de la fenetre
         changementPage(event);
     }
-
+    /**
+     * Clic sur Nouvelle partie, arrete la partie en cours et en demarre une nouvelle
+     * @param event 
+     */
     @FXML
     void QuitAndNew(ActionEvent event) {
         chronos.setFini(true);

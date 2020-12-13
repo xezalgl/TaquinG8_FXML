@@ -15,9 +15,11 @@ import java.io.ObjectOutputStream;
  * @author nci
  */
 public class GrilleDeser {
-    
-
-    
+    /***
+     * Permet de charger un fichier .ser contenant les informtion d'une grille sauvegarder
+     * @return grille la Grille sous forme d'object
+     * @throws ClassNotFoundException 
+     */
     public Grille ChargerGrille() throws ClassNotFoundException{
         Grille grille = null;
         ObjectOutputStream oos = null;

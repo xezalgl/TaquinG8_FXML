@@ -13,7 +13,8 @@ import java.util.Scanner;
  */
 public class Joueur {
     private String pseudo="";  // represente le pseudo du joueur 
-    private int deplacement; // le nombre de deplacement 
+    private int deplacement; // le nombre de deplacement
+    private int temps; // temps pour résoudre le taquin courant
     private int score; //le score
     
     public Joueur(){
@@ -21,8 +22,10 @@ public class Joueur {
         this.score=0;
     }
     
-     public void setPseudo(){
-  //jai repris notre ancienne méthode chez sahzamm 
+    /**
+     * affecte un pseudo au joueur courant
+     */
+    public void setPseudo(){
         Scanner sc = new Scanner(System.in);  //Initialisation du scanner
         System.out.println("\nNouveau Joueur, entre ton pseudo : "); 
         String ps = sc.nextLine();   //Saisie par le joueur
@@ -33,26 +36,37 @@ public class Joueur {
         } 
         this.pseudo = ps;
     }
-     public String getPseudo(){
-         //getteur du pseudo 
-     return pseudo;   
-} 
-       
-     public int getNbDeplacement(){
-         // retourne ne le nombre de deplacement 
-         return deplacement; 
-     }
-     public void setPseudo(String ps){
-            this.pseudo=ps;  
-         }
-     public void setNbDeplacement (){
-         //permet d'incrementer +1
-         this.deplacement=getNbDeplacement()+1; 
-     }
-     public void creationProfil(){
-         //mise a jour du profil et appelle saisie pseudo 
-     }
-     /*public void setScore(){
-        this.score=score+1; 
-     }*/
+    
+    //getteur/setteur du pseudo 
+    public String getPseudo(){
+        return pseudo;   
+    } 
+    public void setPseudo(String ps){
+        this.pseudo=ps;  
+    }
+        
+    /**
+     * Getteur du nb de deplacement
+     * @return int nombre de deplacement du joueur
+     */
+    public int getNbDeplacement(){
+        return deplacement; 
+    }
+    
+    /**
+     * Incrémente 1 a l'ttribut deplacament du joueur
+     */
+    public void setNbDeplacement (){
+        this.deplacement=getNbDeplacement()+1; 
+    }
+    public void creationProfil(){
+        //mise a jour du profil et appelle saisie pseudo 
+    }
+    /**
+     * Permet d'actualiser le score du joueur. Temps écoulé du jeu * nombre de déplacements
+     * @param temps int temps écoulé pour résoudre le jeu
+     */
+    public void setScore(int temps){
+        this.score=this.deplacement*temps; 
+    }
 }

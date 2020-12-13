@@ -61,7 +61,11 @@ public class ConnexionBDD {
         }
     }
     
-    //Méthode qui permet de créer un nouveau joueur dans la base de donnée
+    /**
+     * ajoute un joueur à la bdd
+     * @param pseudo String, le pseuod du joueur
+     * @param mdp String, le code à 4 chiffre du joueur
+     */
     public void insertUsers(String pseudo, String mdp) {
         try {
             this.openConnexion();

@@ -15,11 +15,12 @@ import java.io.ObjectOutputStream;
  */
 public class GrilleSer {
  
-
-    public static void main(String[] args){
-        Grille grille = new Grille(4);
-        ObjectOutputStream oos = null;
-        
+    /**
+     * Méthode permettant d'enregistrer dans un fichier .ser les information d'une grille passer en paramétre
+     * @param grille Grille, grille à enregistrer
+     */
+    public void SauverGrille(Grille grille) throws ClassNotFoundException{
+         ObjectOutputStream oos = null;        
         try{
             final FileOutputStream fichier = new FileOutputStream("grille.ser");
             oos = new ObjectOutputStream(fichier);
@@ -37,8 +38,6 @@ public class GrilleSer {
                 ex.printStackTrace();
             }
         }
-
-}
-
+    }
     
 }

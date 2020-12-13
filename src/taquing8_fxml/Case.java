@@ -17,8 +17,13 @@ public class Case implements Serializable{
     private boolean vide;
     private Bloc b;
     
-    //consctructeur de la classe 
-    //crée un carte qui pour coordonees abs et ord
+    /**
+     * consctructeur d'une case
+     * @param abs int abscisse de la case
+     * @param ord int ordonnée de la case
+     * @param v boolean, case vide=true, false sinon
+     * @param num int numéro de la case
+     */ 
     public Case(int abs, int ord, boolean v, int num){
         this.x=abs; 
         this.y=ord; 
