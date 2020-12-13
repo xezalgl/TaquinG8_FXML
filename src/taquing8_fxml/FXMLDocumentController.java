@@ -166,7 +166,7 @@ public class FXMLDocumentController {
     public void changementPage ( ActionEvent event ) throws IOException{
         Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
-         Stage fenetre = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
+         Stage fenetre = (Stage) optionDeJeu.getScene().getWindow(); // creation stage fenetre  
          fenetre.setScene(deuxiemeF); //on affiche la deuxieme fenetre 
          fenetre.show(); //ouverture de la
     }
