@@ -60,33 +60,57 @@ public class FXMLDocumentController {
     Chrono chronos = new Chrono();    
     Grille g = new Grille(4);
     Joueur j1 = new Joueur();
+    int size = g.getTaille();
 
   @FXML
     private Button Q;
-
+    /**
+   * bouton bas  
+   */  
     @FXML
     private Button S;
-    
+   /**
+   * bouton droit   
+   */  
     @FXML
     private Button D;
-
+ /**
+   * bouton affichage du chrono  
+   */  
     @FXML
     private Label chronoAffiche;
-
+ /**
+   * bouton debute la partie 
+   */  
     @FXML
     private Button start;
-
+ /**
+   * bouton haut  
+   */  
     @FXML
     private Button Z;
     
     @FXML
-    private Label deplacementLabel;
-
+    private Label label;
+   /**
+   * grille d'affichage   
+   */  
     @FXML
     private GridPane grille;
     
     @FXML
+     /**
+   * barre   
+   */  
     private MenuItem console;
+    @FXML
+    private Button profil3;
+
+    @FXML 
+    private Label deplacementLabel; 
+     @FXML
+    private MenuButton optionDeJeu;
+    
     
     //Image à mettre dans l'interface pour jouer
     Class<?> clazz = FXMLDocumentController.class;
@@ -104,9 +128,30 @@ public class FXMLDocumentController {
 //        m.sansGUI();
 //    }
 
+     /**
+      * clic sur fichier "jouer dans la console"
+      * @param event action 
+      */
+
+    @FXML
+    void playConsole(ActionEvent event) {
+        start.setDisable(true);
+        MainsansGUI m = new MainsansGUI();
+        m.sansGUI();
+    }
+    
+     void handleButtonAction(ActionEvent event) {
+
+    }
 
     
-    //creation multifenetre 
+   
+     /**
+      * creation multifenetre qui permet de se connecter 
+      * @param event clique sur le bouton 
+      * @throws IOException 
+      */
+    @FXML
     public void changementPage ( ActionEvent event ) throws IOException{
         Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
@@ -114,6 +159,11 @@ public class FXMLDocumentController {
          fenetre.setScene(deuxiemeF); //on affiche la deuxieme fenetre 
          fenetre.show(); //ouverture de la
     }
+    /**
+     * Creation multifenetre qui permet de s'inscrire 
+     * @param event
+     * @throws IOException 
+     */
     public void passageInscription (ActionEvent event) throws IOException{
          Parent deuxieme  = FXMLLoader.load(getClass().getResource("Inscription.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeFe = new Scene (deuxieme); //creation scene deuxieme fenetre 
@@ -121,9 +171,17 @@ public class FXMLDocumentController {
          window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
          window.show();
     }
-    
-    
-    
+        
+    /**
+     * rend visible/invible les boutons de navigation
+     * @param visible boolean true si bouton visible, else sinon
+     */
+    private void navigationBouton(boolean visible){
+            Z.setVisible(visible);
+            Q.setVisible(visible);
+            S.setVisible(visible);
+            D.setVisible(visible);
+    }   
 
     /**
      * affiche la grille dans le GridPane de l'interface
@@ -187,11 +245,11 @@ public class FXMLDocumentController {
     @FXML
     void run(ActionEvent event) throws InterruptedException {
         start.setVisible(false);
-        
+        navigationBouton(true);
         grilleToGrid(g,grille); 
         chronos.setFini(false);
-        grille.getChildren().remove(g.taille*g.taille);
         //deux mouvement consécutif pour eviter une erreur d'affichage
+        deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()));
         g.deplacement("d".charAt(0), j1);
         g.deplacement("q".charAt(0), j1);
 
@@ -230,31 +288,16 @@ public class FXMLDocumentController {
      * @param event 
      */
     @FXML
-    private void Zpress(KeyEvent event) {
-        if (event.getCode()==KeyCode.Z){
-           deplacementFXML("z".charAt(0), j1);
-        }
-        if (event.getCode()==KeyCode.Q){
-           deplacementFXML("q".charAt(0), j1);
-        }
-        if (event.getCode()==KeyCode.S){
-           deplacementFXML("s".charAt(0), j1);
-        }
+    void touche(KeyEvent event) {
         if (event.getCode()==KeyCode.D){
            deplacementFXML("d".charAt(0), j1);
+        }if (event.getCode()==KeyCode.S){
+           deplacementFXML("s".charAt(0), j1);
+        }if (event.getCode()==KeyCode.Q){
+           deplacementFXML("q".charAt(0), j1);
+        }if (event.getCode()== KeyCode.Z){
+           deplacementFXML("z".charAt(0), j1);
         }
-    }
-
-    @FXML
-    private void Qpress(KeyEvent event) {        
-    }
-
-    @FXML
-    private void Spress(KeyEvent event) {        
-    }
-
-    @FXML
-    private void Dpress(KeyEvent event) {
     } 
     
     /**
@@ -287,10 +330,15 @@ public class FXMLDocumentController {
      * @param event 
      */
     @FXML
-    void SaveAndQuit(ActionEvent event) {
+    void SaveAndQuit(ActionEvent event) throws IOException, ClassNotFoundException {
         chronos.setFini(true);       
         //enregistrement serialisation
-        GrilleSer ser = new GrilleSer();
+//        GrilleSer ser = new GrilleSer();
+//        ser.SauverGrille(g);
+        Ser ser = new Ser();
+        ser.SauverJeu(g,j1);
+
+        changementPage(event);
         //retour fenetre menu
         
     }
@@ -306,6 +354,10 @@ public class FXMLDocumentController {
         chronos.setFini(true);       
         //fermeture de la fenetre
         changementPage(event);
+
+//        Deser deser = new Deser();         
+//        Joueur j2 = deser.ChargerJoueur();
+        
     }
     /**
      * Clic sur Nouvelle partie, arrete la partie en cours et en demarre une nouvelle
@@ -315,8 +367,14 @@ public class FXMLDocumentController {
     void QuitAndNew(ActionEvent event) {
         chronos.setFini(true);
         start.setVisible(true);
+        grille.getChildren().clear();
         chronos.setCmpt(0);
-        g=new Grille(4);
+        chronoAffiche.setText("0");
+        deplacementLabel.setText("0");
+        navigationBouton(false);
+        j1.initNbDeplacement();
+        g=new Grille(size);
+        
     }
     
     @FXML
