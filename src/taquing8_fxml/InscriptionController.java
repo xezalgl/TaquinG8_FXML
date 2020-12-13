@@ -35,7 +35,7 @@ public class InscriptionController implements Initializable {
     private TextField saisieMdp;
     @FXML
     private TextField saisieMail;
-
+     Joueur j = new Joueur(); 
     /**
      * Initializes the controller class.
      */
@@ -69,7 +69,7 @@ public class InscriptionController implements Initializable {
         ps= saisiePseudo.getText(); 
         //recuperer mdp 
         mdp= saisieMdp.getText(); 
-        System.out.println("coucoun"+ps+mdp);
+        System.out.println("Mot et pseudo saisie dans la connexion"+ps+mdp);
        // c.insertUsers(ps, mdp);
        
        if(c.getUsers(ps, mdp)==false){
@@ -81,6 +81,9 @@ public class InscriptionController implements Initializable {
          Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
          window.show();
+         j.setPseudo(ps);
+         j.setMdp(mdp); 
+         System.out.println("le joueur a pour "+j);
         } 
       
        else {

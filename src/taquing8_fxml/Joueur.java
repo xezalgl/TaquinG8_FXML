@@ -15,6 +15,7 @@ public class Joueur {
     private String pseudo="";  // represente le pseudo du joueur 
     private int deplacement; // le nombre de deplacement 
     private int score; //le score
+    private String mot_passe; 
     /**
      * Constructeur de la joueur 
      */
@@ -43,8 +44,24 @@ public class Joueur {
       */
      public String getPseudo(){
          //getteur du pseudo 
+         System.out.println("eqh"+pseudo);
      return pseudo;   
 } 
+     /**
+      * accès en écriture au pseudo du joueur 
+      * @param mdp le mot de passe 
+      */
+     public void setMdp(String mdp){
+         this.mot_passe=mdp; 
+         
+     }
+     /**
+      * accès en lecture du nombre de déplacement 
+      * @return le mot de passe 
+      */
+     public String getMdp(){
+         return mot_passe; 
+     }
        /**
         * accès en lecture du nombre de déplacement 
         * @return le nombre de déplacement 
@@ -73,5 +90,7 @@ public class Joueur {
      public void creationProfil(){
          //mise a jour du profil et appelle saisie pseudo 
      }
-    
+    public String toString(){
+        return ("pseudo"+this.pseudo +"\n"+ "mot de passe "+this.mot_passe); 
+    }
 }

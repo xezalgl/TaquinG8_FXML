@@ -92,6 +92,8 @@ public class FXMLDocumentController {
    * barre   
    */  
     private MenuItem console;
+    @FXML
+    private Button profil3;
 
     
     
@@ -118,6 +120,7 @@ public class FXMLDocumentController {
       * @param event clique sur le bouton 
       * @throws IOException 
       */
+    @FXML
     public void changementPage ( ActionEvent event ) throws IOException{
         Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
@@ -322,7 +325,14 @@ public class FXMLDocumentController {
     @FXML
     private void Dpress(KeyEvent event) {
     }
-
+ @FXML 
+     public void passageProfi (ActionEvent event ) throws IOException{
+        Parent profil  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
+         Scene prof = new Scene (profil); //creation scene deuxieme fenetre 
+         Stage profilP = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
+         profilP.setScene(prof); //on affiche la deuxieme fenetre 
+         profilP.show();
+    }
 
 }
 
