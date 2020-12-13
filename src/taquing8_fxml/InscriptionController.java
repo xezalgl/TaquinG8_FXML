@@ -35,7 +35,7 @@ public class InscriptionController implements Initializable {
     private TextField saisieMdp;
     @FXML
     private TextField saisieMail;
-
+     Joueur j = new Joueur(); 
     /**
      * Initializes the controller class.
      */
@@ -47,13 +47,17 @@ public class InscriptionController implements Initializable {
     public void Image (){
         
     }
-
+/**
+ * Création de multifenetre qui permet de s'inscrire 
+ * @param event
+ * @throws IOException 
+ */
     @FXML
     
         public void passageInscrip (ActionEvent event) throws IOException{
         String ps;
         String mdp ; 
-        //conexion base de donees 
+        //conexion à la base de donees 
         String host = "localhost";
         String port = "3309";
         String dbname = "taquin";
@@ -65,7 +69,7 @@ public class InscriptionController implements Initializable {
         ps= saisiePseudo.getText(); 
         //recuperer mdp 
         mdp= saisieMdp.getText(); 
-        System.out.println("coucoun"+ps+mdp);
+        System.out.println("Mot et pseudo saisie dans la connexion"+ps+mdp);
        // c.insertUsers(ps, mdp);
        
        if(c.getUsers(ps, mdp)==false){
@@ -77,9 +81,13 @@ public class InscriptionController implements Initializable {
          Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
          window.show();
+         j.setPseudo(ps);
+         j.setMdp(mdp); 
+         System.out.println("le joueur a pour "+j);
         } 
       
        else {
+           //si le pseudo existe déjà on mets les lettre à rouge 
             saisiePseudo.setStyle("-fx-text-fill: red ;") ; 
             saisieMdp.setStyle("-fx-text-fill: red ;"); 
        }

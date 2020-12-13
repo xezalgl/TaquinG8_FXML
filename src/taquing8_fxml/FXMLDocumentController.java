@@ -55,6 +55,7 @@ import static javax.swing.text.StyleConstants.Background;
  * @author hazal
  */
 
+
 public class FXMLDocumentController {
     //Initialisation des chrono,grille et joueur
     Chrono chronos = new Chrono();    
@@ -119,14 +120,7 @@ public class FXMLDocumentController {
  
     Image image = new Image(input);
 
-    // à ajouter dans la fenetre choix je pense
-//    //clic sur fichier "jouer dans la console"
-//    @FXML
-//    void playConsole(ActionEvent event) {
-//        start.setDisable(true);
-//        MainsansGUI m = new MainsansGUI();
-//        m.sansGUI();
-//    }
+
 
      /**
       * clic sur fichier "jouer dans la console"
@@ -138,6 +132,17 @@ public class FXMLDocumentController {
         start.setDisable(true);
         MainsansGUI m = new MainsansGUI();
         m.sansGUI();
+    }
+    
+    /**
+     * rend visible/invible les boutons de navigation
+     * @param visible boolean true si bouton visible, else sinon
+     */
+    private void navigationBouton(boolean visible){
+            Z.setVisible(visible);
+            Q.setVisible(visible);
+            S.setVisible(visible);
+            D.setVisible(visible);
     }
     
      void handleButtonAction(ActionEvent event) {
@@ -171,23 +176,25 @@ public class FXMLDocumentController {
          window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
          window.show();
     }
-        
+    
     /**
-     * rend visible/invible les boutons de navigation
-     * @param visible boolean true si bouton visible, else sinon
+     * retourne l'index dans le gridPane de la cese vide
+     * @param g la grille 
+     * @return la grille 
      */
-    private void navigationBouton(boolean visible){
-            Z.setVisible(visible);
-            Q.setVisible(visible);
-            S.setVisible(visible);
-            D.setVisible(visible);
-    }   
-
+   
+    private int trouveCaseVideGrid(Grille g){
+       Case caseVide = g.trouveCaseVide();
+        int xVide = caseVide.getCoordx();
+        int yVide = caseVide.getCoordy();
+        return xVide+1+(yVide*g.taille);
+    }
     /**
      * affiche la grille dans le GridPane de l'interface
-     * @param g Grille, object grille (courant)
-     * @param grid GridPane, représente la grille dans l'interface
+     * @param g grille 
+     * @param grid grille 
      */
+   
     private void grilleToGrid(Grille g, GridPane grid){
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
@@ -282,10 +289,63 @@ public class FXMLDocumentController {
 
         
     }
+    /**
+     * clique sur le bouton z qui permet de monter 
+     * @param event action 
+     */
+  
+/**
+     * saisie clavier sur le touche z qui permet de monter 
+     * @param event action 
+     */
+    void Zpress(ActionEvent event) {
+
+    }
+/**
+     * clique sur le bouton q qui permet d'aller à gauche  
+     * @param event action 
+     */
+   
+/**
+     * saisie clavier sur le touche q qui permet d'aller à gauche  
+     * @param event action 
+     */
+    void Qpress(ActionEvent event) {
+
+    }
+    /**
+     * clique  sur le bouton d qui permet de monter 
+     * @param event action 
+     */
+    
+/**
+     * saisie clavier sur le touche d qui permet d'aller à droite 
+     * @param event action 
+     */
+    void Dpress(ActionEvent event) {
+        
+    }
+/**
+     * clique sur le bouton s qui permet de descendre 
+     * @param event action 
+     */
     
     /**
-     * Déplacement avec les touche du clavier
-     * @param event 
+     * saisie clavier sur le touche s qui permet de descendre 
+     * @param event action 
+     */
+
+    void Spress(ActionEvent event) {
+        
+
+    }
+
+    @FXML
+    private void handleButtonAction(MouseEvent event) {
+    }
+/**
+     * saisie clavier sur le touche z qui permet de monter 
+     * @param event action du clavier 
      */
     @FXML
     void touche(KeyEvent event) {
@@ -308,8 +368,16 @@ public class FXMLDocumentController {
     void Zclic(ActionEvent event) {        
         deplacementFXML("z".charAt(0), j1);;
     }
+ @FXML 
+     public void passageProfi (ActionEvent event ) throws IOException{
+        Parent profil  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
+         Scene prof = new Scene (profil); //creation scene deuxieme fenetre 
+         Stage profilP = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
+         profilP.setScene(prof); //on affiche la deuxieme fenetre 
+         profilP.show();
 
-    @FXML
+     }
+     @FXML
     void Qclic(ActionEvent event) {
         deplacementFXML("q".charAt(0), j1);
     }
@@ -377,8 +445,6 @@ public class FXMLDocumentController {
         
     }
     
-    @FXML
-    private void handleButtonAction(MouseEvent event) {
-    }
+   
 }
 

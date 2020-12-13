@@ -17,7 +17,10 @@ public class Joueur implements Serializable {
     private int deplacement; // le nombre de deplacement
     private int temps; // temps pour résoudre le taquin courant
     private int score; //le score
-    
+    private String mot_passe; 
+    /**
+     * Constructeur de la joueur 
+     */
     public Joueur(){
         this.deplacement=0;
         this.score=0;
@@ -70,6 +73,12 @@ public class Joueur implements Serializable {
     
     public void creationProfil(){
         //mise a jour du profil et appelle saisie pseudo 
+    }
+    public String getMdp(){
+        return this.mot_passe; 
+    }
+    public void setMdp(String mdp){
+        this.mot_passe=mdp; 
     }
     /**
      * Permet d'actualiser le score du joueur. Temps écoulé du jeu * nombre de déplacements
