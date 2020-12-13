@@ -5,11 +5,13 @@
  */
 package taquing8_fxml;
 
+import java.io.Serializable;
+
 /**
  *
  * @author hazal
  */
-public class Bloc {
+public class Bloc implements Serializable {
      
     private int x; 
     private int y; 
@@ -29,25 +31,21 @@ public class Bloc {
     
     
     /**
-    * Méthode qui permet de modifer la coordonnée x d'un bloc
-    *@param x la coordonées à traiter 
-    */
+     * Méthode qui permet de modifer la coordonnée x d'un bloc
+     * @param x int coordonée x à modifier
+     */
     public void setCoordx (int x){
         this.x=x; 
     }
-    
-   /**
-    * Méthode qui permet de modifer la coordonnée y d'un bloc
-    *@param y la coordonées à traiter 
-    */
+    /**
+     *Méthode qui permet de modifier la coordonnée y d'un bloc
+     * @param y int coordonnée y à modifier
+     */
     public void setCoordy(int y){
         this.y=y; 
     }
     
     /**
-    * Méthode qui permet de modifier le numéro d'un bloc
-    * @param num le numéro du bloc 
-    */
     public void setNum(int num){
         this.n=num; 
     }
@@ -84,3 +82,4 @@ public class Bloc {
     //Dans profil insérer le critère de tri soit par le temps soit par le nombre de coups 
     
 }
+     

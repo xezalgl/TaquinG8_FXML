@@ -5,12 +5,18 @@
  */
 package taquing8_fxml;
 
+
+
+
 import com.sun.javafx.geom.BaseBounds;
 import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
 import com.sun.javafx.jmx.MXNodeAlgorithmContext;
 import com.sun.javafx.sg.prism.NGNode;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -28,14 +34,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import static javax.swing.text.StyleConstants.Background;
 
 
 /**
@@ -45,13 +57,14 @@ import javafx.stage.Stage;
 
 
 public class FXMLDocumentController {
-    
+    //Initialisation des chrono,grille et joueur
     Chrono chronos = new Chrono();    
     Grille g = new Grille(4);
     Joueur j1 = new Joueur();
   /**
    * bouton gauche  
    */  
+
   @FXML
     private Button Q;
     /**
@@ -79,7 +92,7 @@ public class FXMLDocumentController {
    */  
     @FXML
     private Button Z;
-
+    
     @FXML
     private Label label;
    /**
@@ -87,6 +100,7 @@ public class FXMLDocumentController {
    */  
     @FXML
     private GridPane grille;
+    
     @FXML
      /**
    * barre   
@@ -95,8 +109,26 @@ public class FXMLDocumentController {
     @FXML
     private Button profil3;
 
+    @FXML 
+    private Label deplacementLabel; 
+     @FXML
+    private MenuButton optionDeJeu;
     
-    
+    //Image à mettre dans l'interface pour jouer
+    Class<?> clazz = FXMLDocumentController.class;
+ 
+    InputStream input = clazz.getResourceAsStream("carte_electronique.png");
+ 
+    Image image = new Image(input);
+
+    // à ajouter dans la fenetre choix je pense
+//    //clic sur fichier "jouer dans la console"
+//    @FXML
+//    void playConsole(ActionEvent event) {
+//        start.setDisable(true);
+//        MainsansGUI m = new MainsansGUI();
+//        m.sansGUI();
+//    }
 
      /**
       * clic sur fichier "jouer dans la console"
@@ -113,6 +145,7 @@ public class FXMLDocumentController {
      void handleButtonAction(ActionEvent event) {
 
     }
+
     
    
      /**
@@ -162,46 +195,85 @@ public class FXMLDocumentController {
     private void grilleToGrid(Grille g, GridPane grid){
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
-                try{
-                    String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc());
-                    Label label = new Label(value);
-                    grid.add(label, i, j);
+                if (g.ensCase[j][i].getVide()){
+                    Pane p = new Pane();
+                    p.setStyle("-fx-background-color:pink");
+                    grid.add(p, i, j);
                 }
-                catch (NullPointerException e){
-                    
+                else {
+                    String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc());
+                    System.out.println(value);
+                    Label label = new Label(value);
+                    Pane p = new Pane();
+                    p.getChildren().add(new ImageView (image));  //On met l'image
+                    p.getChildren().addAll(label);
+                    //p.setStyle("-fx-background-color:black");
+                    grid.add(p, i, j);
+                }
                 }
             }
+        //Affichage de la grille
+        grid.setHgap(3.0);
+        grid.setVgap(3.0);
         }
              
+    /**
+     * Ajout de l'image à l'interface graphique 
+     * @param numBloc int, numéro du bloc à ajouter
+     * @return Image retourne l'image
+     */    
+    private Image ajoutImagePane (int numBloc) { 
+        Image img = null;
+    
+        return img;
     }
-       
     
     /**
-     * clique sur démarrer permet de lancer le jeu 
-     * @param event action 
+     * Effectue un déplacement sur la grille dans l'interface selon direction
+     * @param direction char, lettre du déplacement
+     * @param j Joueur, joueur effectuant le déplacement
+     */
+    private void deplacementFXML(char direction, Joueur j){
+        g.deplacement(direction, j);        
+        deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()-2));
+        grille.getChildren().clear();
+        grilleToGrid(g, grille);
+    }
+
+    
+    /**
+     * Clic sur Start
+     * @param event
+     * @throws InterruptedException 
      */
     @FXML
-    void run(ActionEvent event) {
-        System.out.println("test ");
-        start.setDisable(true);
-        Grille g = new Grille(4);
+    void run(ActionEvent event) throws InterruptedException {
+        start.setVisible(false);
         
-        grilleToGrid(g,grille);    
+        grilleToGrid(g,grille); 
+        chronos.setFini(false);
         grille.getChildren().remove(g.taille*g.taille);
+        //deux mouvement consécutif pour eviter une erreur d'affichage
+        g.deplacement("d".charAt(0), j1);
+        g.deplacement("q".charAt(0), j1);
+
+        grille.getChildren().clear();
+        grilleToGrid(g, grille);
         Task task = new Task<Void>() { // on définit une tâche parallèle pour mettre à jour la vue
         @Override
         public Void call() throws Exception { // implémentation de la méthode protected abstract V call() dans la classe Task
-            while (g.verifVictoire()==false){
+            while (chronos.isFini()==false){
+                if(g.verifVictoire()==true){
+                    chronos.setFini(true);
+                }
                 Platform.runLater(new Runnable() { // classe anonyme
                     @Override
                     public void run(){ 
                             chronos.setCmpt(chronos.getCmpt()+1);
-                            chronoAffiche.setText(Integer.toString(chronos.getCmpt())+" sec.");
-                            
+                            chronoAffiche.setText(Integer.toString(chronos.getCmpt())+" s.");
                     }
                 }
                 );
-
                 Thread.sleep(1000);
             }
             return null;
@@ -212,22 +284,13 @@ public class FXMLDocumentController {
         th.setDaemon(true); // le Thread s'exécutera en arrière-plan (démon informatique)
         th.start(); // et on exécute le Thread pour mettre à jour la vue (déplacement continu de la tuile horizontalement)
 
+        
     }
     /**
      * clique sur le bouton z qui permet de monter 
      * @param event action 
      */
-    @FXML
-    void Zclic(ActionEvent event) {
-        
-        g.deplacement("z".charAt(0), j1);
-        System.out.println(g);
-        grille.getChildren().clear();
-        grilleToGrid(g, grille);
-        
-        
-
-    }
+  
 /**
      * saisie clavier sur le touche z qui permet de monter 
      * @param event action 
@@ -239,13 +302,7 @@ public class FXMLDocumentController {
      * clique sur le bouton q qui permet d'aller à gauche  
      * @param event action 
      */
-    @FXML
-    void Qclic(ActionEvent event) {
-        g.deplacement("q".charAt(0), j1);
-        System.out.println(g);
-        grille.getChildren().clear();
-        grilleToGrid(g, grille);
-    }
+   
 /**
      * saisie clavier sur le touche q qui permet d'aller à gauche  
      * @param event action 
@@ -257,13 +314,7 @@ public class FXMLDocumentController {
      * clique  sur le bouton d qui permet de monter 
      * @param event action 
      */
-    @FXML
-    void Dclic(ActionEvent event) {
-        g.deplacement("d".charAt(0), j1);
-        System.out.println(g);
-        grille.getChildren().clear();
-        grilleToGrid(g, grille);
-    }
+    
 /**
      * saisie clavier sur le touche d qui permet d'aller à droite 
      * @param event action 
@@ -275,15 +326,7 @@ public class FXMLDocumentController {
      * clique sur le bouton s qui permet de descendre 
      * @param event action 
      */
-    @FXML
-    void Sclic(ActionEvent event) {
-
-        g.deplacement("s".charAt(0), j1);
-        System.out.println(g);
-        grille.getChildren().clear();
-        grilleToGrid(g, grille);
-        
-    }
+    
     /**
      * saisie clavier sur le touche s qui permet de descendre 
      * @param event action 
@@ -303,20 +346,32 @@ public class FXMLDocumentController {
      */
     @FXML
     private void Zpress(KeyEvent event) {
+        if (event.getCode()==KeyCode.Z){
+           deplacementFXML("z".charAt(0), j1);
+        }
+        if (event.getCode()==KeyCode.Q){
+           deplacementFXML("q".charAt(0), j1);
+        }
+        if (event.getCode()==KeyCode.S){
+           deplacementFXML("s".charAt(0), j1);
+        }
+        if (event.getCode()==KeyCode.D){
+           deplacementFXML("d".charAt(0), j1);
+        }
     }
 /**
      * saisie clavier sur le touche q qui permet d'aller à gauche  
      * @param event action du clavier 
      */
     @FXML
-    private void Qpress(KeyEvent event) {
+    private void Qpress(KeyEvent event) {        
     }
 /**
      * saisie clavier sur le touche s qui permet de descendre  
      * @param event action du clavier 
      */
     @FXML
-    private void Spress(KeyEvent event) {
+    private void Spress(KeyEvent event) {        
     }
 /**
      * saisie clavier sur le touche d qui permet d'aller à droite 
@@ -324,6 +379,15 @@ public class FXMLDocumentController {
      */
     @FXML
     private void Dpress(KeyEvent event) {
+    } 
+    
+    /**
+     * Déplacement avec les boutons de l'interface
+     * @param event 
+     */
+    @FXML
+    void Zclic(ActionEvent event) {        
+        deplacementFXML("z".charAt(0), j1);;
     }
  @FXML 
      public void passageProfi (ActionEvent event ) throws IOException{
@@ -332,7 +396,61 @@ public class FXMLDocumentController {
          Stage profilP = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          profilP.setScene(prof); //on affiche la deuxieme fenetre 
          profilP.show();
+
+     }
+     @FXML
+    void Qclic(ActionEvent event) {
+        deplacementFXML("q".charAt(0), j1);
+    }
+    
+    @FXML
+    void Dclic(ActionEvent event) {
+        deplacementFXML("d".charAt(0), j1);
     }
 
+    @FXML
+    void Sclic(ActionEvent event) {
+        deplacementFXML("s".charAt(0), j1);  
+    }
+    
+
+    /**
+     * Clic sur Pause, arrete le chronos et enregistre la grille dans un fichier
+     * @param event 
+     */
+    @FXML
+    void SaveAndQuit(ActionEvent event) {
+        chronos.setFini(true);       
+        //enregistrement serialisation
+        GrilleSer ser = new GrilleSer();
+        //retour fenetre menu
+        
+    }
+
+    /**
+     * Clic sur Quitter, arrete le chronos et ferme la fenêtre du jeu
+     * @param event
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
+    @FXML
+    void Quit(ActionEvent event) throws IOException, ClassNotFoundException {
+        chronos.setFini(true);       
+        //fermeture de la fenetre
+        changementPage(event);
+    }
+    /**
+     * Clic sur Nouvelle partie, arrete la partie en cours et en demarre une nouvelle
+     * @param event 
+     */
+    @FXML
+    void QuitAndNew(ActionEvent event) {
+        chronos.setFini(true);
+        start.setVisible(true);
+        chronos.setCmpt(0);
+        g=new Grille(4);
+    }
+    
+   
 }
 

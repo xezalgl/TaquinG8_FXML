@@ -56,7 +56,7 @@
             <Image url="@joueur.png" />
          </image>
       </ImageView>
-      <TextField fx:id="saisieMail" layoutX="250.0" layoutY="224.0" prefHeight="32.0" prefWidth="207.0">
+      <TextField fx:id="saisieMail" layoutX="250.0" layoutY="224.0" prefHeight="32.0" prefWidth="207.0" AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="129.0">
          <font>
             <Font size="17.0" />
          </font>

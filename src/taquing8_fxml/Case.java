@@ -5,22 +5,25 @@
  */
 package taquing8_fxml;
 
+import java.io.Serializable;
+
 /**
  *
  * @author hazal
  */
-public class Case {
+public class Case implements Serializable{
   private int x; 
     private int y;
     private boolean vide;
     private Bloc b;
     
-    /**constructeur de la classe crée un carte qui a pour coordonees abs et ord
-    *@param abs coord en x 
-    *@param ord coord en y 
-    *@param v dit si la case est vide ou non 
-    *@param num recupere le numero du bloc 
-    */
+    /**
+     * consctructeur d'une case
+     * @param abs int abscisse de la case
+     * @param ord int ordonnée de la case
+     * @param v boolean, case vide=true, false sinon
+     * @param num int numéro de la case
+     */ 
     public Case(int abs, int ord, boolean v, int num){
         this.x=abs; 
         this.y=ord; 

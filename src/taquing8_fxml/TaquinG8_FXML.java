@@ -39,10 +39,6 @@ public class TaquinG8_FXML extends Application {
         
         stage.setScene(scene);
         stage.show();
-        
-        
-       
-        
     }
 
     /**
