@@ -25,6 +25,7 @@ public class Deser {
         Joueur j1 = new Joueur();
         
         try{
+            
         FileInputStream fichierl = new FileInputStream("joueur.ser");
             
             ois = new ObjectInputStream(fichierl);

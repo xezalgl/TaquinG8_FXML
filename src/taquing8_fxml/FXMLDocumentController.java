@@ -58,7 +58,8 @@ import static javax.swing.text.StyleConstants.Background;
 
 public class FXMLDocumentController {
     //Initialisation des chrono,grille et joueur
-    Chrono chronos = new Chrono();    
+    Chrono chronos = new Chrono(); 
+    //deserilize la taille selsctionné par le joueur
     Grille g = new Grille(4);
     Joueur j1 = new Joueur();
     int size = g.getTaille();
@@ -91,21 +92,12 @@ public class FXMLDocumentController {
     @FXML
     private Button Z;
     
-    @FXML
-    private Label label;
    /**
    * grille d'affichage   
    */  
     @FXML
     private GridPane grille;
     
-    @FXML
-     /**
-   * barre   
-   */  
-    private MenuItem console;
-    @FXML
-    private Button profil3;
 
     @FXML 
     private Label deplacementLabel; 
@@ -119,6 +111,22 @@ public class FXMLDocumentController {
     InputStream input = clazz.getResourceAsStream("carte_electronique.png");
  
     Image image = new Image(input);
+    @FXML
+    private Label chronoAffiche11;
+    @FXML
+    private Label chronoAffiche111;
+    @FXML
+    private GridPane grille1;
+    @FXML
+    private Button D1;
+    @FXML
+    private Button S1;
+    @FXML
+    private Button Q1;
+    @FXML
+    private Button Z1;
+    @FXML
+    private Button start1;
 
 
 
@@ -127,7 +135,6 @@ public class FXMLDocumentController {
       * @param event action 
       */
 
-    @FXML
     void playConsole(ActionEvent event) {
         start.setDisable(true);
         MainsansGUI m = new MainsansGUI();
@@ -156,7 +163,6 @@ public class FXMLDocumentController {
       * @param event clique sur le bouton 
       * @throws IOException 
       */
-    @FXML
     public void changementPage ( ActionEvent event ) throws IOException{
         Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
@@ -268,6 +274,7 @@ public class FXMLDocumentController {
             while (chronos.isFini()==false){
                 if(g.verifVictoire()==true){
                     chronos.setFini(true);
+                    //c.creationPartie(j1.getPseudo,j1.getMdp,j1.getScore,int mode de jeu)
                 }
                 Platform.runLater(new Runnable() { // classe anonyme
                     @Override
@@ -368,7 +375,6 @@ public class FXMLDocumentController {
     void Zclic(ActionEvent event) {        
         deplacementFXML("z".charAt(0), j1);;
     }
- @FXML 
      public void passageProfi (ActionEvent event ) throws IOException{
         Parent profil  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene prof = new Scene (profil); //creation scene deuxieme fenetre 
