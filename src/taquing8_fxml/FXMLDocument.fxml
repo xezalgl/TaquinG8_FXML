@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="taquing8_fxml.FXMLDocumentController">
+<AnchorPane id="AnchorPane" onKeyPressed="#touche" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="taquing8_fxml.FXMLDocumentController">
     <children>
       <TabPane prefHeight="633.0" prefWidth="576.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -19,10 +19,10 @@
                      <children>
                         <Accordion />
                         <Button fx:id="start" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" onAction="#run" text="Start" AnchorPane.bottomAnchor="545.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="507.0" AnchorPane.topAnchor="18.0" />
-                        <Button fx:id="Z" layoutX="274.0" layoutY="9.0" mnemonicParsing="false" onAction="#Zclic" onKeyPressed="#Zpress" text="Z" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="9.0" />
-                        <Button fx:id="Q" layoutX="242.0" layoutY="36.0" mnemonicParsing="false" onAction="#Qclic" onKeyPressed="#Qpress" text="Q" AnchorPane.leftAnchor="242.0" AnchorPane.rightAnchor="302.0" AnchorPane.topAnchor="36.0" />
-                        <Button fx:id="S" layoutX="275.0" layoutY="67.0" mnemonicParsing="false" onAction="#Sclic" onKeyPressed="#Spress" text="S" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="67.0" />
-                        <Button fx:id="D" layoutX="303.0" layoutY="36.0" mnemonicParsing="false" onAction="#Dclic" onKeyPressed="#Dpress" text="D" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="36.0" />
+                        <Button fx:id="Z" layoutX="274.0" layoutY="9.0" mnemonicParsing="false" onAction="#Zclic" text="Z" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="9.0" />
+                        <Button fx:id="Q" layoutX="242.0" layoutY="36.0" mnemonicParsing="false" onAction="#Qclic" text="Q" AnchorPane.leftAnchor="242.0" AnchorPane.rightAnchor="302.0" AnchorPane.topAnchor="36.0" />
+                        <Button fx:id="S" layoutX="275.0" layoutY="67.0" mnemonicParsing="false" onAction="#Sclic" text="S" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="67.0" />
+                        <Button fx:id="D" layoutX="303.0" layoutY="36.0" mnemonicParsing="false" onAction="#Dclic" text="D" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="36.0" />
                         <GridPane fx:id="grille" gridLinesVisible="true" onDragDetected="#handleButtonAction" prefHeight="464.0" prefWidth="502.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="132.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />  
@@ -88,10 +88,10 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <Button fx:id="D1" layoutX="303.0" layoutY="44.0" mnemonicParsing="false" onKeyPressed="#Dpress" text="D" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="36.0" />
-                        <Button fx:id="S1" layoutX="273.0" layoutY="76.0" mnemonicParsing="false" onKeyPressed="#Spress" text="S" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="65.0" />
+                        <Button fx:id="D1" layoutX="303.0" layoutY="44.0" mnemonicParsing="false" text="D" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="36.0" />
+                        <Button fx:id="S1" layoutX="273.0" layoutY="76.0" mnemonicParsing="false" text="S" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="65.0" />
                         <Button fx:id="Q1" layoutX="242.0" layoutY="45.0" mnemonicParsing="false" text="Q" AnchorPane.topAnchor="36.0" />
-                        <Button fx:id="Z1" layoutX="274.0" layoutY="14.0" mnemonicParsing="false" onKeyPressed="#Zpress" text="Z" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="9.0" />
+                        <Button fx:id="Z1" layoutX="274.0" layoutY="14.0" mnemonicParsing="false" text="Z" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="9.0" />
                         <Button fx:id="start1" layoutX="12.0" layoutY="29.0" mnemonicParsing="false" text="Start" AnchorPane.bottomAnchor="545.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="507.0" AnchorPane.topAnchor="18.0" />
                      </children>
                   </AnchorPane>
