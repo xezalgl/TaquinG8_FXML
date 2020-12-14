@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="taquing8_fxml.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="545.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="taquing8_fxml.FXMLDocumentController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <GridPane fx:id="grille" gridLinesVisible="true" layoutY="132.0" onDragDetected="#handleButtonAction" prefHeight="464.0" prefWidth="502.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="132.0">
+      <GridPane fx:id="grille" gridLinesVisible="true" layoutX="29.0" layoutY="133.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#handleButtonAction" prefHeight="476.0" prefWidth="476.0" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="133.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />  
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
@@ -48,7 +50,7 @@
         </menus>
       </MenuBar>
       <Button fx:id="start" layoutX="14.0" layoutY="49.0" mnemonicParsing="false" onAction="#run" text="Start" />
-      <Label fx:id="chronoAffiche" layoutX="353.0" layoutY="54.0" prefHeight="31.0" prefWidth="154.0" textOverrun="CENTER_WORD_ELLIPSIS">
+      <Label fx:id="chronoAffiche" layoutX="365.0" layoutY="52.0" prefHeight="31.0" prefWidth="154.0" textOverrun="CENTER_WORD_ELLIPSIS">
          <font>
             <Font name="Courier New" size="21.0" />
          </font></Label>
@@ -56,6 +58,6 @@
       <Button fx:id="Q" layoutX="210.0" layoutY="70.0" mnemonicParsing="false" onAction="#Qclic" onKeyPressed="#Qpress" text="Q" />
       <Button fx:id="S" layoutX="239.0" layoutY="101.0" mnemonicParsing="false" onAction="#Sclic" onKeyPressed="#Spress" text="S" />
       <Button fx:id="D" layoutX="267.0" layoutY="70.0" mnemonicParsing="false" onAction="#Dclic" onKeyPressed="#Dpress" text="D" />
-      <Button layoutX="403.0" layoutY="63.0" mnemonicParsing="false" onAction="#changementPage" text="Go to table view " />
+      <ComboBox id="selectTheme" fx:id="selectTheme" layoutX="374.0" layoutY="49.0" onAction="#choixTheme" prefWidth="150.0" promptText="Thème" />
     </children>
 </AnchorPane>
