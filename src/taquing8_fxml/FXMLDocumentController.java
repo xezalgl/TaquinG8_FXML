@@ -52,13 +52,14 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import static javax.swing.text.StyleConstants.Background;
 import java.lang.Cloneable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 /**
  *
- * @author hazal
+ * @author groupe 8
  */
 
 public class FXMLDocumentController implements Parametres {
@@ -66,7 +67,8 @@ public class FXMLDocumentController implements Parametres {
     //Initialisation des chrono,grille et joueur
     Chrono chronos = new Chrono(); 
     //deserilize la taille selsctionné par le joueur
-    Grille g = new Grille(4);
+    //Grille g = new Grille(4); //Pour faire des tests
+    Grille g = new Grille(choixTailleGrille()); //Création de la grille avec pour taille celle choisie dans l'interface
     Joueur j1 = new Joueur();
     int size = g.getTaille();
 
@@ -125,9 +127,23 @@ public class FXMLDocumentController implements Parametres {
     //Image image;
     Image image = new Image(input); //Pour test
     
+    @FXML
+    private Pane paneFond;  //Pane de fond, pour changer la couleur en fonction du thème
+    
+    @FXML 
+    private CheckBox checkAffNumero;    //Pour que l'utilisateur affiche ou non les numéro des cases
+    
+    private boolean affNumero; //TRUE si checkAffNumero est coché
+        
+    //Thème Graphique
+    private Color colFondCase;  //Couleur de fond des cases
+    private Color colCaseVide;  //Couleur pour la case vide
+    private Color colTexte;     //Couleur des labels
     
     //clic sur fichier "jouer dans la console"
-
+    
+    //Onglet Aide
+    @FXML
     private Label chronoAffiche11;
     @FXML
     private Label chronoAffiche111;
@@ -145,7 +161,70 @@ public class FXMLDocumentController implements Parametres {
     private Button start1;
 
 
-
+    //Getteurs et setteurs
+    
+    /**
+     * Renvoie le booléen pour savoir si le joueur veut afficher les numéros des cases
+     * @return le booléen d'affichage des numéros des cases
+     */
+    public boolean getAffNumero () {
+        return this.affNumero;
+    }
+    /**
+     * Renvoie la couleur correspondant à l'élément souhaité
+     * @param objet le type d'élément pour lequel on veut connaitre la couleur
+     * @return la couleur correspondant à l'élément
+     */
+    public Color getCol (String objet) {
+        if (objet == "FondCase"){
+            return this.colFondCase;
+        }
+        else if (objet == "CaseVide"){
+            return this.colCaseVide;
+        }
+        else if (objet == "Texte"){
+            return this.colTexte;
+        }
+        else {
+            return null;
+        }
+    }
+    
+    
+    /**
+     * Changement de la valeur du booléen pour l'affichage des numéros des cases
+     * @param newValue La nouvelle valeur a attribué au booléen
+     */
+    public void setAffNumero (boolean newValue){
+        this.affNumero = newValue;
+    }
+    
+    /**
+     * Modifie la couleur d'un élément 
+     * @param objet l'élément pour lequel on veut changer la couleur
+     * @param newColor la nouvelle couleur a attribué à l'élément
+     */
+    public void setCol (String objet, Color newColor){
+        if (objet == "FondCase"){
+            this.colFondCase = newColor;
+        }
+        else if (objet == "CaseVide"){
+            this.colCaseVide = newColor;
+        }
+        else if (objet == "Texte"){
+            this.colTexte = newColor;
+        }
+    }
+    
+    /**
+     * Modifie le booléen d'affichage des numéro des cases en fonction de la checkBox
+     */
+    public void setAffNumero () {
+        this.affNumero = checkAffNumero.isSelected();
+    }
+    
+    
+    
      /**
       * clic sur fichier "jouer dans la console"
       * @param event action 
@@ -211,12 +290,12 @@ public class FXMLDocumentController implements Parametres {
         int yVide = caseVide.getCoordy();
         return xVide+1+(yVide*g.taille);
     }
+    
     /**
      * affiche la grille dans le GridPane de l'interface
      * @param g grille 
      * @param grid grille 
      */
-   
     private void grilleToGrid(Grille g, GridPane grid){
         //parcours de la grille
         for(int i =0; i<g.getTaille(); i++){
@@ -229,16 +308,24 @@ public class FXMLDocumentController implements Parametres {
                 }
                 //Si la case n'est pas vide
                 else {
-                    String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc()); //Récupération du numéro du bloc
                     //Récupération des coordonnées du bloc pour insérer l'image
                     int coordxBloc = g.ensCase[j][i].getCoordx();
                     int coordyBloc = g.ensCase[j][i].getCoordy();
-                    Label label = new Label(value); //Récupération du numéro du bloc dans un label
-                    label.setTextFill(Color.web("#ffffff"));  //Changement de style du label
+                    
+                    int numBlocTemp = 0;    //Stockage du numéro de la case sous forme de int
+                    
                     Pane p = new Pane(); //Création d'un pane
-                    int numBlocTemp = Integer.parseInt(value);  //Numéro du bloc en int
                     p.getChildren().add(ajoutImagePane(numBlocTemp, coordxBloc, coordyBloc, grid, g)); //Ajout de la portion de l'image correspondance au bloc sur le pane
-                    p.getChildren().addAll(label); //Ajout du texte sur le pane
+                    
+                    //Si le joueur veut afficher les numéros des cases
+                    if (getAffNumero()) {
+                        String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc()); //Récupération du numéro du bloc
+                        Label label = new Label(value); //Récupération du numéro du bloc dans un label
+                        label.setTextFill(Color.web("#ffffff"));  //Changement de style du label
+                        p.getChildren().addAll(label); //Ajout du texte sur le pane
+                        numBlocTemp = Integer.parseInt(value);  //Numéro du bloc en int
+                    }
+                    
                     //p.setStyle("-fx-background-color:black"); //couleur de fond si pas d'image
                     grid.add(p, i, j); //Ajout du pane au grid pane
 
@@ -632,20 +719,37 @@ public class FXMLDocumentController implements Parametres {
      */
     @FXML
     protected void choixTheme () {
-        Color colFond;
+        //Déclaration des couleurs
+        Color colFond = null;
+        Color colTexte = null;
+        Color colVide = null;
+        //Récupération de l'item choisi
         String theme = selectTheme.getSelectionModel().getSelectedItem().toString();
         System.out.println(theme);  //test
+        //Modification des paramètres graphiques 'couleurs et nom de l'image)
         switch (theme){
+            case "Thème par défaut":
+                colFond = colDefaut;
+                colTexte = colTextDefaut;
+                colVide = colVideDefaut;
+                this.input = clazz.getResourceAsStream(urlDefaut);
+                break;
             case "Cerisier" : 
                 colFond = colCerisier;
+                colTexte = colTextCerisier;
+                colVide = colVideCerisier;
                 this.input = clazz.getResourceAsStream(urlCerisier);
                 break;
             case "Electronique" :
                 colFond = colElectro;
+                colTexte = colTextElectro;
+                colVide = colVideElectro;
                 this.input = clazz.getResourceAsStream(urlElectro);
                 break;
             case "Dragons" :
                 colFond = colDragon;
+                colTexte = colTextDragon;
+                colVide = colVideDragon;
                 this.input = clazz.getResourceAsStream(urlDragon);
                 break;
             case "Une image de mon pc" :
@@ -663,10 +767,14 @@ public class FXMLDocumentController implements Parametres {
                 break;
         }
         
+        setCol("FondCase", colFond); //Changement de la couleur de fond du jeu
+        setCol("Texte", colTexte);  //Changement de la couleur de texte
+        setCol("CaseVide", colVide);    //Changement de la couleur de fond de la case vide
+        
         //Changement de l'image en fonction de l'image choisie
         this.image = new Image(input);
     }
-        
+      
     
     /**
      * clique sur le bouton z qui permet de monter 
