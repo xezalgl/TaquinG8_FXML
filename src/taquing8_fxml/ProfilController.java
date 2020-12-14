@@ -6,6 +6,7 @@
 package taquing8_fxml;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -38,6 +39,8 @@ public class ProfilController implements Initializable  {
     Joueur j = new Joueur();
     //deserialisation du joueur
     Deser deser = new Deser();
+    @FXML
+    private Button precedent;
     
   
      
@@ -105,5 +108,14 @@ public class ProfilController implements Initializable  {
 
 
 
+    }
+
+    @FXML
+    private void prec(ActionEvent event) throws IOException {
+        Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
+         Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
+         Stage fenetre = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
+         fenetre.setScene(deuxiemeF); //on affiche la deuxieme fenetre 
+         fenetre.show();
     }
 }

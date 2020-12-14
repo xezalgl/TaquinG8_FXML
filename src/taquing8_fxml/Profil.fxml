@@ -15,33 +15,34 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="90.0" layoutY="213.0" prefHeight="30.0" prefWidth="133.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text=" Mot de passe " textFill="WHITE">
+                        <Label layoutX="86.0" layoutY="231.0" prefHeight="30.0" prefWidth="151.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text=" Mot de passe " textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="saisieNvPs" layoutX="218.0" layoutY="101.0" prefHeight="30.0" prefWidth="154.0" />
-                        <PasswordField fx:id="saisieNvMDP" layoutX="218.0" layoutY="213.0" prefHeight="30.0" prefWidth="154.0" />
+                        <TextField fx:id="saisieNvPs" layoutX="235.0" layoutY="102.0" prefHeight="30.0" prefWidth="154.0" />
+                        <PasswordField fx:id="saisieNvMDP" layoutX="231.0" layoutY="231.0" prefHeight="30.0" prefWidth="154.0" />
                         <Text fill="#070707" fontSmoothingType="LCD" layoutX="48.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tu peux modifier ton pseudo ou ton mot de passe ici, il te suffit de saisir le nouveau pseudo ou mot de passe que tu souhaites et clique sur le bouton !" wrappingWidth="512.619140625">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <Button fx:id="nouveauPs" layoutX="409.0" layoutY="148.0" mnemonicParsing="false" onAction="#changementPseudo" prefHeight="32.0" prefWidth="179.0" style="-fx-background-color: #000000;" text="Nouveau pseudo " textFill="WHITE">
+                        <Button fx:id="nouveauPs" layoutX="394.0" layoutY="148.0" mnemonicParsing="false" onAction="#changementPseudo" prefHeight="37.0" prefWidth="194.0" style="-fx-background-color: #000000;" text="Nouveau pseudo " textFill="WHITE">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="nouveauMdp" layoutX="409.0" layoutY="280.0" mnemonicParsing="false" onAction="#changementMdp" prefHeight="32.0" prefWidth="179.0" style="-fx-background-color: #000000;" text="Nouveau mot de passe " textFill="#fcf8f8">
+                        <Button fx:id="nouveauMdp" layoutX="385.0" layoutY="284.0" mnemonicParsing="false" onAction="#changementMdp" prefHeight="37.0" prefWidth="203.0" style="-fx-background-color: #000000;" text="Nouveau mot de passe " textFill="#fcf8f8">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Label layoutX="88.0" layoutY="102.0" prefHeight="30.0" prefWidth="137.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text=" Nouveau Pseudo " textFill="WHITE">
+                        <Label layoutX="88.0" layoutY="102.0" prefHeight="30.0" prefWidth="147.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text=" Nouveau Pseudo " textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
+                        <Button fx:id="precedent" layoutX="25.0" layoutY="302.0" mnemonicParsing="false" onAction="#prec" text="Précédent" />
                      </children>
                   </AnchorPane>
               </content>
