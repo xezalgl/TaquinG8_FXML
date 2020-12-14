@@ -5,13 +5,14 @@
  */
 package taquing8_fxml;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 /**
  *
  * @author hazal
  */
-public class Joueur {
+public class Joueur implements Serializable {
     private String pseudo="";  // represente le pseudo du joueur 
     private int deplacement; // le nombre de deplacement
     private int temps; // temps pour résoudre le taquin courant
@@ -62,6 +63,14 @@ public class Joueur {
     public void setNbDeplacement (){
         this.deplacement=getNbDeplacement()+1; 
     }
+    
+    /**
+     * renitialise le nb de déplacement à 0 du joueur
+     */
+    public void initNbDeplacement(){
+        this.deplacement=0;
+    }
+    
     public void creationProfil(){
         //mise a jour du profil et appelle saisie pseudo 
     }

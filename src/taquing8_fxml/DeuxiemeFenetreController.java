@@ -57,7 +57,7 @@ public class DeuxiemeFenetreController implements Initializable {
         String mdp ; 
         //conexion base de donees 
         String host = "localhost";
-        String port = "3309";
+        String port = "3306";
         String dbname = "taquin";
         String username = "root";
         String password ="";
@@ -78,11 +78,6 @@ public class DeuxiemeFenetreController implements Initializable {
          Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
          window.show();
-         j.setPseudo(ps);
-         j.setMdp(mdp); 
-         System.out.println("joueur affiché"+j.toString());
-           
-            
         } 
         else {
             
