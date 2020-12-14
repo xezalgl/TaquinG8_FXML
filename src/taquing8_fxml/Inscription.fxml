@@ -21,7 +21,7 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Label layoutX="121.0" layoutY="236.0" prefHeight="32.0" prefWidth="145.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text="Mot de passe " textFill="WHITE">
+      <Label layoutX="121.0" layoutY="277.0" prefHeight="32.0" prefWidth="145.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text="Mot de passe " textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
@@ -36,7 +36,12 @@
             <Image url="@logo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="saisieMdp" layoutX="250.0" layoutY="235.0" prefHeight="32.0" prefWidth="207.0">
+      <Label layoutX="121.0" layoutY="225.0" prefHeight="32.0" prefWidth="145.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text="Adresse mail" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="saisieMdp" layoutX="250.0" layoutY="276.0" prefHeight="32.0" prefWidth="207.0">
          <font>
             <Font size="17.0" />
          </font>
@@ -51,5 +56,10 @@
             <Image url="@joueur.png" />
          </image>
       </ImageView>
+      <TextField fx:id="saisieMail" layoutX="250.0" layoutY="224.0" prefHeight="32.0" prefWidth="207.0" AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="129.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

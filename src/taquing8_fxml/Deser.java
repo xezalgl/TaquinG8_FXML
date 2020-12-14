@@ -19,11 +19,6 @@ import taquing8_fxml.Grille;
  */
 public class Deser {
     
-    /**
-     * charge le joueur 
-     * @return
-     * @throws ClassNotFoundException 
-     */
     public Joueur ChargerJoueur() throws ClassNotFoundException{
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null;
@@ -51,12 +46,7 @@ public class Deser {
         return j1;
     }    
         
-     /**
-      * Recharge la grille 
-      * @param j1
-      * @param grille
-      * @throws ClassNotFoundException 
-      */   
+        
     public void ChargerGrille(Joueur j1, Grille grille) throws ClassNotFoundException{
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null;    

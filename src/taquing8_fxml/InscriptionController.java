@@ -33,6 +33,8 @@ public class InscriptionController implements Initializable {
     private Button accesPage;
     @FXML
     private TextField saisieMdp;
+    @FXML
+    private TextField saisieMail;
      Joueur j = new Joueur(); 
     /**
      * Initializes the controller class.
@@ -79,7 +81,9 @@ public class InscriptionController implements Initializable {
          Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
          window.show();
-        
+         j.setPseudo(ps);
+         j.setMdp(mdp); 
+         System.out.println("le joueur a pour "+j);
         } 
       
        else {

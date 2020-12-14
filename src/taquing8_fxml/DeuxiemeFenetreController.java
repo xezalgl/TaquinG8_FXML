@@ -52,7 +52,7 @@ public class DeuxiemeFenetreController implements Initializable {
      * @throws IOException 
      */
     @FXML
-    public void passageDeuxiemeF (ActionEvent event ) throws IOException, ClassNotFoundException{
+    public void passageDeuxiemeF (ActionEvent event ) throws IOException{
         String ps;
         String mdp ; 
         //conexion base de donees 
@@ -72,13 +72,13 @@ public class DeuxiemeFenetreController implements Initializable {
         //verifie si la personne existe 
         if(c.getUsers(ps, mdp)==true){
              //ouverture fenetre 
-         Ser ser = new Ser(); 
-         ser.SauverJeu(null, j);
+        
          Parent deuxieme  = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeFe = new Scene (deuxieme); //creation scene deuxieme fenetre 
          Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
          window.show();
+         
         } 
         else {
             

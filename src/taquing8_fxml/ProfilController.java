@@ -34,13 +34,7 @@ public class ProfilController implements Initializable  {
     private Button nouveauPs;
     @FXML
     private Button nouveauMdp;
-   Deser deser = new Deser(); 
-  
-   Joueur j1; 
-   
-    public ProfilController() throws ClassNotFoundException {
-        this.j1 = deser.ChargerJoueur();
-    }
+     Joueur  j= new Joueur();
   
      
  
@@ -52,7 +46,10 @@ public class ProfilController implements Initializable  {
         // TODO
         
     } 
-   
+    public void recupInfo(){
+        j.toString(); 
+        System.out.println("salut c'est le joueur"+j);
+    }
     /**
      * changement du mot de passe dans l'onglet modification de profil 
      * @param event 
@@ -70,7 +67,7 @@ public class ProfilController implements Initializable  {
         String password ="";
         ConnexionBDD c = new ConnexionBDD(host, port,  dbname, username,password); 
         c.openConnexion();
-      
+        recupInfo(); 
         //System.out.println("recupération mdp"+j.toString());
         //recupérer pseudo 
        
@@ -78,10 +75,10 @@ public class ProfilController implements Initializable  {
         ps= saisieNvPs.getText(); 
         //recuperer mdp 
         mdp= saisieNvMDP.getText(); 
-        if( j1.getMdp()!=mdp){
+        if( j.getMdp()!=mdp){
             System.out.println("passage boucle"+ps+mdp);
-            c.updateMdpBDD(ps,j1.getMdp(),mdp);
-           j1.setMdp(mdp);
+            c.setMdpBDD(ps,j.getMdp(),mdp);
+           j.setMdp(mdp);
         }
         
      
