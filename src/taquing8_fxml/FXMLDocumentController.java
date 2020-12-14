@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -13,8 +13,6 @@ import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
 import com.sun.javafx.jmx.MXNodeAlgorithmContext;
 import com.sun.javafx.sg.prism.NGNode;
-import javafx.geometry.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -30,10 +28,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -41,7 +42,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -49,6 +49,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import static javax.swing.text.StyleConstants.Background;
 import java.lang.Cloneable;
@@ -62,8 +63,8 @@ import javafx.stage.FileChooser;
  * @author groupe 8
  */
 
-public class FXMLDocumentController implements Parametres {
 
+public class FXMLDocumentController implements Parametres {
     //Initialisation des chrono,grille et joueur
     Chrono chronos = new Chrono(); 
     //deserilize la taille selsctionné par le joueur
@@ -105,22 +106,16 @@ public class FXMLDocumentController implements Parametres {
    */  
     @FXML
     private GridPane grille;
-    
-
-    @FXML 
-    private Label deplacementLabel; 
-     @FXML
-    private MenuButton optionDeJeu;
-    
+    @FXML
+    private MenuItem console;
     
     @FXML
     private ComboBox selectTheme;
     
     private ComboBox selectTaille;
-    
+
     //Image à mettre dans l'interface pour jouer
     Class<?> clazz = FXMLDocumentController.class;
-
     //InputStream input;
     InputStream input = clazz.getResourceAsStream(urlCerisier); //Pour test
     //Image image;
@@ -129,7 +124,7 @@ public class FXMLDocumentController implements Parametres {
     private CheckBox checkAffNumero;    //Pour que l'utilisateur affiche ou non les numéro des cases
     
     private boolean affNumero; //TRUE si checkAffNumero est coché
-        
+       
     //Thème Graphique
     private Color colFondCase;  //Couleur de fond des cases
     private Color colCaseVide;  //Couleur pour la case vide
@@ -138,7 +133,12 @@ public class FXMLDocumentController implements Parametres {
     //clic sur fichier "jouer dans la console"
     
     //Onglet Aide
-    @FXML
+
+    @FXML 
+    private Label deplacementLabel; 
+     @FXML
+    private MenuButton optionDeJeu;   
+
     private Label chronoAffiche11;
     @FXML
     private Label chronoAffiche111;
@@ -156,10 +156,9 @@ public class FXMLDocumentController implements Parametres {
     private Button start1;
     @FXML
     private Label label;
-    @FXML
-    private MenuItem console;
 
 
+        
     //Getteurs et setteurs
     
     /**
@@ -262,7 +261,7 @@ public class FXMLDocumentController implements Parametres {
     public void changementPage ( ActionEvent event ) throws IOException{
         Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
-         Stage fenetre = (Stage) optionDeJeu.getScene().getWindow(); // creation stage fenetre  
+         Stage fenetre = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          fenetre.setScene(deuxiemeF); //on affiche la deuxieme fenetre 
          fenetre.show(); //ouverture de la
     }
@@ -296,8 +295,8 @@ public class FXMLDocumentController implements Parametres {
      * affiche la grille dans le GridPane de l'interface
      * @param g grille 
      * @param grid grille 
-     */
-    private void grilleToGrid(Grille g, GridPane grid){
+     */   
+     private void grilleToGrid(Grille g, GridPane grid){
         //parcours de la grille
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
@@ -331,13 +330,13 @@ public class FXMLDocumentController implements Parametres {
                     grid.add(p, i, j); //Ajout du pane au grid pane
 
                 }
-                }
             }
+        }
         //Affichage de la grille avec des espaces entre les colonnes et lignes
         grid.setHgap(3.0);
         grid.setVgap(3.0);
     }
-      
+             
     /**
      * Ajout d'une portion de l'image au bloc souhaité
      * @param numBloc   le numéro du bloc sur lequel placer un morceau de l'image
@@ -630,7 +629,7 @@ public class FXMLDocumentController implements Parametres {
      */
     private void deplacementFXML(char direction, Joueur j){
         g.deplacement(direction, j);        
-        deplacementLabel.setText(Integer.toString(j.getNbDeplacement()-2));
+        deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()-2));
         grille.getChildren().clear();
         grilleToGrid(g, grille);
     }
@@ -641,13 +640,13 @@ public class FXMLDocumentController implements Parametres {
      * @param event
      * @throws InterruptedException 
      */
-    @FXML 
+    @FXML
     void run(ActionEvent event) throws InterruptedException {
         start.setVisible(false);
+        navigationBouton(true);
         initComboBoxTheme();    //Initialisation de la combobox A METTRE AILLEURS
         grille.setPrefSize(476, 476); //Redimensionnement de la grille
         grille.setGridLinesVisible(false); //Visibilité des ligne de la grille
-        navigationBouton(true);
         grilleToGrid(g,grille); 
         chronos.setFini(false);
         //deux mouvement consécutif pour eviter une erreur d'affichage
@@ -683,9 +682,9 @@ public class FXMLDocumentController implements Parametres {
         th.setDaemon(true); // le Thread s'exécutera en arrière-plan (démon informatique)
         th.start(); // et on exécute le Thread pour mettre à jour la vue (déplacement continu de la tuile horizontalement)
 
-
+        
     }
-    
+
     /**
      * Analyse du choix de la taille de la grille
      * @return la taille choisie sous forme de int
@@ -727,17 +726,11 @@ public class FXMLDocumentController implements Parametres {
         System.out.println(theme);  //test
         //Modification des paramètres graphiques 'couleurs et nom de l'image)
         switch (theme){
-            case "Thème par défaut":
+            case "Cerisier" : 
                 colFond = colDefaut;
                 colTexte = colTextDefaut;
                 colVide = colVideDefaut;
                 this.input = clazz.getResourceAsStream(urlDefaut);
-                break;
-            case "Cerisier" : 
-                colFond = colCerisier;
-                colTexte = colTextCerisier;
-                colVide = colVideCerisier;
-                this.input = clazz.getResourceAsStream(urlCerisier);
                 break;
             case "Electronique" :
                 colFond = colElectro;
@@ -773,7 +766,7 @@ public class FXMLDocumentController implements Parametres {
         //Changement de l'image en fonction de l'image choisie
         this.image = new Image(input);
     }
-      
+
 
     @FXML
     private void handleButtonAction(MouseEvent event) {
@@ -804,16 +797,16 @@ public class FXMLDocumentController implements Parametres {
         deplacementFXML("z".charAt(0), j1);;
     }
     
-    public void passageProfi (ActionEvent event ) throws IOException{
+     public void passageProfi (ActionEvent event ) throws IOException{
         Parent profil  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene prof = new Scene (profil); //creation scene deuxieme fenetre 
          Stage profilP = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          profilP.setScene(prof); //on affiche la deuxieme fenetre 
          profilP.show();
 
-    }
-    
-    
+     }
+     
+     
      @FXML
     void Qclic(ActionEvent event) {
         deplacementFXML("q".charAt(0), j1);
@@ -897,7 +890,5 @@ public class FXMLDocumentController implements Parametres {
     @FXML
     private void Dpress(KeyEvent event) {
     }
-    
-   
+  
 }
-
