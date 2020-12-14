@@ -33,7 +33,7 @@ public class TaquinG8_FXML extends Application {
         */     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml"));
         
         Scene scene = new Scene(root);
         

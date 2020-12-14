@@ -87,4 +87,8 @@ public class Joueur implements Serializable {
     public void setScore(int temps){
         this.score=this.deplacement*temps; 
     }
+    
+    public int getScore(){
+        return this.score;
+    }
 }

@@ -16,15 +16,40 @@ import java.io.ObjectOutputStream;
 public class Ser {
  
     /**
-     * Méthode permettant d'enregistrer dans un fichier .ser les information d'une grille passer en paramétre
+     * Méthode permettant d'enregistrer dans un fichier .ser les information d'un jeu en paramétre
      * @param grille Grille, grille à enregistrer
      */
-    public void SauverJeu(Grille grille, Joueur j1) throws ClassNotFoundException{
+    public void SauverJeu(Joueur j1, Grille grille) throws ClassNotFoundException{
          ObjectOutputStream oos = null;        
         try{
-            final FileOutputStream fichier = new FileOutputStream("grille.ser");
+            final FileOutputStream fichier = new FileOutputStream("grilleJeu.ser");
             oos = new ObjectOutputStream(fichier);
             oos.writeObject(grille);
+            final FileOutputStream fichier2 = new FileOutputStream("joueurJeu.ser");
+            oos = new ObjectOutputStream(fichier2);
+            oos.writeObject(j1);
+            oos.flush();
+        }catch (final java.io.IOException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(oos != null){
+                    oos.flush();
+                    oos.close();
+                }
+            }catch (final IOException ex){
+                ex.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * Méthode permettant d'enregistrer dans un fichier .ser les information d'un joueur en paramétre
+     * @param grille Grille, grille à enregistrer
+     */
+    public void SauverJoueur(Joueur j1) throws ClassNotFoundException{
+         ObjectOutputStream oos = null;        
+        try{
             final FileOutputStream fichier2 = new FileOutputStream("joueur.ser");
             oos = new ObjectOutputStream(fichier2);
             oos.writeObject(j1);
@@ -43,4 +68,28 @@ public class Ser {
         }
     }
     
+    /**
+     * Méthode permettant d'enregistrer dans un fichier .ser les information d'une grille passer en paramétre
+     * @param grille Grille, grille à enregistrer
+     */
+    public void SauverGrille(Grille grille) throws ClassNotFoundException{
+         ObjectOutputStream oos = null;        
+        try{
+            final FileOutputStream fichier = new FileOutputStream("grille.ser");
+            oos = new ObjectOutputStream(fichier);
+            oos.writeObject(grille);
+            oos.flush();
+        }catch (final java.io.IOException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(oos != null){
+                    oos.flush();
+                    oos.close();
+                }
+            }catch (final IOException ex){
+                ex.printStackTrace();
+            }
+        }
+    }
 }

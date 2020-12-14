@@ -19,6 +19,7 @@ import taquing8_fxml.Grille;
  */
 public class Deser {
     
+    
     public Joueur ChargerJoueur() throws ClassNotFoundException{
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null;
@@ -29,9 +30,7 @@ public class Deser {
         FileInputStream fichierl = new FileInputStream("joueur.ser");
             
             ois = new ObjectInputStream(fichierl);
-            j1 = (Joueur) ois.readObject();
-            System.out.println(j1.getNbDeplacement());
-        
+            j1 = (Joueur) ois.readObject();        
         }catch (final java.io.IOException e){
             e.printStackTrace();
         }finally{
