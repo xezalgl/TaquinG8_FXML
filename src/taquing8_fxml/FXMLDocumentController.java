@@ -116,7 +116,6 @@ public class FXMLDocumentController implements Parametres {
     @FXML
     private ComboBox selectTheme;
     
-    @FXML
     private ComboBox selectTaille;
     
     //Image à mettre dans l'interface pour jouer
@@ -127,10 +126,6 @@ public class FXMLDocumentController implements Parametres {
     //Image image;
     Image image = new Image(input); //Pour test
     
-    @FXML
-    private Pane paneFond;  //Pane de fond, pour changer la couleur en fonction du thème
-    
-    @FXML 
     private CheckBox checkAffNumero;    //Pour que l'utilisateur affiche ou non les numéro des cases
     
     private boolean affNumero; //TRUE si checkAffNumero est coché
@@ -159,6 +154,10 @@ public class FXMLDocumentController implements Parametres {
     private Button Z1;
     @FXML
     private Button start1;
+    @FXML
+    private Label label;
+    @FXML
+    private MenuItem console;
 
 
     //Getteurs et setteurs
@@ -230,12 +229,14 @@ public class FXMLDocumentController implements Parametres {
       * @param event action 
       */
 
-    void playConsole(ActionEvent event) {
+    @FXML
+    public void playConsole(ActionEvent event) {
         start.setDisable(true);
         MainsansGUI m = new MainsansGUI();
         m.sansGUI();
     }
     
+    @FXML
     /**
      * rend visible/invible les boutons de navigation
      * @param visible boolean true si bouton visible, else sinon
@@ -246,8 +247,8 @@ public class FXMLDocumentController implements Parametres {
             S.setVisible(visible);
             D.setVisible(visible);
     }
-    
-     void handleButtonAction(ActionEvent event) {
+    @FXML
+    public void handleButtonAction(ActionEvent event) {
 
     }
 
@@ -621,6 +622,7 @@ public class FXMLDocumentController implements Parametres {
         return img;
     }
     
+    @FXML
     /**
      * Effectue un déplacement sur la grille dans l'interface selon direction
      * @param direction char, lettre du déplacement
@@ -688,7 +690,6 @@ public class FXMLDocumentController implements Parametres {
      * Analyse du choix de la taille de la grille
      * @return la taille choisie sous forme de int
      */
-    @FXML
     protected int choixTailleGrille () {
         String tailleString = selectTaille.getSelectionModel().getSelectedItem().toString(); //Récupération de l'item sélectionné
         System.out.println(tailleString);  //TTTEEESSSTTT Pour savoir si ça prend le bon item
@@ -699,7 +700,6 @@ public class FXMLDocumentController implements Parametres {
     /**
      * Initialise la combobox qui permet de choisir le thème graphique
      */
-    @FXML
     public void initComboBoxTheme () {
         selectTheme.getItems().addAll("Thème par défaut", "Cerisier", "Electronique", "Dragons", "Une image de mon pc");
         selectTheme.getSelectionModel().select("Thème par défaut");
@@ -708,7 +708,6 @@ public class FXMLDocumentController implements Parametres {
     /**
      * Initialise la combobox qui permet de choisir la taille de la grille
      */
-    @FXML
     public void initComboBoxTaille () {
         selectTheme.getItems().addAll("3x3", "4x4", "5x5");
         selectTheme.getSelectionModel().select("4x4");
@@ -775,57 +774,6 @@ public class FXMLDocumentController implements Parametres {
         this.image = new Image(input);
     }
       
-    
-    /**
-     * clique sur le bouton z qui permet de monter 
-     * @param event action 
-     */
-  
-/**
-     * saisie clavier sur le touche z qui permet de monter 
-     * @param event action 
-     */
-    void Zpress(ActionEvent event) {
-
-    }
-/**
-     * clique sur le bouton q qui permet d'aller à gauche  
-     * @param event action 
-     */
-   
-/**
-     * saisie clavier sur le touche q qui permet d'aller à gauche  
-     * @param event action 
-     */
-    void Qpress(ActionEvent event) {
-
-    }
-    /**
-     * clique  sur le bouton d qui permet de monter 
-     * @param event action 
-     */
-    
-/**
-     * saisie clavier sur le touche d qui permet d'aller à droite 
-     * @param event action 
-     */
-    void Dpress(ActionEvent event) {
-        
-    }
-/**
-     * clique sur le bouton s qui permet de descendre 
-     * @param event action 
-     */
-    
-    /**
-     * saisie clavier sur le touche s qui permet de descendre 
-     * @param event action 
-     */
-
-    void Spress(ActionEvent event) {
-        
-
-    }
 
     @FXML
     private void handleButtonAction(MouseEvent event) {
@@ -932,6 +880,22 @@ public class FXMLDocumentController implements Parametres {
         j1.initNbDeplacement();
         g=new Grille(size);
         
+    }
+
+    @FXML
+    private void Zpress(KeyEvent event) {
+    }
+
+    @FXML
+    private void Qpress(KeyEvent event) {
+    }
+
+    @FXML
+    private void Spress(KeyEvent event) {
+    }
+
+    @FXML
+    private void Dpress(KeyEvent event) {
     }
     
    
