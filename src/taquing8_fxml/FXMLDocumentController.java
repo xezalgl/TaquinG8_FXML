@@ -32,6 +32,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -93,21 +94,12 @@ public class FXMLDocumentController {
     @FXML
     private Button Z;
     
-    @FXML
-    private Label label;
    /**
    * grille d'affichage   
    */  
     @FXML
     private GridPane grille;
     
-    @FXML
-     /**
-   * barre   
-   */  
-    private MenuItem console;
-    @FXML
-    private Button profil3;
 
     @FXML 
     private Label deplacementLabel; 
@@ -120,6 +112,12 @@ public class FXMLDocumentController {
     InputStream input = clazz.getResourceAsStream("carte_electronique.png");
  
     Image image = new Image(input);
+    @FXML
+    private Label chronoAffiche11;
+    @FXML
+    private Label chronoAffiche111;
+    @FXML
+    private ComboBox<String> choix_taille;
 
     // à ajouter dans la fenetre choix je pense
 //    //clic sur fichier "jouer dans la console"
@@ -135,16 +133,13 @@ public class FXMLDocumentController {
       * @param event action 
       */
   
-    @FXML
     void playConsole(ActionEvent event) {
         start.setDisable(true);
         MainsansGUI m = new MainsansGUI();
         m.sansGUI();
     }
 
-     void handleButtonAction(ActionEvent event) {
-
-    }
+   
 
     
    
@@ -153,7 +148,6 @@ public class FXMLDocumentController {
       * @param event clique sur le bouton 
       * @throws IOException 
       */
-    @FXML
     public void changementPage ( ActionEvent event ) throws IOException{
         Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
@@ -389,7 +383,6 @@ public class FXMLDocumentController {
     void Zclic(ActionEvent event) {        
         deplacementFXML("z".charAt(0), j1);;
     }
- @FXML 
      public void passageProfi (ActionEvent event ) throws IOException{
         Parent profil  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene prof = new Scene (profil); //creation scene deuxieme fenetre 
@@ -450,7 +443,13 @@ public class FXMLDocumentController {
         chronos.setCmpt(0);
         g=new Grille(4);
     }
-    
-   
+    @FXML
+   void affichageTaille(ActionEvent event){
+      // choix_taille.setValue("3x3"); 
+      // choix_taille.setValue("4x4"); 
+       choix_taille.getItems().add("3x3"); 
+      // choix_taille.setValue("5x5"); 
+       
+   }
 }
 

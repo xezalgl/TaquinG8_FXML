@@ -46,10 +46,7 @@ public class ProfilController implements Initializable  {
         // TODO
         
     } 
-    public void recupInfo(){
-        j.toString(); 
-        System.out.println("salut c'est le joueur"+j);
-    }
+   
     /**
      * changement du mot de passe dans l'onglet modification de profil 
      * @param event 
@@ -67,7 +64,7 @@ public class ProfilController implements Initializable  {
         String password ="";
         ConnexionBDD c = new ConnexionBDD(host, port,  dbname, username,password); 
         c.openConnexion();
-        recupInfo(); 
+      
         //System.out.println("recupération mdp"+j.toString());
         //recupérer pseudo 
        

@@ -230,6 +230,29 @@ public class ConnexionBDD {
     }
 
     }
+    /**
+      * Méthode permettant d'accèder au score de la partie d'un joueur
+      * @param id   identifiant personnel du joueur
+      * @param mode Mode de jeu 
+      */ 
+     public int getScorePartie(int id, int mode){
+        int score = 666;
+        this.openConnexion();
+        try {
+            Statement stmt = con.createStatement();
+            String query = "SELECT score from classement WHERE id_joueur = '" + id + "'  AND Mode ='" + mode + "' ";
+            ResultSet resultSet = stmt.executeQuery(query);
+
+            while (resultSet.next()) {
+                score = (resultSet.getInt("score"));
+                System.out.println("le score est de "+score);
+            }
+        } catch (Exception e) {
+            System.out.println("Probleme avec l'accès au score ");
+        }
+        return score;
+     }
+     //c.geScorePartie(id, 3/4/5 ); 
     
     
     
