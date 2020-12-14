@@ -25,7 +25,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" onKeyPressed="#touche" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="taquing8_fxml.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="page" onKeyPressed="#touche" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="taquing8_fxml.FXMLDocumentController">
     <children>
 
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
@@ -178,7 +178,8 @@
                         </Label>
                         <MenuButton fx:id="optionDeJeu" layoutX="20.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 3px;" text="Option de Jeu" AnchorPane.bottomAnchor="505.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="423.0" AnchorPane.topAnchor="58.0">
                           <items>
-                              <MenuItem mnemonicParsing="false" text="Profil" />
+                              <MenuItem mnemonicParsing="false" onAction="#modeConsole" text="Mode console" />
+                              <MenuItem mnemonicParsing="false" onAction="#Profil" text="Profil" />
                             <MenuItem mnemonicParsing="false" onAction="#SaveAndQuit" text="Pause (Quiter et Sauver)" />
                             <MenuItem mnemonicParsing="false" onAction="#Quit" text="Quitter (sans Sauver)" />
                               <MenuItem mnemonicParsing="false" onAction="#QuitAndNew" text="Nouvelle partie ( Quitter sans Sauver)" />

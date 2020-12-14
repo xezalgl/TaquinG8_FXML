@@ -19,7 +19,11 @@ import taquing8_fxml.Grille;
  */
 public class Deser {
     
-    
+    /**
+     * Permet de charger le joueur depuis le fichier.ser
+     * @return
+     * @throws ClassNotFoundException 
+     */
     public Joueur ChargerJoueur() throws ClassNotFoundException{
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null;
@@ -45,7 +49,12 @@ public class Deser {
         return j1;
     }    
         
-        
+    /**
+     * Permet de charger la grille depuis le fichier.ser
+     * @param j1
+     * @param grille
+     * @throws ClassNotFoundException 
+     */    
     public void ChargerGrille(Joueur j1, Grille grille) throws ClassNotFoundException{
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null;    

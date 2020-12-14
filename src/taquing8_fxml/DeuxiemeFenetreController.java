@@ -107,6 +107,12 @@ public class DeuxiemeFenetreController implements Initializable {
     }
      public void connexionBdd(ActionEvent event){ 
      }
+     
+   /**
+    * Accès à la page profil
+    * @param event
+    * @throws IOException 
+    */
       @FXML 
      public void passageProfil (ActionEvent event ) throws IOException{
         Parent profil  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 

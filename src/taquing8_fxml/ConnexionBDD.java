@@ -91,7 +91,6 @@ public class ConnexionBDD {
             this.closeConnexion();
         }
        
-
     }
   /**
    * Méthode permettant d'obtenir l'identifiant personnel d'un joueur dans la table joueur 
@@ -271,10 +270,8 @@ public class ConnexionBDD {
         }  else{
             this.closeConnexion();
         } 
-            
-            
-        
-        }else{
+            }
+        else{
                     try {
         
             
@@ -293,8 +290,6 @@ public class ConnexionBDD {
         } finally {
             this.closeConnexion();
         }
-        
-    
      }
      }
      /**
@@ -320,12 +315,6 @@ public class ConnexionBDD {
         return score;  
      }
      
-     
-     
-     
-     
-     
-
      /**
       * 
       * @param id 
@@ -372,9 +361,7 @@ public class ConnexionBDD {
       * @param score Nouveau score
       */
      public void setScore(int id, int mode, int score){
-        
-
-        try {
+         try {
 
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM classement WHERE `id_joueur`='" + id + "' ");
@@ -412,25 +399,12 @@ public class ConnexionBDD {
                     rank = rs.getRow();
                 
             }          
-
-            }
-            
-            
-            
-            
+           }
+                   
         } catch (Exception e) {
             System.out.println("Probleme avec le classement ");
          
-     }
-         
-         
-         
-         
+     }  
          return rank;
-     }
-     
-
-
-   
-     
+     }  
 }

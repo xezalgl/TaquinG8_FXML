@@ -73,13 +73,6 @@ public class Bloc implements Serializable {
     public int  getNumBloc (){
         return n; 
     }
-  
-    
-    // implémnation pointillé avec fleche simple (non remplis) , MAJUSCULE si static et le final, 
-    //plusieurs schéma de diagrammmes d'utilisation en fonction de l'utilisation et du moment 
-    //creer un profil -> se connecter
-    //couper a deplacer les cases du puzzle 
-    //Dans profil insérer le critère de tri soit par le temps soit par le nombre de coups 
-    
+   
 }
      

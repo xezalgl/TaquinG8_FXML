@@ -75,7 +75,7 @@ public class FXMLDocumentController implements Parametres {
     Joueur j1 = new Joueur();
     //conexion base de donees 
         String host = "localhost";
-        String port = "3306";
+        String port = "3309";
         String dbname = "taquin";
         String username = "root";
         String password ="";
@@ -147,18 +147,6 @@ public class FXMLDocumentController implements Parametres {
     @FXML
     private Label chronoAffiche111;
     @FXML
-    private GridPane grille1;
-    @FXML
-    private Button D1;
-    @FXML
-    private Button S1;
-    @FXML
-    private Button Q1;
-    @FXML
-    private Button Z1;
-    @FXML
-    private Button start1;
-    @FXML
     private Label label;
     @FXML
     private Label labelTaille;
@@ -179,6 +167,8 @@ public class FXMLDocumentController implements Parametres {
     private AnchorPane anchorPaneJeu;
     
     private MenuItem profil;
+    @FXML
+    private AnchorPane page;
 
 
         
@@ -259,12 +249,9 @@ public class FXMLDocumentController implements Parametres {
       * @param event action 
       */
 
-    @FXML
-    public void playConsole(ActionEvent event) {
-        start.setDisable(true);
-        MainsansGUI m = new MainsansGUI();
-        m.sansGUI();
-    }
+    
+       
+    
     
     /**
      * rend visible/invible les boutons de navigation
@@ -280,8 +267,18 @@ public class FXMLDocumentController implements Parametres {
     public void handleButtonAction(ActionEvent event) {
 
     }
-
-    
+    /**
+     * 
+     * @param event 
+     */
+    @FXML
+    public void modeConsole(ActionEvent event ){
+        start.setDisable(true);
+        MainsansGUI m = new MainsansGUI();
+        m.sansGUI();
+        
+    }
+     
    
      /**
       * creation multifenetre qui permet de se connecter 
@@ -395,7 +392,14 @@ public class FXMLDocumentController implements Parametres {
         //Retourne la portion de l'image du bloc
         return img;
     }
-    
+    /**
+     * Ajout d'une portion de l'image au bloc souhaité
+     * @param img
+     * @param numBloc
+     * @param hauteurCase
+     * @param largCase
+     * @return 
+     */
     private ImageView ajoutImageTaille4(ImageView img, int numBloc, float hauteurCase, float largCase){
         //Déclaration de la découpe
         Rectangle2D imgDecoupe = null;
@@ -468,7 +472,14 @@ public class FXMLDocumentController implements Parametres {
         
         return img;
     }
-    
+    /**
+     * Ajout d'une portion de l'image au bloc souhaité
+     * @param img
+     * @param numBloc
+     * @param hauteurCase
+     * @param largCase
+     * @return 
+     */
     private ImageView ajoutImageTaille3(ImageView img, int numBloc, float hauteurCase, float largCase){
         //Déclaration de la découpe
         Rectangle2D imgDecoupe = null;
@@ -513,7 +524,14 @@ public class FXMLDocumentController implements Parametres {
         
         return img;
     }
-    
+   /**
+    * Ajout d'une portion de l'image au bloc souhaité
+    * @param img
+    * @param numBloc
+    * @param hauteurCase
+    * @param largCase
+    * @return 
+    */ 
     private ImageView ajoutImageTaille5(ImageView img, int numBloc, float hauteurCase, float largCase){
         //Déclaration de la découpe
         Rectangle2D imgDecoupe = null;
@@ -835,7 +853,11 @@ public class FXMLDocumentController implements Parametres {
     void Zclic(ActionEvent event) {        
         deplacementFXML("z".charAt(0), j1);;
     }
-    
+    /**
+     * Passage à la fenetre profil 
+     * @param event
+     * @throws IOException 
+     */
      public void passageProfi (ActionEvent event ) throws IOException{
         Parent profil  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene prof = new Scene (profil); //creation scene deuxieme fenetre 
@@ -845,17 +867,26 @@ public class FXMLDocumentController implements Parametres {
 
      }
      
-     
+     /**
+      * Clique à gauche 
+      * @param event 
+      */
      @FXML
     void Qclic(ActionEvent event) {
         deplacementFXML("q".charAt(0), j1);
     }
-    
+    /**
+     * Clique à droite 
+     * @param event 
+     */
     @FXML
     void Dclic(ActionEvent event) {
         deplacementFXML("d".charAt(0), j1);
     }
-
+    /**
+     * Clique en Bas 
+     * @param event 
+     */
     @FXML
     void Sclic(ActionEvent event) {
         deplacementFXML("s".charAt(0), j1);  
@@ -912,7 +943,11 @@ public class FXMLDocumentController implements Parametres {
         chronoAffiche111.relocate(360, 25);
         
     }
-
+/**
+ * Accès au profil 
+ * @param event
+ * @throws IOException 
+ */
   @FXML 
   void Profil (ActionEvent event) throws IOException{
     Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
@@ -921,4 +956,8 @@ public class FXMLDocumentController implements Parametres {
          fenetre.setScene(deuxiemeF); //on affiche la deuxieme fenetre 
          fenetre.show(); //ouverture de la  
   }
+
+    @FXML
+    private void playConsole(ActionEvent event) {
+    }
 }
