@@ -19,7 +19,7 @@
                      <children>
                         <Accordion />
                         <Button fx:id="start" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" onAction="#run" text="Start" AnchorPane.bottomAnchor="545.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="507.0" AnchorPane.topAnchor="18.0" />
-                        <Button fx:id="Z" layoutX="274.0" layoutY="9.0" mnemonicParsing="false" onAction="#Zclic" text="Z" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="9.0" />
+                        <Button fx:id="Z" layoutX="274.0" layoutY="9.0" mnemonicParsing="false" onAction="#Zclic" onMouseEntered="#afficheAide" text="Z" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="9.0" />
                         <Button fx:id="Q" layoutX="242.0" layoutY="36.0" mnemonicParsing="false" onAction="#Qclic" text="Q" AnchorPane.leftAnchor="242.0" AnchorPane.rightAnchor="302.0" AnchorPane.topAnchor="36.0" />
                         <Button fx:id="S" layoutX="275.0" layoutY="67.0" mnemonicParsing="false" onAction="#Sclic" text="S" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="67.0" />
                         <Button fx:id="D" layoutX="303.0" layoutY="36.0" mnemonicParsing="false" onAction="#Dclic" text="D" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="36.0" />
@@ -54,7 +54,7 @@
                               <Font name="Courier New" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="chronoAffiche11" layoutX="360.0" layoutY="52.0" prefHeight="31.0" prefWidth="94.0" text="Déplacements:" textOverrun="CENTER_WORD_ELLIPSIS">
+                        <Label fx:id="chronoAffiche11" layoutX="360.0" layoutY="52.0" onMouseEntered="#op" prefHeight="31.0" prefWidth="94.0" text="Déplacements:" textOverrun="CENTER_WORD_ELLIPSIS">
                            <font>
                               <Font name="Courier New" size="12.0" />
                            </font>
