@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -28,10 +28,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -47,6 +49,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import static javax.swing.text.StyleConstants.Background;
 
@@ -57,14 +60,14 @@ import static javax.swing.text.StyleConstants.Background;
  */
 
 
-public class FXMLDocumentController {
+public class FXMLDocumentController implements Parametres {
     //Initialisation des chrono,grille et joueur
-    Chrono chronos = new Chrono();    
-    Grille g = new Grille(4);
+    Chrono chronos = new Chrono(); 
+    private int tailleGrid = 0;
+    //deserilize la taille selsctionné par le joueur
+    //Grille g = new Grille(4); //Pour faire des tests
+    Grille g; //Création de la grille avec pour taille celle choisie dans l'interface
     Joueur j1 = new Joueur();
-  /**
-   * bouton gauche  
-   */  
 
   @FXML
     private Button Q;
@@ -99,25 +102,65 @@ public class FXMLDocumentController {
    */  
     @FXML
     private GridPane grille;
+    @FXML
+    private MenuItem console;
     
+
+    //Image à mettre dans l'interface pour jouer
+    Class<?> clazz = FXMLDocumentController.class;
+    //InputStream input;
+    InputStream input = clazz.getResourceAsStream(urlCerisier); //Pour test
+    //Image image;
+    Image image = new Image(input); //Pour test
+    
+    private CheckBox checkAffNumero;    //Pour que l'utilisateur affiche ou non les numéro des cases
+    
+    private boolean affNumero = true; //TRUE si checkAffNumero est coché
+       
+    //Thème Graphique
+    private Color colFondCase;  //Couleur de fond des cases
+    private Color colCaseVide;  //Couleur pour la case vide
+    private Color colTexte;     //Couleur des labels
+    
+    //clic sur fichier "jouer dans la console"
+    
+    //Onglet Aide
 
     @FXML 
     private Label deplacementLabel; 
      @FXML
-    private MenuButton optionDeJeu;
-    
-    //Image à mettre dans l'interface pour jouer
-    Class<?> clazz = FXMLDocumentController.class;
- 
-    InputStream input = clazz.getResourceAsStream("carte_electronique.png");
- 
-    Image image = new Image(input);
+    private MenuButton optionDeJeu;   
+
     @FXML
     private Label chronoAffiche11;
     @FXML
     private Label chronoAffiche111;
     @FXML
-    private ComboBox<String> choix_taille;
+    private GridPane grille1;
+    @FXML
+    private Button D1;
+    @FXML
+    private Button S1;
+    @FXML
+    private Button Q1;
+    @FXML
+    private Button Z1;
+    @FXML
+    private Button start1;
+    @FXML
+    private Label label;
+    @FXML
+    private Label labelTaille;
+    @FXML
+    private ComboBox choix_taille;
+    @FXML
+    private Label labelTheme;
+    @FXML
+    private ComboBox choix_theme;
+    @FXML
+    private ComboBox<?> selectTheme;
+    @FXML
+    private Button boutonInitChoix;
 
     // à ajouter dans la fenetre choix je pense
 //    //clic sur fichier "jouer dans la console"
@@ -128,26 +171,113 @@ public class FXMLDocumentController {
 //        m.sansGUI();
 //    }
 
+        
+    //Getteurs et setteurs
+    public int getTailleGrid () {
+        return this.tailleGrid;
+    }
+    public void setTailleGrid(int newValue){
+        this.tailleGrid = newValue;
+        //Grille maj
+        this.g = new Grille(this.tailleGrid);
+    }
+    /**
+     * Renvoie le booléen pour savoir si le joueur veut afficher les numéros des cases
+     * @return le booléen d'affichage des numéros des cases
+     */
+    public boolean getAffNumero () {
+        return this.affNumero;
+    }
+    /**
+     * Renvoie la couleur correspondant à l'élément souhaité
+     * @param objet le type d'élément pour lequel on veut connaitre la couleur
+     * @return la couleur correspondant à l'élément
+     */
+    public Color getCol (String objet) {
+        if (objet == "FondCase"){
+            return this.colFondCase;
+        }
+        else if (objet == "CaseVide"){
+            return this.colCaseVide;
+        }
+        else if (objet == "Texte"){
+            return this.colTexte;
+        }
+        else {
+            return null;
+        }
+    }
+    
+    
+    /**
+     * Changement de la valeur du booléen pour l'affichage des numéros des cases
+     * @param newValue La nouvelle valeur a attribué au booléen
+     */
+    public void setAffNumero (boolean newValue){
+        this.affNumero = newValue;
+    }
+    
+    /**
+     * Modifie la couleur d'un élément 
+     * @param objet l'élément pour lequel on veut changer la couleur
+     * @param newColor la nouvelle couleur a attribué à l'élément
+     */
+    public void setCol (String objet, Color newColor){
+        if (objet == "FondCase"){
+            this.colFondCase = newColor;
+        }
+        else if (objet == "CaseVide"){
+            this.colCaseVide = newColor;
+        }
+        else if (objet == "Texte"){
+            this.colTexte = newColor;
+        }
+    }
+    
+    /**
+     * Modifie le booléen d'affichage des numéro des cases en fonction de la checkBox
+     */
+    public void setAffNumero () {
+        this.affNumero = checkAffNumero.isSelected();
+    }
+    
+    
+    
      /**
       * clic sur fichier "jouer dans la console"
       * @param event action 
       */
-  
-    void playConsole(ActionEvent event) {
+
+    @FXML
+    public void playConsole(ActionEvent event) {
         start.setDisable(true);
         MainsansGUI m = new MainsansGUI();
         m.sansGUI();
     }
+    
+    /**
+     * rend visible/invible les boutons de navigation
+     * @param visible boolean true si bouton visible, else sinon
+     */
+    private void navigationBouton(boolean visible){
+            Z.setVisible(visible);
+            Q.setVisible(visible);
+            S.setVisible(visible);
+            D.setVisible(visible);
+    }
+    
+    public void handleButtonAction(ActionEvent event) throws IOException {
 
    
 
     
-   
+    }
      /**
       * creation multifenetre qui permet de se connecter 
       * @param event clique sur le bouton 
       * @throws IOException 
       */
+    
     public void changementPage ( ActionEvent event ) throws IOException{
         Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
@@ -159,68 +289,326 @@ public class FXMLDocumentController {
      * Creation multifenetre qui permet de s'inscrire 
      * @param event
      * @throws IOException 
-     */
+    */
     public void passageInscription (ActionEvent event) throws IOException{
          Parent deuxieme  = FXMLLoader.load(getClass().getResource("Inscription.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeFe = new Scene (deuxieme); //creation scene deuxieme fenetre 
-         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
+         Stage window = (Stage) optionDeJeu.getScene().getWindow(); // creation stage fenetre  
          window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
          window.show();
     }
     
     /**
-     * retourne l'index dans le gridPane de la cese vide
-     * @param g la grille 
-     * @return la grille 
-     */
-   
-    private int trouveCaseVideGrid(Grille g){
-       Case caseVide = g.trouveCaseVide();
-        int xVide = caseVide.getCoordx();
-        int yVide = caseVide.getCoordy();
-        return xVide+1+(yVide*g.taille);
-    }
-    /**
      * affiche la grille dans le GridPane de l'interface
      * @param g grille 
      * @param grid grille 
-     */
-   
-    private void grilleToGrid(Grille g, GridPane grid){
+     */   
+     private void grilleToGrid(Grille g, GridPane grid){
+        //parcours de la grille
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
                 if (g.ensCase[j][i].getVide()){
-                    Pane p = new Pane();
-                    p.setStyle("-fx-background-color:pink");
-                    grid.add(p, i, j);
+                    Pane p = new Pane();   //Création d'un nouveau pane
+                    //p.setStyle("-fx-background-color:"+this.colCaseVide);    //Couleur de fond
+                    grid.add(p, i, j);  //Ajout du pane à gridpane
                 }
                 else {
-                    String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc());
-                    System.out.println(value);
-                    Label label = new Label(value);
-                    Pane p = new Pane();
-                    p.getChildren().add(new ImageView (image));  //On met l'image
-                    p.getChildren().addAll(label);
-                    //p.setStyle("-fx-background-color:black");
-                    grid.add(p, i, j);
-                }
+                    //Récupération des coordonnées du bloc pour insérer l'image
+                    int coordxBloc = g.ensCase[j][i].getCoordx();
+                    int coordyBloc = g.ensCase[j][i].getCoordy();
+                       
+                    
+                    Pane p = new Pane(); //Création d'un pane
+                    String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc()); //Récupération du numéro du bloc
+                    int numBlocTemp = Integer.parseInt(value);  //Stockage du numéro de la case sous forme de int
+                    Label label = new Label ("");
+                    
+                    //Si le joueur veut afficher les numéros des cases
+                    if (getAffNumero()==true) {
+                        label = new Label(value); //Récupération du numéro du bloc dans un label
+                        label.setTextFill(Color.web("#000000"));  //Changement de style du label
+                    }
+                    
+                    p.getChildren().add(ajoutImagePane(numBlocTemp, coordxBloc, coordyBloc, grid, g)); //Ajout de la portion de l'image correspondance au bloc sur le pane
+                    p.getChildren().addAll(label); //Ajout du texte sur le pane
+                    
+                    
+                    //p.setStyle("-fx-background-color:black"); //couleur de fond si pas d'image
+                    grid.add(p, i, j); //Ajout du pane au grid pane
+
                 }
             }
-        //Affichage de la grille
+        }
+        //Affichage de la grille avec des espaces entre les colonnes et lignes
         grid.setHgap(3.0);
         grid.setVgap(3.0);
-        }
+    }
              
     /**
-     * Ajout de l'image à l'interface graphique 
-     * @param numBloc int, numéro du bloc à ajouter
-     * @return Image retourne l'image
-     */    
-    private Image ajoutImagePane (int numBloc) { 
-        Image img = null;
-    
+     * Ajout d'une portion de l'image au bloc souhaité
+     * @param numBloc   le numéro du bloc sur lequel placer un morceau de l'image
+     * @param grid la grille dans l'interface graphique
+     * @param g la grille du jeu
+     * @return la portion de l'image correspondant au bloc
+     */
+    private ImageView ajoutImagePane (int numBloc, int x, int y, GridPane grid, Grille g) { 
+        //On récupère l'image chargé sous forme de ImageView
+        ImageView img = new ImageView (image);
+        
+        //Récupréation des dimensions d'une case
+        float hauteurCase = (float) 476 / (float) g.getTaille();  //Récupération de la dimension d'une case
+        float largCase = (float) 476 / (float) g.getTaille();  //Récupération de la dimension d'une case
+
+        //Appel d'une fonction pour avoir la portion de l'image en fonction de la taille de la grille
+        switch (this.tailleGrid){
+            case 3 : 
+                //La grille est en taille 3
+                img = ajoutImageTaille3(img, numBloc, hauteurCase, largCase);
+                break;
+            case 4 :
+                //La grille est en taille 4
+                img = ajoutImageTaille4(img, numBloc, hauteurCase, largCase);
+                break;
+            case 5 :
+                //La grille est en taille 5
+                img = ajoutImageTaille5(img, numBloc, hauteurCase, largCase);
+                break;
+        }
+             
+        //Redimensionne la portion de l'image à la taille de la case
+        img.setFitWidth(largCase);
+        img.setFitHeight(hauteurCase);
+                
+        //Retourne la portion de l'image du bloc
         return img;
     }
+    
+    private ImageView ajoutImageTaille4(ImageView img, int numBloc, float hauteurCase, float largCase){
+        //Déclaration de la découpe
+        Rectangle2D imgDecoupe = null;
+        //En fonction du numéro du bloc
+        switch (numBloc) {
+            case 1 : 
+                //Découpage de la 2e zone de l'image
+                imgDecoupe = new Rectangle2D(0, 0, largCase, hauteurCase);
+                break;
+            case 2 : 
+                //Découpage de la 2e zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase, 0, largCase, hauteurCase);
+                break;
+            case 3: 
+                //Découpage de la 3e zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*2, 0, largCase, hauteurCase);
+                break;
+            case 4:
+                //Découpage de la 4 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*3, 0, largCase, hauteurCase);
+                break;
+            case 5:
+                //Découpage de la 5 zone de l'image
+                imgDecoupe = new Rectangle2D(0, hauteurCase, largCase, hauteurCase);
+                break;
+            case 6:
+                //Découpage de la 6 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase, hauteurCase, largCase, hauteurCase);
+                break;
+            case 7:
+                //Découpage de la 7 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*2, hauteurCase, largCase, hauteurCase);
+                break;
+            case 8:
+                //Découpage de la 8 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*3, hauteurCase, largCase, hauteurCase);
+                break;
+            case 9:
+                //Découpage de la 9 zone de l'image
+                imgDecoupe = new Rectangle2D(0, hauteurCase*2, largCase, hauteurCase);
+                break;
+            case 10:
+                //Découpage de la 10 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase, hauteurCase*2, largCase, hauteurCase);
+                break;
+            case 11:
+                //Découpage de la 11 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*2, hauteurCase*2, largCase, hauteurCase);
+                break;
+            case 12:
+                //Découpage de la 12 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*3, hauteurCase*2, largCase, hauteurCase);
+                break;
+            case 13:
+                //Découpage de la 13 zone de l'image
+                imgDecoupe = new Rectangle2D(0, hauteurCase*3, largCase, hauteurCase);
+                break;
+            case 14:
+                //Découpage de la 14 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase, hauteurCase*3, largCase, hauteurCase);
+                break;
+            case 15:
+                //Découpage de la 15 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*2, hauteurCase*3, largCase, hauteurCase);
+                break;
+            
+        }
+        
+        img.setViewport(imgDecoupe);
+        
+        return img;
+    }
+    
+    private ImageView ajoutImageTaille3(ImageView img, int numBloc, float hauteurCase, float largCase){
+        //Déclaration de la découpe
+        Rectangle2D imgDecoupe = null;
+        //En fonction du numéro du bloc
+        switch (numBloc) {
+            case 1 : 
+                //Découpage de la 2e zone de l'image
+                imgDecoupe = new Rectangle2D(0, 0, largCase, hauteurCase);
+                break;
+            case 2 : 
+                //Découpage de la 2e zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase, 0, largCase, hauteurCase);
+                break;
+            case 3: 
+                //Découpage de la 3e zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*2, 0, largCase, hauteurCase);
+                break;
+            case 4:
+                //Découpage de la 4 zone de l'image
+                imgDecoupe = new Rectangle2D(0, hauteurCase, largCase, hauteurCase);
+                break;
+            case 5:
+                //Découpage de la 5 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase, hauteurCase, largCase, hauteurCase);
+                break;
+            case 6:
+                //Découpage de la 6 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*2, hauteurCase, largCase, hauteurCase);
+                break;
+            case 7:
+                //Découpage de la 7 zone de l'image
+                imgDecoupe = new Rectangle2D(0, hauteurCase*2, largCase, hauteurCase);
+                break;
+            case 8:
+                //Découpage de la 8 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase, hauteurCase*2, largCase, hauteurCase);
+                break;
+            
+        }
+        
+        img.setViewport(imgDecoupe);
+        
+        return img;
+    }
+    
+    private ImageView ajoutImageTaille5(ImageView img, int numBloc, float hauteurCase, float largCase){
+        //Déclaration de la découpe
+        Rectangle2D imgDecoupe = null;
+        //En fonction du numéro du bloc
+        switch (numBloc) {
+            case 1 : 
+                //Découpage de la 2e zone de l'image
+                imgDecoupe = new Rectangle2D(0, 0, largCase, hauteurCase);
+                break;
+            case 2 : 
+                //Découpage de la 2e zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase, 0, largCase, hauteurCase);
+                break;
+            case 3: 
+                //Découpage de la 3e zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*2, 0, largCase, hauteurCase);
+                break;
+            case 4:
+                //Découpage de la 4 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*3, 0, largCase, hauteurCase);
+                break;
+            case 5:
+                //Découpage de la 5 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*4, 0, largCase, hauteurCase);
+                break;
+            case 6:
+                //Découpage de la 6 zone de l'image
+                imgDecoupe = new Rectangle2D(0, hauteurCase, largCase, hauteurCase);
+                break;
+            case 7:
+                //Découpage de la 7 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase, hauteurCase, largCase, hauteurCase);
+                break;
+            case 8:
+                //Découpage de la 8 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*2, hauteurCase, largCase, hauteurCase);
+                break;
+            case 9:
+                //Découpage de la 9 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*3, hauteurCase, largCase, hauteurCase);
+                break;
+            case 10:
+                //Découpage de la 10 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*4, hauteurCase, largCase, hauteurCase);
+                break;
+            case 11:
+                //Découpage de la 6 zone de l'image
+                imgDecoupe = new Rectangle2D(0, hauteurCase*2, largCase, hauteurCase);
+                break;
+            case 12:
+                //Découpage de la 7 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase, hauteurCase*2, largCase, hauteurCase);
+                break;
+            case 13:
+                //Découpage de la 8 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*2, hauteurCase*2, largCase, hauteurCase);
+                break;
+            case 14:
+                //Découpage de la 9 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*3, hauteurCase*2, largCase, hauteurCase);
+                break;
+            case 15:
+                //Découpage de la 15 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*4, hauteurCase*2, largCase, hauteurCase);
+                break;
+            case 16:
+                //Découpage de la 16 zone de l'image
+                imgDecoupe = new Rectangle2D(0, hauteurCase*3, largCase, hauteurCase);
+                break;
+            case 17:
+                //Découpage de la 17 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*3, hauteurCase*3, largCase, hauteurCase);
+                break;
+            case 18:
+                //Découpage de la 18 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*2, hauteurCase*3, largCase, hauteurCase);
+                break;
+            case 19:
+                //Découpage de la 19 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*3, hauteurCase*3, largCase, hauteurCase);
+                break;
+            case 20:
+                //Découpage de la 20 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*4, hauteurCase*3, largCase, hauteurCase);
+                break;
+            case 21:
+                //Découpage de la 16 zone de l'image
+                imgDecoupe = new Rectangle2D(0, hauteurCase*4, largCase, hauteurCase);
+                break;
+            case 22:
+                //Découpage de la 17 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*3, hauteurCase*4, largCase, hauteurCase);
+                break;
+            case 23:
+                //Découpage de la 18 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*2, hauteurCase*4, largCase, hauteurCase);
+                break;
+            case 24:
+                //Découpage de la 19 zone de l'image
+                imgDecoupe = new Rectangle2D(hauteurCase*3, hauteurCase*4, largCase, hauteurCase);
+                break;
+        }
+        
+        img.setViewport(imgDecoupe);
+        
+        return img;
+    }
+             
     
     /**
      * Effectue un déplacement sur la grille dans l'interface selon direction
@@ -234,6 +622,22 @@ public class FXMLDocumentController {
         grilleToGrid(g, grille);
     }
 
+    /**
+     * Initialise l'interface de choix graphiques
+     */
+    @FXML
+    public void initChoix () {
+        boutonInitChoix.setVisible(false);
+        
+        initComboBoxTaille();   //initialisation de la combobox taille
+        initComboBoxTheme();    //Initialisation de la combobox theme
+        
+        //Visibilité des éléments de choix
+        labelTaille.setVisible(true);
+        labelTheme.setVisible(true);
+        choix_taille.setVisible(true);
+        choix_theme.setVisible(true);
+    }
     
     /**
      * Clic sur Start
@@ -243,16 +647,17 @@ public class FXMLDocumentController {
     @FXML
     void run(ActionEvent event) throws InterruptedException {
         start.setVisible(false);
-        
+        navigationBouton(true);
+        grille.setPrefSize(476, 476); //Redimensionnement de la grille
+        grille.setGridLinesVisible(false); //Visibilité des ligne de la grille
         grilleToGrid(g,grille); 
         chronos.setFini(false);
         grille.getChildren().remove(g.taille*g.taille);
         //deux mouvement consécutif pour eviter une erreur d'affichage
-        g.deplacement("d".charAt(0), j1);
-        g.deplacement("q".charAt(0), j1);
+        deplacementLabel.setText(Integer.toString(this.j1.getNbDeplacement()));
+//        g.deplacement("d".charAt(0), this.j1);
+//        g.deplacement("q".charAt(0), this.j1);
 
-        grille.getChildren().clear();
-        grilleToGrid(g, grille);
         Task task = new Task<Void>() { // on définit une tâche parallèle pour mettre à jour la vue
         @Override
         public Void call() throws Exception { // implémentation de la méthode protected abstract V call() dans la classe Task
@@ -280,56 +685,91 @@ public class FXMLDocumentController {
 
         
     }
-    /**
-     * clique sur le bouton z qui permet de monter 
-     * @param event action 
-     */
-  
-/**
-     * saisie clavier sur le touche z qui permet de monter 
-     * @param event action 
-     */
-    void Zpress(ActionEvent event) {
 
-    }
-/**
-     * clique sur le bouton q qui permet d'aller à gauche  
-     * @param event action 
-     */
-   
-/**
-     * saisie clavier sur le touche q qui permet d'aller à gauche  
-     * @param event action 
-     */
-    void Qpress(ActionEvent event) {
-
-    }
     /**
-     * clique  sur le bouton d qui permet de monter 
-     * @param event action 
+     * Analyse du choix de la taille de la grille
+     * @return la taille choisie sous forme de int
      */
-    
-/**
-     * saisie clavier sur le touche d qui permet d'aller à droite 
-     * @param event action 
-     */
-    void Dpress(ActionEvent event) {
+    @FXML
+    protected void choixTailleGrille () {
+        String tailleString = choix_taille.getSelectionModel().getSelectedItem().toString(); //Récupération de l'item sélectionné
+        char taille = tailleString.charAt(0);
+        String tailleNum = taille + "";
+        int tailleChoisie = Integer.parseInt(tailleNum); //Passage sous forme de int
+        setTailleGrid(tailleChoisie);
         
     }
-/**
-     * clique sur le bouton s qui permet de descendre 
-     * @param event action 
-     */
     
     /**
-     * saisie clavier sur le touche s qui permet de descendre 
-     * @param event action 
+     * Initialise la combobox qui permet de choisir le thème graphique
      */
-
-    void Spress(ActionEvent event) {
-        
-
+    public void initComboBoxTheme () {
+        choix_theme.getItems().addAll("Thème par défaut", "Cerisier", "Electronique", "Dragons", "Une image de mon pc");
+        choix_theme.getSelectionModel().select("Thème par défaut");
     }
+    
+    /**
+     * Initialise la combobox qui permet de choisir la taille de la grille
+     */
+    public void initComboBoxTaille () {
+        choix_taille.getItems().addAll("3x3", "4x4", "5x5");
+        choix_taille.getSelectionModel().select("4x4");
+    }
+    
+    /**
+     * Permet de définir des paramètres en fonction du thème choisi
+     */
+    @FXML
+    protected void choixTheme () {
+        //Déclaration des couleurs
+        Color colFond = null;
+        Color colTexte = null;
+        Color colVide = null;
+        //Récupération de l'item choisi
+        String theme = choix_theme.getSelectionModel().getSelectedItem().toString();
+        //Modification des paramètres graphiques 'couleurs et nom de l'image)
+        switch (theme){
+            case "Thème par défaut" : 
+                colFond = colDefaut;
+                colTexte = colTextDefaut;
+                colVide = colVideDefaut;
+                this.input = clazz.getResourceAsStream(urlDefaut);
+                break;
+            case "Cerisier" : 
+                colFond = colDefaut;
+                colTexte = colTextDefaut;
+                colVide = colVideDefaut;
+                this.input = clazz.getResourceAsStream(urlCerisier);
+                break;
+            case "Electronique" :
+                colFond = colElectro;
+                colTexte = colTextElectro;
+                colVide = colVideElectro;
+                this.input = clazz.getResourceAsStream(urlElectro);
+                break;
+            case "Dragons" :
+                colFond = colDragon;
+                colTexte = colTextDragon;
+                colVide = colVideDragon;
+                this.input = clazz.getResourceAsStream(urlDragon);
+                break;
+            case "Une image de mon pc" :
+            /*
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Choisir une image pour jouer au Taquin");
+                fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.png", "*.jpg"));
+                File selectedFile = fileChooser.showOpenDialog(mainStage);
+                if (selectedFile != null) {
+                   stage.display(selectedFile);
+                }
+            */
+                break;
+            default :
+                break;
+        }
+        
+    }
+
 
     @FXML
     private void handleButtonAction(MouseEvent event) {
@@ -383,6 +823,7 @@ public class FXMLDocumentController {
     void Zclic(ActionEvent event) {        
         deplacementFXML("z".charAt(0), j1);;
     }
+    
      public void passageProfi (ActionEvent event ) throws IOException{
         Parent profil  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene prof = new Scene (profil); //creation scene deuxieme fenetre 
@@ -391,6 +832,8 @@ public class FXMLDocumentController {
          profilP.show();
 
      }
+     
+     
      @FXML
     void Qclic(ActionEvent event) {
         deplacementFXML("q".charAt(0), j1);
@@ -442,15 +885,13 @@ public class FXMLDocumentController {
         chronos.setFini(true);
         start.setVisible(true);
         chronos.setCmpt(0);
-        g=new Grille(4);
+        chronoAffiche.setText("0");
+        deplacementLabel.setText("0");
+        navigationBouton(false);
+        j1.initNbDeplacement();
+        g=new Grille(g.getTaille());
+        
     }
-    @FXML
-   void affichageTaille(ActionEvent event){
-      // choix_taille.setValue("3x3"); 
-      // choix_taille.setValue("4x4"); 
-       choix_taille.getItems().add("3x3"); 
-      // choix_taille.setValue("5x5"); 
-       
-   }
-}
 
+  
+}

@@ -34,7 +34,13 @@ public class ProfilController implements Initializable  {
     private Button nouveauPs;
     @FXML
     private Button nouveauMdp;
-     Joueur  j= new Joueur();
+   Deser deser = new Deser(); 
+  
+   Joueur j1; 
+   
+    public ProfilController() throws ClassNotFoundException {
+        this.j1 = deser.ChargerJoueur();
+    }
   
      
  
@@ -72,10 +78,10 @@ public class ProfilController implements Initializable  {
         ps= saisieNvPs.getText(); 
         //recuperer mdp 
         mdp= saisieNvMDP.getText(); 
-        if( j.getMdp()!=mdp){
+        if( j1.getMdp()!=mdp){
             System.out.println("passage boucle"+ps+mdp);
-            c.updateMdpBDD(ps,j.getMdp(),mdp);
-           j.setMdp(mdp);
+            c.updateMdpBDD(ps,j1.getMdp(),mdp);
+           j1.setMdp(mdp);
         }
         
      

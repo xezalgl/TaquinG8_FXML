@@ -1,30 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="taquing8_fxml.FXMLDocumentController">
+<AnchorPane id="AnchorPane" onKeyPressed="#touche" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="taquing8_fxml.FXMLDocumentController">
     <children>
-      <TabPane prefHeight="633.0" prefWidth="576.0" style="-fx-background-color: #000000;" tabClosingPolicy="UNAVAILABLE">
+
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      
+      <Accordion />
+      <MenuBar prefHeight="44.0" prefWidth="511.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem fx:id="console" mnemonicParsing="false" onAction="#playConsole" text="Jouer dans la console" />
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      
+      <ComboBox id="selectTheme" fx:id="selectTheme" layoutX="374.0" layoutY="49.0" onAction="#choixTheme" prefWidth="150.0" promptText="Thème" />
+
+      <TabPane prefHeight="633.0" prefWidth="576.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab style="-fx-background-color: #FFFFFF; -fx-font-family: AvenirNext;" text="Choix Jeu">
+          <Tab style="-fx-background-color: #FFFFFF; -fx-font-family: AvenirNext;" text="Choix Jeu">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ABB1E0;">
                      <children>
-                        <Label layoutX="56.0" layoutY="179.0" prefHeight="27.0" prefWidth="200.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text="Quelle taille veux-tu? " textFill="WHITE">
+                        <Label fx:id="labelTaille" layoutX="53.0" layoutY="225.0" prefHeight="27.0" prefWidth="200.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text="Quelle taille veux-tu? " textFill="WHITE" visible="false">
                            <font>
                               <Font name="Avenir Next Regular" size="18.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="choix_taille" layoutX="57.0" layoutY="225.0" onAction="#affichageTaille" prefHeight="27.0" prefWidth="177.0" promptText="Taille " style="-fx-background-color: #FFFFFF; -fx-font-family: AvenirNext;" />
-                        <Label layoutX="56.0" layoutY="287.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text="Quelle thème veut-tu?  " textFill="WHITE">
+                        <ComboBox fx:id="choix_taille" layoutX="54.0" layoutY="271.0" onAction="#choixTailleGrille" prefHeight="27.0" prefWidth="177.0" promptText="Taille " style="-fx-background-color: #FFFFFF; -fx-font-family: AvenirNext;" visible="false" />
+                        <Label fx:id="labelTheme" layoutX="53.0" layoutY="333.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text="Quelle thème veux-tu?  " textFill="WHITE" visible="false">
                            <font>
                               <Font name="Avenir Next Regular" size="18.0" />
                            </font>
@@ -39,7 +75,7 @@
                               <Font name="Avenir Next Regular" size="24.0" />
                            </font>
                         </Text>
-                        <ComboBox layoutX="56.0" layoutY="332.0" prefHeight="27.0" prefWidth="179.0" promptText="Theme " style="-fx-background-color: #FFFFFF; -fx-font-family: AvenirNext;" />
+                        <ComboBox fx:id="choix_theme" layoutX="53.0" layoutY="378.0" onAction="#choixTheme" prefHeight="27.0" prefWidth="179.0" promptText="Theme " style="-fx-background-color: #FFFFFF; -fx-font-family: AvenirNext;" visible="false" />
                         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="376.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@joueur.png" />
@@ -52,33 +88,29 @@
                               <Image url="@puzzle.png" />
                            </image>
                         </ImageView>
+                        <Button fx:id="boutonInitChoix" layoutX="268.0" layoutY="145.0" mnemonicParsing="false" onAction="#initChoix" onMouseDragReleased="#initChoix" text="Je choisis ma grille !" />
                      </children>
                   </AnchorPane>
               </content>
             </Tab>
-          <Tab style="-fx-background-color: #FFFFFF;" text="Jeu">
+          <Tab text="Jeu">
             <content>
               <AnchorPane prefHeight="594.0" prefWidth="644.0" style="-fx-background-color: #ABB1E0;">
                      <children>
                         <Accordion />
-                        <Button fx:id="start" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" onAction="#run" prefHeight="35.0" prefWidth="73.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-size: 15px;" text="Start" AnchorPane.bottomAnchor="547.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="485.0" AnchorPane.topAnchor="18.0">
-                           <font>
-                              <Font name="Avenir Next Regular" size="13.0" />
-                           </font></Button>
-                        <Button fx:id="Z" layoutX="274.0" layoutY="9.0" mnemonicParsing="false" onAction="#Zclic" onKeyPressed="#Zpress" style="-fx-background-color: #FFFFFF;" text="Z" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="9.0" />
-                        <Button fx:id="Q" layoutX="242.0" layoutY="36.0" mnemonicParsing="false" onAction="#Qclic" onKeyPressed="#Qpress" style="-fx-background-color: #FFFFFF;" text="Q" AnchorPane.leftAnchor="242.0" AnchorPane.rightAnchor="302.0" AnchorPane.topAnchor="36.0" />
-                        <Button fx:id="S" layoutX="275.0" layoutY="67.0" mnemonicParsing="false" onAction="#Sclic" onKeyPressed="#Spress" style="-fx-background-color: #FFFFFF;" text="S" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="67.0" />
-                        <Button fx:id="D" layoutX="303.0" layoutY="36.0" mnemonicParsing="false" onAction="#Dclic" onKeyPressed="#Dpress" style="-fx-background-color: #FFFFFF;" text="D" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="36.0" />
-                        <GridPane fx:id="grille" gridLinesVisible="true" onDragDetected="#handleButtonAction" prefHeight="464.0" prefWidth="502.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="132.0">
+                        <Button fx:id="start" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" onAction="#run" text="Start" AnchorPane.bottomAnchor="545.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="507.0" AnchorPane.topAnchor="18.0" />
+                        <Button fx:id="Z" layoutX="274.0" layoutY="9.0" mnemonicParsing="false" onAction="#Zclic" text="Z" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="9.0" />
+                        <Button fx:id="Q" layoutX="242.0" layoutY="36.0" mnemonicParsing="false" onAction="#Qclic" text="Q" AnchorPane.leftAnchor="242.0" AnchorPane.rightAnchor="302.0" AnchorPane.topAnchor="36.0" />
+                        <Button fx:id="S" layoutX="275.0" layoutY="67.0" mnemonicParsing="false" onAction="#Sclic" text="S" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="67.0" />
+                        <Button fx:id="D" layoutX="303.0" layoutY="36.0" mnemonicParsing="false" onAction="#Dclic" text="D" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="36.0" />
+                        <GridPane fx:id="grille" gridLinesVisible="true" layoutX="51.0" layoutY="105.0" onDragDetected="#handleButtonAction" prefHeight="476.0" prefWidth="476.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="105.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />  
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
