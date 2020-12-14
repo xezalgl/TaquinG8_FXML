@@ -415,7 +415,7 @@ public class FXMLDocumentController {
     void SaveAndQuit(ActionEvent event) {
         chronos.setFini(true);       
         //enregistrement serialisation
-        GrilleSer ser = new GrilleSer();
+        //GrilleSer ser = new GrilleSer();
         //retour fenetre menu
         
     }
@@ -432,6 +432,7 @@ public class FXMLDocumentController {
         //fermeture de la fenetre
         changementPage(event);
     }
+    
     /**
      * Clic sur Nouvelle partie, arrete la partie en cours et en demarre une nouvelle
      * @param event 
