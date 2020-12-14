@@ -41,11 +41,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-<<<<<<< HEAD
 import javafx.scene.image.PixelReader;
-=======
 import javafx.scene.input.KeyCode;
->>>>>>> origin/master
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
@@ -64,20 +61,12 @@ import javafx.stage.FileChooser;
  * @author hazal
  */
 
-<<<<<<< HEAD
 public class FXMLDocumentController implements Parametres {
-    
-    Chrono chronos = new Chrono();    
-    //Grille g = new Grille(choixTailleGrille()); //Création de la grille avec pour taille celle choisie dans l'interface
-    Grille g = new Grille (4); //Pour choisir manuellement la taille de la grille pour des tests
-=======
 
-public class FXMLDocumentController {
     //Initialisation des chrono,grille et joueur
     Chrono chronos = new Chrono(); 
     //deserilize la taille selsctionné par le joueur
     Grille g = new Grille(4);
->>>>>>> origin/master
     Joueur j1 = new Joueur();
     int size = g.getTaille();
 
@@ -130,7 +119,7 @@ public class FXMLDocumentController {
     
     //Image à mettre dans l'interface pour jouer
     Class<?> clazz = FXMLDocumentController.class;
-<<<<<<< HEAD
+
     //InputStream input;
     InputStream input = clazz.getResourceAsStream(urlCerisier); //Pour test
     //Image image;
@@ -138,13 +127,7 @@ public class FXMLDocumentController {
     
     
     //clic sur fichier "jouer dans la console"
-=======
- 
-    InputStream input = clazz.getResourceAsStream("carte_electronique.png");
- 
-    Image image = new Image(input);
->>>>>>> origin/master
-    @FXML
+
     private Label chronoAffiche11;
     @FXML
     private Label chronoAffiche111;
@@ -246,7 +229,6 @@ public class FXMLDocumentController {
                 }
                 //Si la case n'est pas vide
                 else {
-<<<<<<< HEAD
                     String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc()); //Récupération du numéro du bloc
                     //Récupération des coordonnées du bloc pour insérer l'image
                     int coordxBloc = g.ensCase[j][i].getCoordx();
@@ -259,28 +241,13 @@ public class FXMLDocumentController {
                     p.getChildren().addAll(label); //Ajout du texte sur le pane
                     //p.setStyle("-fx-background-color:black"); //couleur de fond si pas d'image
                     grid.add(p, i, j); //Ajout du pane au grid pane
-=======
-                    String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc());
-                    System.out.println(value);
-                    Label label = new Label(value);
-                    Pane p = new Pane();
-                    p.getChildren().add(new ImageView (image));  //On met l'image
-                    p.getChildren().addAll(label);
-                    //p.setStyle("-fx-background-color:black");
-                    grid.add(p, i, j);
->>>>>>> origin/master
+
                 }
                 }
             }
-<<<<<<< HEAD
-        }
         //Affichage de la grille avec des espaces entre les colonnes et lignes
-=======
-        //Affichage de la grille
->>>>>>> origin/master
         grid.setHgap(3.0);
         grid.setVgap(3.0);
-<<<<<<< HEAD
     }
       
     /**
@@ -526,18 +493,44 @@ public class FXMLDocumentController {
         
         img.setViewport(imgDecoupe);
         
-=======
-        }
+        return img;
+    }
              
     /**
      * Ajout de l'image à l'interface graphique 
      * @param numBloc int, numéro du bloc à ajouter
      * @return Image retourne l'image
      */    
-    private Image ajoutImagePane (int numBloc) { 
-        Image img = null;
-    
->>>>>>> origin/master
+    private ImageView ajoutImagePane (int numBloc) { 
+        //On récupère l'image chargé sous forme de ImageView
+        ImageView img = new ImageView (image);
+        //Redimensionnement de l'image à la taille de la grille
+        
+        //Récupréation des dimensions d'une case
+        float hauteurCase = (float) 476 / (float) g.getTaille();  //Récupération de la dimension d'une case
+        float largCase = (float) 476 / (float) g.getTaille();  //Récupération de la dimension d'une case
+
+        //Appel d'une fonction pour avoir la portion de l'image en fonction de la taille de la grille
+        switch (g.taille){
+            case 3 : 
+                //La grille est en taille 3
+                //img = ajoutImageTaille3(img, numBloc, hauteurCase, largCase);
+                break;
+            case 4 :
+                //La grille est en taille 4
+                img = ajoutImageTaille4(img, numBloc, hauteurCase, largCase);
+                break;
+            case 5 :
+                //La grille est en taille 5
+                //img = ajoutImageTaille5(img, numBloc, hauteurCase, largCase);
+                break;
+        }
+             
+        //Redimensionne la portion de l'image à la taille de la case
+        img.setFitWidth(largCase);
+        img.setFitHeight(hauteurCase);
+                
+        //Retourne la portion de l'image du bloc
         return img;
     }
     
@@ -548,7 +541,7 @@ public class FXMLDocumentController {
      */
     private void deplacementFXML(char direction, Joueur j){
         g.deplacement(direction, j);        
-        deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()-2));
+        deplacementLabel.setText(Integer.toString(j.getNbDeplacement()-2));
         grille.getChildren().clear();
         grilleToGrid(g, grille);
     }
@@ -559,37 +552,22 @@ public class FXMLDocumentController {
      * @param event
      * @throws InterruptedException 
      */
-    @FXML
-<<<<<<< HEAD
-    void run(ActionEvent event) {
-        start.setDisable(true);
-        
-        initComboBoxTheme();    //Initialisation de la combobox A METTRE AILLEURS
-        
-        //Redimensionnement de la grille
-        grille.setPrefSize(476, 476);
-        
-        //Visibilité de la grille
-        grille.setGridLinesVisible(false);
-        
-        grilleToGrid(g,grille);    //remplissage de la grille
-        
-        
-        
-=======
+    @FXML 
     void run(ActionEvent event) throws InterruptedException {
         start.setVisible(false);
+        initComboBoxTheme();    //Initialisation de la combobox A METTRE AILLEURS
+        grille.setPrefSize(476, 476); //Redimensionnement de la grille
+        grille.setGridLinesVisible(false); //Visibilité des ligne de la grille
         navigationBouton(true);
         grilleToGrid(g,grille); 
         chronos.setFini(false);
         //deux mouvement consécutif pour eviter une erreur d'affichage
-        deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()));
-        g.deplacement("d".charAt(0), j1);
-        g.deplacement("q".charAt(0), j1);
+        deplacementLabel.setText(Integer.toString(this.j1.getNbDeplacement()));
+        g.deplacement("d".charAt(0), this.j1);
+        g.deplacement("q".charAt(0), this.j1);
 
         grille.getChildren().clear();
         grilleToGrid(g, grille);
->>>>>>> origin/master
         Task task = new Task<Void>() { // on définit une tâche parallèle pour mettre à jour la vue
         @Override
         public Void call() throws Exception { // implémentation de la méthode protected abstract V call() dans la classe Task
@@ -616,7 +594,7 @@ public class FXMLDocumentController {
         th.setDaemon(true); // le Thread s'exécutera en arrière-plan (démon informatique)
         th.start(); // et on exécute le Thread pour mettre à jour la vue (déplacement continu de la tuile horizontalement)
 
-<<<<<<< HEAD
+
     }
     
     /**
@@ -688,18 +666,8 @@ public class FXMLDocumentController {
         //Changement de l'image en fonction de l'image choisie
         this.image = new Image(input);
     }
+        
     
-    @FXML
-    void Zclic(ActionEvent event) {
-        
-        g.deplacement("z".charAt(0), j1);
-        System.out.println(g);
-        grille.getChildren().clear();
-        grilleToGrid(g, grille);
-=======
->>>>>>> origin/master
-        
-    }
     /**
      * clique sur le bouton z qui permet de monter 
      * @param event action 
@@ -779,14 +747,17 @@ public class FXMLDocumentController {
     void Zclic(ActionEvent event) {        
         deplacementFXML("z".charAt(0), j1);;
     }
-     public void passageProfi (ActionEvent event ) throws IOException{
+    
+    public void passageProfi (ActionEvent event ) throws IOException{
         Parent profil  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene prof = new Scene (profil); //creation scene deuxieme fenetre 
          Stage profilP = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          profilP.setScene(prof); //on affiche la deuxieme fenetre 
          profilP.show();
 
-     }
+    }
+    
+    
      @FXML
     void Qclic(ActionEvent event) {
         deplacementFXML("q".charAt(0), j1);
