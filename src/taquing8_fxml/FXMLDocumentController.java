@@ -52,11 +52,15 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import static javax.swing.text.StyleConstants.Background;
-
+import java.lang.Cloneable;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 
 /**
  *
- * @author hazal
+ * @author groupe 8
  */
 
 
@@ -162,14 +166,6 @@ public class FXMLDocumentController implements Parametres {
     @FXML
     private Button boutonInitChoix;
 
-    // à ajouter dans la fenetre choix je pense
-//    //clic sur fichier "jouer dans la console"
-//    @FXML
-//    void playConsole(ActionEvent event) {
-//        start.setDisable(true);
-//        MainsansGUI m = new MainsansGUI();
-//        m.sansGUI();
-//    }
 
         
     //Getteurs et setteurs
@@ -266,22 +262,21 @@ public class FXMLDocumentController implements Parametres {
             D.setVisible(visible);
     }
     
-    public void handleButtonAction(ActionEvent event) throws IOException {
+    public void handleButtonAction(ActionEvent event) {
 
-   
+    }
 
     
-    }
+   
      /**
       * creation multifenetre qui permet de se connecter 
       * @param event clique sur le bouton 
       * @throws IOException 
       */
-    
     public void changementPage ( ActionEvent event ) throws IOException{
         Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
-         Stage fenetre = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
+         Stage fenetre = (Stage) optionDeJeu.getScene().getWindow(); // creation stage fenetre  
          fenetre.setScene(deuxiemeF); //on affiche la deuxieme fenetre 
          fenetre.show(); //ouverture de la
     }
@@ -289,11 +284,11 @@ public class FXMLDocumentController implements Parametres {
      * Creation multifenetre qui permet de s'inscrire 
      * @param event
      * @throws IOException 
-    */
+     */
     public void passageInscription (ActionEvent event) throws IOException{
          Parent deuxieme  = FXMLLoader.load(getClass().getResource("Inscription.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeFe = new Scene (deuxieme); //creation scene deuxieme fenetre 
-         Stage window = (Stage) optionDeJeu.getScene().getWindow(); // creation stage fenetre  
+         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
          window.show();
     }
@@ -307,11 +302,13 @@ public class FXMLDocumentController implements Parametres {
         //parcours de la grille
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
+                //Si on est sur une case vide
                 if (g.ensCase[j][i].getVide()){
                     Pane p = new Pane();   //Création d'un nouveau pane
                     //p.setStyle("-fx-background-color:"+this.colCaseVide);    //Couleur de fond
                     grid.add(p, i, j);  //Ajout du pane à gridpane
                 }
+                //Si la case n'est pas vide
                 else {
                     //Récupération des coordonnées du bloc pour insérer l'image
                     int coordxBloc = g.ensCase[j][i].getCoordx();
@@ -617,7 +614,7 @@ public class FXMLDocumentController implements Parametres {
      */
     private void deplacementFXML(char direction, Joueur j){
         g.deplacement(direction, j);        
-        deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()-2));
+        deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()));
         grille.getChildren().clear();
         grilleToGrid(g, grille);
     }
@@ -652,7 +649,6 @@ public class FXMLDocumentController implements Parametres {
         grille.setGridLinesVisible(false); //Visibilité des ligne de la grille
         grilleToGrid(g,grille); 
         chronos.setFini(false);
-        grille.getChildren().remove(g.taille*g.taille);
         //deux mouvement consécutif pour eviter une erreur d'affichage
         deplacementLabel.setText(Integer.toString(this.j1.getNbDeplacement()));
 //        g.deplacement("d".charAt(0), this.j1);
@@ -664,6 +660,7 @@ public class FXMLDocumentController implements Parametres {
             while (chronos.isFini()==false){
                 if(g.verifVictoire()==true){
                     chronos.setFini(true);
+                    //c.creationPartie(j1.getPseudo,j1.getMdp,j1.getScore,int mode de jeu)
                 }
                 Platform.runLater(new Runnable() { // classe anonyme
                     @Override
@@ -768,6 +765,12 @@ public class FXMLDocumentController implements Parametres {
                 break;
         }
         
+        setCol("FondCase", colFond); //Changement de la couleur de fond du jeu
+        setCol("Texte", colTexte);  //Changement de la couleur de texte
+        setCol("CaseVide", colVide);    //Changement de la couleur de fond de la case vide
+        
+        //Changement de l'image en fonction de l'image choisie
+        this.image = new Image(input);
     }
 
 
@@ -779,40 +782,16 @@ public class FXMLDocumentController implements Parametres {
      * @param event action du clavier 
      */
     @FXML
-    private void Zpress(KeyEvent event) {
-        if (event.getCode()==KeyCode.Z){
-           deplacementFXML("z".charAt(0), j1);
-        }
-        if (event.getCode()==KeyCode.Q){
-           deplacementFXML("q".charAt(0), j1);
-        }
-        if (event.getCode()==KeyCode.S){
-           deplacementFXML("s".charAt(0), j1);
-        }
+    void touche(KeyEvent event) {
         if (event.getCode()==KeyCode.D){
            deplacementFXML("d".charAt(0), j1);
+        }if (event.getCode()==KeyCode.S){
+           deplacementFXML("s".charAt(0), j1);
+        }if (event.getCode()==KeyCode.Q){
+           deplacementFXML("q".charAt(0), j1);
+        }if (event.getCode()== KeyCode.Z){
+           deplacementFXML("z".charAt(0), j1);
         }
-    }
-/**
-     * saisie clavier sur le touche q qui permet d'aller à gauche  
-     * @param event action du clavier 
-     */
-    @FXML
-    private void Qpress(KeyEvent event) {        
-    }
-/**
-     * saisie clavier sur le touche s qui permet de descendre  
-     * @param event action du clavier 
-     */
-    @FXML
-    private void Spress(KeyEvent event) {        
-    }
-/**
-     * saisie clavier sur le touche d qui permet d'aller à droite 
-     * @param event action du clavier 
-     */
-    @FXML
-    private void Dpress(KeyEvent event) {
     } 
     
     /**
@@ -855,10 +834,15 @@ public class FXMLDocumentController implements Parametres {
      * @param event 
      */
     @FXML
-    void SaveAndQuit(ActionEvent event) {
+    void SaveAndQuit(ActionEvent event) throws IOException, ClassNotFoundException {
         chronos.setFini(true);       
         //enregistrement serialisation
-        //GrilleSer ser = new GrilleSer();
+//        GrilleSer ser = new GrilleSer();
+//        ser.SauverGrille(g);
+        Ser ser = new Ser();
+        ser.SauverJeu(g,j1);
+
+        changementPage(event);
         //retour fenetre menu
         
     }
@@ -874,8 +858,11 @@ public class FXMLDocumentController implements Parametres {
         chronos.setFini(true);       
         //fermeture de la fenetre
         changementPage(event);
+
+//        Deser deser = new Deser();         
+//        Joueur j2 = deser.ChargerJoueur();
+        
     }
-    
     /**
      * Clic sur Nouvelle partie, arrete la partie en cours et en demarre une nouvelle
      * @param event 
@@ -884,6 +871,7 @@ public class FXMLDocumentController implements Parametres {
     void QuitAndNew(ActionEvent event) {
         chronos.setFini(true);
         start.setVisible(true);
+        grille.getChildren().clear();
         chronos.setCmpt(0);
         chronoAffiche.setText("0");
         deplacementLabel.setText("0");
