@@ -112,7 +112,7 @@ public class ProfilController implements Initializable  {
 
     @FXML
     private void prec(ActionEvent event) throws IOException {
-        Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
+        Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("FXMLDocumentController.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
          Stage fenetre = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          fenetre.setScene(deuxiemeF); //on affiche la deuxieme fenetre 
