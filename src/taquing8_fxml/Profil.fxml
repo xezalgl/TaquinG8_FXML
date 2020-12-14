@@ -11,16 +11,6 @@
    <children>
       <TabPane layoutX="-5.0" prefHeight="400.0" prefWidth="608.0" style="-fx-background-color: #ABB1E0; -fx-header-color: #FFFFFF;" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab style="-fx-background-color: #FFFFFF;" text="Mes statistiques ">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-          <Tab style="-fx-background-color: #FFFFFF;" text="Mes parties en cours ">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
             <Tab style="-fx-background-color: #FFFFFF;" text="Modifier mon profil ">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -56,6 +46,11 @@
                   </AnchorPane>
               </content>
             </Tab>
+          <Tab style="-fx-background-color: #FFFFFF;" text="Mes statistiques ">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
         </tabs>
       </TabPane>
    </children>
