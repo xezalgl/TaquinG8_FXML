@@ -56,7 +56,7 @@ public class ProfilController implements Initializable  {
      * @param event 
      */
     @FXML
-    public void changementMdp(ActionEvent event ) throws ClassNotFoundException{
+    private void changementMdp(ActionEvent event ) throws ClassNotFoundException{
         j=deser.ChargerJoueur();
         String ps;
         String asPs; 
