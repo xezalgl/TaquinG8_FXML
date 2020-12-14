@@ -164,11 +164,14 @@ public class FXMLDocumentController implements Parametres {
     @FXML
     private Button boutonInitChoix;
     @FXML
+
     private CheckBox checkAffNumero;
     @FXML
     private AnchorPane prezImages;
     @FXML
     private AnchorPane anchorPaneJeu;
+    
+    private MenuItem profil;
 
 
         
@@ -857,6 +860,7 @@ public class FXMLDocumentController implements Parametres {
         //retour fenetre menu
         
     }
+   
 
     /**
      * Clic sur Quitter, arrete le chronos et ferme la fenêtre du jeu
@@ -892,5 +896,12 @@ public class FXMLDocumentController implements Parametres {
         
     }
 
-  
+  @FXML 
+  void Profil (ActionEvent event) throws IOException{
+    Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
+         Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
+         Stage fenetre = (Stage) optionDeJeu.getScene().getWindow(); // creation stage fenetre  
+         fenetre.setScene(deuxiemeF); //on affiche la deuxieme fenetre 
+         fenetre.show(); //ouverture de la  
+  }
 }

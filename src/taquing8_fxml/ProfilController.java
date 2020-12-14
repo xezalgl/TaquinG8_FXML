@@ -77,7 +77,7 @@ public class ProfilController implements Initializable  {
         mdp= saisieNvMDP.getText(); 
         if( j.getMdp()!=mdp){
             System.out.println("passage boucle"+ps+mdp);
-            c.updateMdpBDD(ps,j.getMdp(),mdp);
+            c.setMdpBDD(ps,j.getMdp(),mdp);
            j.setMdp(mdp);
         }
         

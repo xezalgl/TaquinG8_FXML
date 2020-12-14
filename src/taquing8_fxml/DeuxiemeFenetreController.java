@@ -78,6 +78,7 @@ public class DeuxiemeFenetreController implements Initializable {
          Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
          window.show();
+         
         } 
         else {
             
