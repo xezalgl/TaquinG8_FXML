@@ -5,6 +5,7 @@
  */
 package taquing8_fxml;
 
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -34,7 +35,10 @@ public class ProfilController implements Initializable  {
     private Button nouveauPs;
     @FXML
     private Button nouveauMdp;
-     Joueur  j= new Joueur();
+    Joueur j = new Joueur();
+    //deserialisation du joueur
+    Deser deser = new Deser();
+    
   
      
  
@@ -46,43 +50,42 @@ public class ProfilController implements Initializable  {
         // TODO
         
     } 
-    public void recupInfo(){
-        j.toString(); 
-        System.out.println("salut c'est le joueur"+j);
-    }
+
     /**
      * changement du mot de passe dans l'onglet modification de profil 
      * @param event 
      */
     @FXML
-    public void changementMdp(ActionEvent event ){
+    public void changementMdp(ActionEvent event ) throws ClassNotFoundException{
+        j=deser.ChargerJoueur();
         String ps;
         String asPs; 
         String mdp ; 
         //conexion base de donees 
         String host = "localhost";
-        String port = "3309";
+        String port = "3306";
         String dbname = "taquin";
         String username = "root";
         String password ="";
         ConnexionBDD c = new ConnexionBDD(host, port,  dbname, username,password); 
         c.openConnexion();
-        recupInfo(); 
+
         //System.out.println("recupération mdp"+j.toString());
         //recupérer pseudo 
-       
-       
-        ps= saisieNvPs.getText(); 
+
+
+
         //recuperer mdp 
         mdp= saisieNvMDP.getText(); 
         if( j.getMdp()!=mdp){
-            System.out.println("passage boucle"+ps+mdp);
-            c.updateMdpBDD(ps,j.getMdp(),mdp);
+            
+           c.setPseudoBDD(j.getPseudo(),j.getMdp(),mdp);
            j.setMdp(mdp);
+
         }
-        
-     
-        
+
+
+
     }
     /**
      * changement du pseudo dans l'onglet modification de profil 
@@ -90,6 +93,34 @@ public class ProfilController implements Initializable  {
      */
 
     @FXML
-    private void changementPseudo(ActionEvent event) {
+    private void changementPseudo(ActionEvent event) throws ClassNotFoundException {
+        j=deser.ChargerJoueur();
+        String ps;
+        String asPs; 
+        String mdp ; 
+        //conexion base de donees 
+        String host = "localhost";
+        String port = "3306";
+        String dbname = "taquin";
+        String username = "root";
+        String password ="";
+        ConnexionBDD c = new ConnexionBDD(host, port,  dbname, username,password); 
+        c.openConnexion();
+
+        //System.out.println("recupération mdp"+j.toString());
+        //recupérer pseudo 
+
+
+        ps= saisieNvPs.getText(); 
+        
+        if( j.getPseudo()!=ps){
+            System.out.println("passage boucle"+ps);
+            c.setPseudoBDD(j.getPseudo(),j.getMdp(),ps);
+           j.setPseudo(ps);
+
+        }
+
+
+
     }
 }

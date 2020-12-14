@@ -55,6 +55,7 @@ import static javax.swing.text.StyleConstants.Background;
 import java.lang.Cloneable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
@@ -63,7 +64,6 @@ import javafx.stage.FileChooser;
  * @author groupe 8
  */
 
-
 public class FXMLDocumentController implements Parametres {
     //Initialisation des chrono,grille et joueur
     Chrono chronos = new Chrono(); 
@@ -71,8 +71,16 @@ public class FXMLDocumentController implements Parametres {
     //deserilize la taille selsctionné par le joueur
     //Grille g = new Grille(4); //Pour faire des tests
     Grille g; //Création de la grille avec pour taille celle choisie dans l'interface
+    Deser deser = new Deser();
     Joueur j1 = new Joueur();
-
+    //conexion base de donees 
+        String host = "localhost";
+        String port = "3306";
+        String dbname = "taquin";
+        String username = "root";
+        String password ="";
+    //deserialisation
+        
   @FXML
     private Button Q;
     /**
@@ -614,7 +622,7 @@ public class FXMLDocumentController implements Parametres {
      */
     private void deplacementFXML(char direction, Joueur j){
         g.deplacement(direction, j);        
-        deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()-2));
+        deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()));
         grille.getChildren().clear();
         grilleToGrid(g, grille);
     }
@@ -643,7 +651,8 @@ public class FXMLDocumentController implements Parametres {
      */
     @FXML
     void run(ActionEvent event) throws InterruptedException {
-        start.setVisible(false);
+        
+        start.setVisible(false);       
         navigationBouton(true);
         grille.setPrefSize(476, 476); //Redimensionnement de la grille
         grille.setGridLinesVisible(false); //Visibilité des ligne de la grille
@@ -651,16 +660,27 @@ public class FXMLDocumentController implements Parametres {
         chronos.setFini(false);
         //deux mouvement consécutif pour eviter une erreur d'affichage
         deplacementLabel.setText(Integer.toString(this.j1.getNbDeplacement()));
-//        g.deplacement("d".charAt(0), this.j1);
-//        g.deplacement("q".charAt(0), this.j1);
+
 
         Task task = new Task<Void>() { // on définit une tâche parallèle pour mettre à jour la vue
         @Override
         public Void call() throws Exception { // implémentation de la méthode protected abstract V call() dans la classe Task
             while (chronos.isFini()==false){
                 if(g.verifVictoire()==true){
+                    j1=deser.ChargerJoueur();                    
                     chronos.setFini(true);
-                    //c.creationPartie(j1.getPseudo,j1.getMdp,j1.getScore,int mode de jeu)
+                    navigationBouton(false);
+                    chronos.setFini(true);
+                    grille.setVisible(false);
+                    chronoAffiche11.setVisible(false);
+                    chronoAffiche111.setText("VICTOIRE !!!!/nPour rejouer : Option de jeu -> Nouvelle partie");
+                    chronoAffiche111.resize(300, 200);
+                    chronoAffiche111.relocate(239, 282);
+                    ConnexionBDD c = new ConnexionBDD(host, port,  dbname, username,password); 
+                    c.openConnexion(); 
+                    //enregistrement du score
+                    j1.setScore(chronos.getCmpt());
+                    c.creationPartie(j1.getPseudo(),j1.getMdp(),j1.getScore(),g.getTaille());
                 }
                 Platform.runLater(new Runnable() { // classe anonyme
                     @Override
@@ -837,13 +857,11 @@ public class FXMLDocumentController implements Parametres {
     void SaveAndQuit(ActionEvent event) throws IOException, ClassNotFoundException {
         chronos.setFini(true);       
         //enregistrement serialisation
-//        GrilleSer ser = new GrilleSer();
-//        ser.SauverGrille(g);
         Ser ser = new Ser();
-        ser.SauverJeu(g,j1);
-
+        ser.SauverGrille(g);        
+        //retour menu
         changementPage(event);
-        //retour fenetre menu
+
         
     }
 
@@ -857,11 +875,7 @@ public class FXMLDocumentController implements Parametres {
     void Quit(ActionEvent event) throws IOException, ClassNotFoundException {
         chronos.setFini(true);       
         //fermeture de la fenetre
-        changementPage(event);
-
-//        Deser deser = new Deser();         
-//        Joueur j2 = deser.ChargerJoueur();
-        
+        changementPage(event);        
     }
     /**
      * Clic sur Nouvelle partie, arrete la partie en cours et en demarre une nouvelle
@@ -878,6 +892,10 @@ public class FXMLDocumentController implements Parametres {
         navigationBouton(false);
         j1.initNbDeplacement();
         g=new Grille(g.getTaille());
+        grille.setVisible(false);
+        chronoAffiche111.setText("Temps écoulé:");
+        chronoAffiche111.resize(99, 21);
+        chronoAffiche111.relocate(360, 25);
         
     }
 
