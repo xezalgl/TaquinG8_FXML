@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -19,7 +25,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" onKeyPressed="#touche" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="taquing8_fxml.FXMLDocumentController">
+<AnchorPane id="AnchorPane" onKeyPressed="#touche" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="taquing8_fxml.FXMLDocumentController">
     <children>
 
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
@@ -45,8 +51,6 @@
           </Menu>
         </menus>
       </MenuBar>
-      
-      <ComboBox id="selectTheme" fx:id="selectTheme" layoutX="374.0" layoutY="49.0" onAction="#choixTheme" prefWidth="150.0" promptText="Thème" />
 
       <TabPane prefHeight="633.0" prefWidth="576.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -65,7 +69,7 @@
                               <Font name="Avenir Next Regular" size="18.0" />
                            </font>
                         </Label>
-                        <ImageView fitHeight="271.0" fitWidth="245.0" layoutX="-35.0" layoutY="-44.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="271.0" fitWidth="245.0" layoutX="-35.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@logo.png" />
                            </image>
@@ -76,34 +80,86 @@
                            </font>
                         </Text>
                         <ComboBox fx:id="choix_theme" layoutX="53.0" layoutY="378.0" onAction="#choixTheme" prefHeight="27.0" prefWidth="179.0" promptText="Theme " style="-fx-background-color: #FFFFFF; -fx-font-family: AvenirNext;" visible="false" />
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="376.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="389.0" layoutY="430.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@joueur.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="77.0" fitWidth="104.0" layoutX="35.0" layoutY="406.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="349.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="400.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@puzzle.png" />
-                           </image>
-                        </ImageView>
                         <Button fx:id="boutonInitChoix" layoutX="268.0" layoutY="145.0" mnemonicParsing="false" onAction="#initChoix" onMouseDragReleased="#initChoix" text="Je choisis ma grille !" />
+                        <AnchorPane id="prezImages" fx:id="prezImages" layoutX="322.0" layoutY="207.0" prefHeight="200.0" prefWidth="208.0" visible="false">
+                           <children>
+                              <ImageView fitHeight="74.0" fitWidth="90.0" layoutX="14.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@carte_electronique.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView id="prezCerisier" fitHeight="74.0" fitWidth="90.0" layoutX="113.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@cerisier.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="24.0" layoutY="74.0" text="Défaut">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="74.0" fitWidth="90.0" layoutX="113.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@dragons.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView id="prezDefaut" fitHeight="74.0" fitWidth="90.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@lego_lila.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="119.0" layoutY="74.0" prefHeight="20.0" prefWidth="62.0" text="Cerisier">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="-3.0" layoutY="176.0" prefHeight="20.0" prefWidth="107.0" text="Electronique">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="110.0" layoutY="176.0" prefHeight="20.0" prefWidth="80.0" text="Dragons" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Century Gothic" size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
               </content>
             </Tab>
           <Tab text="Jeu">
             <content>
-              <AnchorPane prefHeight="594.0" prefWidth="644.0">
+              <AnchorPane fx:id="anchorPaneJeu" prefHeight="618.0" prefWidth="638.0">
                      <children>
                         <Accordion />
-                        <Button fx:id="start" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" onAction="#run" text="Start" AnchorPane.bottomAnchor="545.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="507.0" AnchorPane.topAnchor="18.0" />
-                        <Button fx:id="Z" layoutX="274.0" layoutY="9.0" mnemonicParsing="false" onAction="#Zclic" text="Z" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="9.0" />
-                        <Button fx:id="Q" layoutX="242.0" layoutY="36.0" mnemonicParsing="false" onAction="#Qclic" text="Q" AnchorPane.leftAnchor="242.0" AnchorPane.rightAnchor="302.0" AnchorPane.topAnchor="36.0" />
-                        <Button fx:id="S" layoutX="275.0" layoutY="67.0" mnemonicParsing="false" onAction="#Sclic" text="S" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="67.0" />
-                        <Button fx:id="D" layoutX="303.0" layoutY="36.0" mnemonicParsing="false" onAction="#Dclic" text="D" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="36.0" />
-                        <GridPane fx:id="grille" gridLinesVisible="true" layoutX="51.0" layoutY="105.0" onDragDetected="#handleButtonAction" prefHeight="476.0" prefWidth="476.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="105.0">
+                        <Button fx:id="start" layoutX="18.0" layoutY="9.0" mnemonicParsing="false" onAction="#run" prefHeight="37.0" prefWidth="70.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 3px;" text="Start" AnchorPane.bottomAnchor="554.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="490.0" AnchorPane.topAnchor="9.0">
+                           <font>
+                              <Font name="Century Gothic" size="12.0" />
+                           </font></Button>
+                        <Button fx:id="Z" layoutX="274.0" layoutY="19.0" mnemonicParsing="false" onAction="#Zclic" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 3px;" text="Z" textAlignment="CENTER" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="19.0">
+                           <font>
+                              <Font name="Century Gothic" size="12.0" />
+                           </font></Button>
+                        <Button fx:id="Q" layoutX="229.0" layoutY="37.0" mnemonicParsing="false" onAction="#Qclic" prefHeight="38.0" prefWidth="40.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 3px;" text="Q" textAlignment="CENTER" AnchorPane.leftAnchor="229.0" AnchorPane.rightAnchor="309.0" AnchorPane.topAnchor="37.0">
+                           <font>
+                              <Font name="Century Gothic" size="12.0" />
+                           </font></Button>
+                        <Button fx:id="S" layoutX="274.0" layoutY="54.0" mnemonicParsing="false" onAction="#Sclic" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 3px;" text="S" textAlignment="CENTER" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="54.0">
+                           <font>
+                              <Font name="Century Gothic" size="12.0" />
+                           </font></Button>
+                        <Button fx:id="D" layoutX="311.0" layoutY="35.0" mnemonicParsing="false" onAction="#Dclic" prefHeight="38.0" prefWidth="40.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 3px;" text="D" textAlignment="CENTER" AnchorPane.leftAnchor="311.0" AnchorPane.rightAnchor="227.0" AnchorPane.topAnchor="35.0">
+                           <font>
+                              <Font name="Century Gothic" size="12.0" />
+                           </font></Button>
+                        <GridPane fx:id="grille" gridLinesVisible="true" layoutX="52.0" layoutY="111.0" onDragDetected="#handleButtonAction" prefHeight="476.0" prefWidth="476.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="52.0" AnchorPane.rightAnchor="53.0" AnchorPane.topAnchor="111.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />  
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -115,60 +171,55 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                         </GridPane>
-                        <Label fx:id="chronoAffiche" layoutX="460.0" layoutY="25.0" prefHeight="31.0" prefWidth="101.0" textOverrun="CENTER_WORD_ELLIPSIS" AnchorPane.leftAnchor="460.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="25.0">
+                        <Label fx:id="chronoAffiche" layoutX="461.0" layoutY="25.0" prefHeight="31.0" prefWidth="101.0" textOverrun="CENTER_WORD_ELLIPSIS" AnchorPane.leftAnchor="461.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="25.0">
                            <font>
-                              <Font name="Courier New" size="12.0" />
+                              <Font name="Century Gothic" size="12.0" />
                            </font>
                         </Label>
-                        <MenuButton fx:id="optionDeJeu" layoutX="18.0" layoutY="52.0" mnemonicParsing="false" text="Option de Jeu" AnchorPane.bottomAnchor="511.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="425.0" AnchorPane.topAnchor="52.0">
+                        <MenuButton fx:id="optionDeJeu" layoutX="20.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 3px;" text="Option de Jeu" AnchorPane.bottomAnchor="505.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="423.0" AnchorPane.topAnchor="58.0">
                           <items>
+                              <MenuItem mnemonicParsing="false" text="Profil" />
                             <MenuItem mnemonicParsing="false" onAction="#SaveAndQuit" text="Pause (Quiter et Sauver)" />
                             <MenuItem mnemonicParsing="false" onAction="#Quit" text="Quitter (sans Sauver)" />
                               <MenuItem mnemonicParsing="false" onAction="#QuitAndNew" text="Nouvelle partie ( Quitter sans Sauver)" />
                           </items>
+                           <font>
+                              <Font name="Century Gothic" size="12.0" />
+                           </font>
                         </MenuButton>
-                        <Label fx:id="deplacementLabel" layoutX="458.0" layoutY="52.0" prefHeight="31.0" prefWidth="104.0" textOverrun="CENTER_WORD_ELLIPSIS">
+                        <Label fx:id="deplacementLabel" layoutX="460.0" layoutY="53.0" prefHeight="31.0" prefWidth="104.0" textOverrun="CENTER_WORD_ELLIPSIS">
                            <font>
-                              <Font name="Courier New" size="12.0" />
+                              <Font name="Century Gothic" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="chronoAffiche11" layoutX="360.0" layoutY="52.0" prefHeight="31.0" prefWidth="94.0" text="Déplacements:" textOverrun="CENTER_WORD_ELLIPSIS">
+                        <Label fx:id="chronoAffiche11" layoutX="362.0" layoutY="53.0" prefHeight="31.0" prefWidth="94.0" text="Déplacements:" textOverrun="CENTER_WORD_ELLIPSIS">
                            <font>
-                              <Font name="Courier New" size="12.0" />
+                              <Font name="Century Gothic" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="chronoAffiche111" layoutX="360.0" layoutY="25.0" prefHeight="31.0" prefWidth="99.0" text="Temps écoulé:" textOverrun="CENTER_WORD_ELLIPSIS">
+                        <Label fx:id="chronoAffiche111" layoutX="362.0" layoutY="25.0" prefHeight="31.0" prefWidth="99.0" text="Temps écoulé:" textOverrun="CENTER_WORD_ELLIPSIS">
                            <font>
-                              <Font name="Courier New" size="12.0" />
+                              <Font name="Century Gothic" size="12.0" />
                            </font>
                         </Label>
+                        <CheckBox fx:id="checkAffNumero" layoutX="115.0" layoutY="7.0" mnemonicParsing="false" onAction="#setAffNumero" prefHeight="35.0" prefWidth="92.0" text="Numéros">
+                           <font>
+                              <Font name="Century Gothic" size="12.0" />
+                           </font>
+                        </CheckBox>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
           <Tab text="Aide">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ABB1E0;">
                      <children>
-                        <GridPane fx:id="grille1" gridLinesVisible="true" layoutX="37.0" layoutY="166.0" onDragDetected="#handleButtonAction" prefHeight="464.0" prefWidth="502.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="132.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <Button fx:id="D1" layoutX="303.0" layoutY="44.0" mnemonicParsing="false" text="D" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="36.0" />
-                        <Button fx:id="S1" layoutX="273.0" layoutY="76.0" mnemonicParsing="false" text="S" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="65.0" />
-                        <Button fx:id="Q1" layoutX="242.0" layoutY="45.0" mnemonicParsing="false" text="Q" AnchorPane.topAnchor="36.0" />
-                        <Button fx:id="Z1" layoutX="274.0" layoutY="14.0" mnemonicParsing="false" text="Z" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="9.0" />
-                        <Button fx:id="start1" layoutX="12.0" layoutY="29.0" mnemonicParsing="false" text="Start" AnchorPane.bottomAnchor="545.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="507.0" AnchorPane.topAnchor="18.0" />
+                        <ImageView fitHeight="521.0" fitWidth="488.0" layoutX="50.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Aide.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
             </content>

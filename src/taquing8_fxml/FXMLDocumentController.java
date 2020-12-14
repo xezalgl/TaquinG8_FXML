@@ -125,13 +125,12 @@ public class FXMLDocumentController implements Parametres {
     //Image image;
     Image image = new Image(input); //Pour test
     
-    private CheckBox checkAffNumero;    //Pour que l'utilisateur affiche ou non les numéro des cases
-    
-    private boolean affNumero = true; //TRUE si checkAffNumero est coché
+   
+    private boolean affNumero; //TRUE si checkAffNumero est coché
        
     //Thème Graphique
     private Color colFondCase;  //Couleur de fond des cases
-    private Color colCaseVide;  //Couleur pour la case vide
+    private String colCaseVide;  //Couleur pour la case vide
     private Color colTexte;     //Couleur des labels
     
     //clic sur fichier "jouer dans la console"
@@ -170,9 +169,16 @@ public class FXMLDocumentController implements Parametres {
     @FXML
     private ComboBox choix_theme;
     @FXML
-    private ComboBox<?> selectTheme;
-    @FXML
     private Button boutonInitChoix;
+    @FXML
+
+    private CheckBox checkAffNumero;
+    @FXML
+    private AnchorPane prezImages;
+    @FXML
+    private AnchorPane anchorPaneJeu;
+    
+    private MenuItem profil;
 
 
         
@@ -201,9 +207,6 @@ public class FXMLDocumentController implements Parametres {
         if (objet == "FondCase"){
             return this.colFondCase;
         }
-        else if (objet == "CaseVide"){
-            return this.colCaseVide;
-        }
         else if (objet == "Texte"){
             return this.colTexte;
         }
@@ -211,14 +214,23 @@ public class FXMLDocumentController implements Parametres {
             return null;
         }
     }
+    /**
+     * Renvoie la couleur de la case vide
+     * @return 
+     */
+    public String getCol (){
+        return this.colCaseVide;
+    }
     
     
     /**
      * Changement de la valeur du booléen pour l'affichage des numéros des cases
      * @param newValue La nouvelle valeur a attribué au booléen
      */
-    public void setAffNumero (boolean newValue){
-        this.affNumero = newValue;
+    @FXML
+    public void setAffNumero (){
+        this.affNumero = checkAffNumero.isSelected(); //Changement de la valeur
+        grilleToGrid(g,grille); //Relancement de l'affichage du grid
     }
     
     /**
@@ -231,20 +243,15 @@ public class FXMLDocumentController implements Parametres {
             this.colFondCase = newColor;
         }
         else if (objet == "CaseVide"){
-            this.colCaseVide = newColor;
+            String colorVide = newColor + "";
+            this.colCaseVide = colorVide;
         }
         else if (objet == "Texte"){
             this.colTexte = newColor;
         }
     }
     
-    /**
-     * Modifie le booléen d'affichage des numéro des cases en fonction de la checkBox
-     */
-    public void setAffNumero () {
-        this.affNumero = checkAffNumero.isSelected();
-    }
-    
+       
     
     
      /**
@@ -313,7 +320,7 @@ public class FXMLDocumentController implements Parametres {
                 //Si on est sur une case vide
                 if (g.ensCase[j][i].getVide()){
                     Pane p = new Pane();   //Création d'un nouveau pane
-                    //p.setStyle("-fx-background-color:"+this.colCaseVide);    //Couleur de fond
+                    p.setStyle("-fx-background-color:#ffffff");    //Couleur de fond
                     grid.add(p, i, j);  //Ajout du pane à gridpane
                 }
                 //Si la case n'est pas vide
@@ -331,7 +338,8 @@ public class FXMLDocumentController implements Parametres {
                     //Si le joueur veut afficher les numéros des cases
                     if (getAffNumero()==true) {
                         label = new Label(value); //Récupération du numéro du bloc dans un label
-                        label.setTextFill(Color.web("#000000"));  //Changement de style du label
+                        label.setTextFill(Color.web("#FFFF00"));  //Changement de style du label
+                        label.setStyle("-fx-font-size:30px");
                     }
                     
                     p.getChildren().add(ajoutImagePane(numBlocTemp, coordxBloc, coordyBloc, grid, g)); //Ajout de la portion de l'image correspondance au bloc sur le pane
@@ -642,6 +650,7 @@ public class FXMLDocumentController implements Parametres {
         labelTheme.setVisible(true);
         choix_taille.setVisible(true);
         choix_theme.setVisible(true);
+        prezImages.setVisible(true);
     }
     
     /**
@@ -721,7 +730,7 @@ public class FXMLDocumentController implements Parametres {
      * Initialise la combobox qui permet de choisir le thème graphique
      */
     public void initComboBoxTheme () {
-        choix_theme.getItems().addAll("Thème par défaut", "Cerisier", "Electronique", "Dragons", "Une image de mon pc");
+        choix_theme.getItems().addAll("Thème par défaut", "Cerisier", "Electronique", "Dragons", "Non-Dispo : Une image de mon pc");
         choix_theme.getSelectionModel().select("Thème par défaut");
     }
     
@@ -741,7 +750,7 @@ public class FXMLDocumentController implements Parametres {
         //Déclaration des couleurs
         Color colFond = null;
         Color colTexte = null;
-        Color colVide = null;
+        String colVide = null;
         //Récupération de l'item choisi
         String theme = choix_theme.getSelectionModel().getSelectedItem().toString();
         //Modification des paramètres graphiques 'couleurs et nom de l'image)
@@ -751,26 +760,30 @@ public class FXMLDocumentController implements Parametres {
                 colTexte = colTextDefaut;
                 colVide = colVideDefaut;
                 this.input = clazz.getResourceAsStream(urlDefaut);
+                anchorPaneJeu.setStyle("-fx-background-color:Plum");
                 break;
             case "Cerisier" : 
                 colFond = colDefaut;
                 colTexte = colTextDefaut;
                 colVide = colVideDefaut;
                 this.input = clazz.getResourceAsStream(urlCerisier);
+                anchorPaneJeu.setStyle("-fx-background-color:Pink");
                 break;
             case "Electronique" :
                 colFond = colElectro;
                 colTexte = colTextElectro;
                 colVide = colVideElectro;
                 this.input = clazz.getResourceAsStream(urlElectro);
+                anchorPaneJeu.setStyle("-fx-background-color:SeaGreen");
                 break;
             case "Dragons" :
                 colFond = colDragon;
                 colTexte = colTextDragon;
                 colVide = colVideDragon;
                 this.input = clazz.getResourceAsStream(urlDragon);
+                anchorPaneJeu.setStyle("-fx-background-color:LightSkyBlue");
                 break;
-            case "Une image de mon pc" :
+            case "Non-Dispo : Une image de mon pc" :
             /*
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Choisir une image pour jouer au Taquin");
@@ -787,7 +800,7 @@ public class FXMLDocumentController implements Parametres {
         
         setCol("FondCase", colFond); //Changement de la couleur de fond du jeu
         setCol("Texte", colTexte);  //Changement de la couleur de texte
-        setCol("CaseVide", colVide);    //Changement de la couleur de fond de la case vide
+        this.colCaseVide = colVide;    //Changement de la couleur de fond de la case vide
         
         //Changement de l'image en fonction de l'image choisie
         this.image = new Image(input);
@@ -864,6 +877,7 @@ public class FXMLDocumentController implements Parametres {
 
         
     }
+   
 
     /**
      * Clic sur Quitter, arrete le chronos et ferme la fenêtre du jeu
@@ -899,5 +913,12 @@ public class FXMLDocumentController implements Parametres {
         
     }
 
-  
+  @FXML 
+  void Profil (ActionEvent event) throws IOException{
+    Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
+         Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
+         Stage fenetre = (Stage) optionDeJeu.getScene().getWindow(); // creation stage fenetre  
+         fenetre.setScene(deuxiemeF); //on affiche la deuxieme fenetre 
+         fenetre.show(); //ouverture de la  
+  }
 }

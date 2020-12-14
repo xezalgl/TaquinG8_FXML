@@ -21,17 +21,17 @@
          <font>
             <Font size="17.0" />
          </font></Button>
-      <Label layoutX="88.0" layoutY="177.0" prefHeight="32.0" prefWidth="145.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text="  Entre ton pseudo  " textFill="#fffbfb">
+      <Label layoutX="88.0" layoutY="177.0" prefHeight="32.0" prefWidth="162.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text="  Entre ton pseudo  " textFill="#fffbfb">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <TextField fx:id="saisiePseudo" layoutX="226.0" layoutY="176.0" prefHeight="32.0" prefWidth="207.0">
+      <TextField fx:id="saisiePseudo" layoutX="249.0" layoutY="174.0" prefHeight="32.0" prefWidth="207.0">
          <font>
             <Font size="17.0" />
          </font>
       </TextField>
-      <Label layoutX="88.0" layoutY="219.0" prefHeight="32.0" prefWidth="139.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text="  Mot de passe  " textFill="#fffbfb">
+      <Label layoutX="88.0" layoutY="219.0" prefHeight="32.0" prefWidth="162.0" style="-fx-background-color: #526FBD; -fx-background-radius: 3px;" text="  Mot de passe  " textFill="#fffbfb">
          <font>
             <Font size="17.0" />
          </font>
@@ -45,7 +45,6 @@
             <Image url="@logo.png" />
          </image>
       </ImageView>
-      <Button layoutX="68.0" layoutY="21.0" mnemonicParsing="false" onAction="#passageProfil" text="profil " />
-      <PasswordField fx:id="saisieMdp" layoutX="227.0" layoutY="220.0" prefHeight="34.0" prefWidth="207.0" />
+      <PasswordField fx:id="saisieMdp" layoutX="249.0" layoutY="218.0" prefHeight="34.0" prefWidth="207.0" />
    </children>
 </AnchorPane>

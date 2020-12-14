@@ -25,10 +25,10 @@ public interface Parametres {
     final String urlDefaut = "lego_lila.png";
     
     //Couleur de la case vide
-    final Color colVideCerisier = Color.rgb (169, 59, 114);
-    final Color colVideElectro = Color.rgb (18, 149, 49);
-    final Color colVideDragon = Color.rgb (59, 124, 162);
-    final Color colVideDefaut = Color.rgb (132, 94, 222);
+    final String colVideCerisier = "HotPink";
+    final String colVideElectro = "DarkGreen";
+    final String colVideDragon = "DarkTurquoise";
+    final String colVideDefaut = "DarkOrchid";
     
     //Couleur de texte des labels
     final Color colTextCerisier = Color.rgb (112, 36, 62);

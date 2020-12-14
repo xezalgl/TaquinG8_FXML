@@ -33,8 +33,6 @@ public class InscriptionController implements Initializable {
     private Button accesPage;
     @FXML
     private TextField saisieMdp;
-    @FXML
-    private TextField saisieMail;
      Joueur j = new Joueur(); 
     /**
      * Initializes the controller class.
@@ -59,7 +57,7 @@ public class InscriptionController implements Initializable {
         String mdp ; 
         //conexion à la base de donees 
         String host = "localhost";
-        String port = "3309";
+        String port = "3306";
         String dbname = "taquin";
         String username = "root";
         String password ="";
@@ -69,7 +67,7 @@ public class InscriptionController implements Initializable {
         ps= saisiePseudo.getText(); 
         //recuperer mdp 
         mdp= saisieMdp.getText(); 
-        System.out.println("Mot et pseudo saisie dans la connexion"+ps+mdp);
+        
        // c.insertUsers(ps, mdp);
        
        if(c.getUsers(ps, mdp)==false){
@@ -83,7 +81,6 @@ public class InscriptionController implements Initializable {
          window.show();
          j.setPseudo(ps);
          j.setMdp(mdp); 
-         System.out.println("le joueur a pour "+j);
         } 
       
        else {

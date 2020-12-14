@@ -67,9 +67,7 @@ public class DeuxiemeFenetreController implements Initializable {
         //recupérer pseudo 
         ps= saisiePseudo.getText(); 
         //recuperer mdp 
-         mdp= saisieMdp.getText(); 
-        System.out.println("saisie du pseudo connexion"+ps+mdp);
-     
+         mdp= saisieMdp.getText();
         //verifie si la personne existe 
         if(c.getUsers(ps, mdp)==true){
             // enregistrement des données du joueur            
@@ -83,9 +81,9 @@ public class DeuxiemeFenetreController implements Initializable {
          Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
          window.show();
+         
         } 
         else {
-            
            saisiePseudo.setStyle("-fx-text-fill: red ;") ; 
             saisieMdp.setStyle("-fx-text-fill: red ;"); 
         }

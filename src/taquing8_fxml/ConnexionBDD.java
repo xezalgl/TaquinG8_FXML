@@ -13,7 +13,8 @@ import java.sql.Statement;
 
 /**
  *
- * @author Camille
+ * @author hazal
+ *
  */
 public class ConnexionBDD {
     private String host, port, dbname, username, password; 
@@ -427,5 +428,9 @@ public class ConnexionBDD {
          
          return rank;
      }
+     
+
+
+   
      
 }

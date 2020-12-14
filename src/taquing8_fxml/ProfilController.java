@@ -69,23 +69,13 @@ public class ProfilController implements Initializable  {
         String password ="";
         ConnexionBDD c = new ConnexionBDD(host, port,  dbname, username,password); 
         c.openConnexion();
-
-        //System.out.println("recupération mdp"+j.toString());
-        //recupérer pseudo 
-
-
-
         //recuperer mdp 
         mdp= saisieNvMDP.getText(); 
-        if( j.getMdp()!=mdp){
-            
-           c.setPseudoBDD(j.getPseudo(),j.getMdp(),mdp);
+        if( j.getMdp()!=mdp){            
+            c.setMdpBDD(j.getPseudo(),j.getMdp(),mdp);
            j.setMdp(mdp);
 
         }
-
-
-
     }
     /**
      * changement du pseudo dans l'onglet modification de profil 
@@ -106,15 +96,8 @@ public class ProfilController implements Initializable  {
         String password ="";
         ConnexionBDD c = new ConnexionBDD(host, port,  dbname, username,password); 
         c.openConnexion();
-
-        //System.out.println("recupération mdp"+j.toString());
-        //recupérer pseudo 
-
-
         ps= saisieNvPs.getText(); 
-        
         if( j.getPseudo()!=ps){
-            System.out.println("passage boucle"+ps);
             c.setPseudoBDD(j.getPseudo(),j.getMdp(),ps);
            j.setPseudo(ps);
 
