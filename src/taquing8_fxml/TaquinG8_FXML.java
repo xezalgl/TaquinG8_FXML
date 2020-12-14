@@ -19,20 +19,30 @@ import javafx.stage.Stage;
 public class TaquinG8_FXML extends Application {
     //Attributs
 
-          
-    //Constructeur
+    /**
+     * Constructeur de la classe TaquinG8_FXML 
+     */      
+   
     public TaquinG8_FXML() {
         
     }
-            
+       /**
+        * 
+        * @param stage
+        * @throws Exception 
+        */     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml"));
         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+<<<<<<< HEAD
         stage.setResizable(false); //Bloque le redimensionnement du stage
+=======
+
+>>>>>>> origin/master
         stage.show();
     }
 

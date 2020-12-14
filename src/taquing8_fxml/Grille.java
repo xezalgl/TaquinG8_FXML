@@ -5,6 +5,10 @@
  */
 package taquing8_fxml;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,17 +17,18 @@ import java.util.Scanner;
  *
  * @author hazal
  */
-public class Grille {
+public class Grille  implements Serializable{
       //Attributs
     int taille=0;
     Case [][] ensCase;    
     //HashSet<Integer> ensNumBloc = new HashSet();
     List <Integer> listeBloc = new ArrayList<Integer>();
+  
     
-    //Constructeur
-    /*
-    constructeur de case : coords, num du bloc, booleen en bas à droite
-    */   
+    /**
+     * constructeur de la classe grille 
+     * @param t 
+     */
     public Grille(int t){
              
         this.taille = t;
@@ -52,28 +57,44 @@ public class Grille {
             }
         }
     }
+    /**
+     * Melange les 
+     * @param taille taille de la grille 
+     * @return un nombre 
+     */
     
     public int aleatoire(int taille){
         int max = taille-1;
         return (int)(Math.random() * (max));
         
     }
+    /**
+     * accès en écriture à la taille de la grille 
+     * @param newTaille nouvelle taille de la grille 
+     */
     
     
-    public void setTaille (int newTaille) {
     //Initialisation de l'attribut taille
+    public void setTaille (int newTaille) {
         //Si la valeur de taille est nulle, cela veut dire qu'on ne l'a jamais initialisé donc il faut le faire
         if (this.taille == 0){
             this.taille = newTaille;
         }
     }
+
+
+    /**
+     * accès en lecture à la taille de la grille 
+     * @return la taille de la grille 
+     */
     
     public int getTaille () {
         return this.taille;
     }
     
-    /*
-    Remplissage de l'ensemble avec tous les numéros des blocs possibles
+    /**
+     * Remplissage de l'ensemble avec tous les numéros des blocs possibles
+     * @param List liste contenant les bloc 
     */
     private List remplissageListeBloc(List l) {
         for (int i=0 ; i<this.taille*taille-1; i++){
@@ -85,9 +106,14 @@ public class Grille {
         return l;
     }
     
-    private void inversionCoord(int num_bloc_x, int num_bloc_y, Case caseVide, char d){
-        //Récupérer les coordonnées du bloc et de la case vide  dans des variables
-        
+    /**
+     * Inversion des coordonnées entre deux case
+     * @param num_bloc_x int coordonée x du bloc 
+     * @param num_bloc_y int coordonnée y du bloc
+     * @param caseVide Case , case vide actuellement
+     * @param d 
+     */
+    private void inversionCoord(int num_bloc_x, int num_bloc_y, Case caseVide, char d){        
         int tempx = num_bloc_x; //du bloc qui va être déplacé 
         int  tempy = num_bloc_y;   // du bloc qui va être déplacé 
         int videx= caseVide.getCoordx(); 
@@ -116,6 +142,12 @@ public class Grille {
         
     }
     
+    /**
+     * Trouve la case seon ses coordonnées x et y et retourne la Caes
+     * @param x int coordonnée x de la case
+     * @param y int coordonnée y de la case 
+     * @return Case, case de coordonées x et y de la grille
+     */
     private Case trouveCaseByCoord(int x, int y ){
         Case c = null;
         //Parcours de l'ensemble des cases
@@ -130,8 +162,14 @@ public class Grille {
         //Renvoie la case cherchée
         return c; 
     }
+    
+    /**
+     * permet le déplacement d'une case dans la direction souhaitée si c'est possible
+     * @param direction char lettre "z" "q" "s" "d" qui représente la direction
+     * @param j Joueur, joueur qui effectue ce déplacement
+     * @return boolean, tru si le déplacement à été effectué, false sinon
+     */
     protected boolean deplacement (char direction, Joueur j){
-    //permet le déplacement d'une case dans la direction souhaitée si c'est possible
         //Récupération des coordonnées de la case vide
         Case caseVide = (Case) trouveCaseVide();
         int casevide_x = caseVide.getCoordx();
@@ -175,8 +213,7 @@ public class Grille {
         else {
             //le déplacement n'est pas possible
             deplacement_ok = false;
-        }
-        
+        }      
         
         //Vérifie si le déplacement est possible
         if (deplacement_ok){
@@ -186,39 +223,44 @@ public class Grille {
         }
         
         return deplacement_ok; 
-    }
     
-       protected boolean verifVictoire () {
-        int temp_num_bloc = 0;  //variable temp pour le num du bloc précédent
-        boolean ordonne = true; //TRUE si les blocs sont dans l'ordre
-
-        Case case_Vide= trouveCaseVide(); 
-       while (ordonne) {
-           //si la case vide est au bon endroit on fait le test 
-           if(case_Vide.getCoordx()==this.taille-1 && case_Vide.getCoordy()==this.taille-1){
-        for (int i=0 ; i<taille && ordonne; i++) {
-            for (int j=0 ; j<taille && ordonne ; j++) {
-                    Case c = trouveCaseByCoord(i, j);
-                    //on regarde si c'est une case vide qui n'est pas en bas à droite
-                    if(j!=this.taille-1 || i!=this.taille-1){
-                       if (c.getBloc().getNumBloc() != temp_num_bloc+1  ){
-                        ordonne = false;
-                    }
-                       temp_num_bloc = c.getBloc().getNumBloc();
+     
+    }
+     
+    
+    /**
+     * Trouve la case vide et en renvoie une copie
+    
+    /**
+     * Vérifie si le taquin est résolue
+     * @return boolean, true si le jeu est résulue, false sinon 
+     */
+    protected boolean verifVictoire () {
+       int temp_num_bloc = 0;  //variable temp pour le num du bloc précédent
+       boolean ordonne = true; //TRUE si les blocs sont dans l'ordre
+       Case case_Vide= trouveCaseVide(); 
+         while (ordonne) {
+        //si la case vide est au bon endroit on fait le test 
+        if(case_Vide.getCoordx()==this.taille-1 && case_Vide.getCoordy()==this.taille-1){
+            for (int i=0 ; i<taille && ordonne; i++) {
+                for (int j=0 ; j<taille && ordonne ; j++) {
+                        Case c = trouveCaseByCoord(i, j);
+                        //on regarde si c'est une case vide qui n'est pas en bas à droite
+                        if(j!=this.taille-1 || i!=this.taille-1){
+                            if (c.getBloc().getNumBloc() != temp_num_bloc+1  ){
+                                ordonne = false;
+                            }
+                            temp_num_bloc = c.getBloc().getNumBloc();
                        }                       
                     }
                 }break;
             }
-           else {
+            else {
                 ordonne = false;
            }
         }
         return ordonne;    
     }
-    
-    /*
-    Trouve la case vide et en renvoie une copie
-    */
     public Case trouveCaseVide() {
         Case c = null;
         //Parcours de l'ensemble des cases
@@ -234,40 +276,11 @@ public class Grille {
         return (Case) c;
       
     }
+
     
-    /*
-    x : coordonnée en x du bloc voulu
-    y : coordonnée en y du bloc voulu
-    Parcours le HashSet de Bloc pour trouver le bloc qui a pour coord x et y et renvoie son numéro
-    */
-    private int getNumBlocByCoord(int x, int y) {
-        /*
-        //Déclaration et Initialisation
-        int numbloc = 0;
-        //Copie du HashSet de Bloc
-        HashSet copieEnsBloc = ensBloc;
-        //Parcours du HashSet
-        Iterator it = copieEnsBloc.iterator();
-        while (it.hasNext()){
-            //Copie du bloc courant
-            Bloc bloctemp = (Bloc) it.next();
-            //Si c'est le bloc qu'on cherche alors on récupère son numéro
-            if (bloctemp.getCoordx()==x && bloctemp.getCoordy()==y){
-                numbloc = bloctemp.getNumBloc();
-            }
-        }
-        
-        //Retourne le numéro du bloc
-        return numbloc;
-        //pomme 
-        */
-        return 0;
-    }
-    
-    
-    /*
-    Permet de retourner la grille en chaine de caractère
-    */
+     /**
+     * @return Case une copie de la case vide dans la grille
+    **/
     @Override
     public String toString () {
         String grilleString = "";
@@ -280,6 +293,4 @@ public class Grille {
         }
         return grilleString;
     }
-    
-
 }

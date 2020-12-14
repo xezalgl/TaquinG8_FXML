@@ -5,18 +5,25 @@
  */
 package taquing8_fxml;
 
+import java.io.Serializable;
+
 /**
  *
  * @author hazal
  */
-public class Case {
+public class Case implements Serializable{
   private int x; 
     private int y;
     private boolean vide;
     private Bloc b;
     
-    //consctructeur de la classe 
-    //crée un carte qui pour coordonees abs et ord
+    /**
+     * consctructeur d'une case
+     * @param abs int abscisse de la case
+     * @param ord int ordonnée de la case
+     * @param v boolean, case vide=true, false sinon
+     * @param num int numéro de la case
+     */ 
     public Case(int abs, int ord, boolean v, int num){
         this.x=abs; 
         this.y=ord; 
@@ -25,48 +32,74 @@ public class Case {
         this.b=bloc;
     }
 
-    //renvoie l'attribut x 
+    /**
+   * accès en lecture au vide 
+    @return la coordonée en x 
+    */
     public int getCoordx(){    
        return (int) this.x; 
     }
-    
-    //renvoie l'attribut y
+   /**
+    * accès en lecture au coord y 
+    @return la coordonée en y
+    */
     public int getCoordy(){    
        return this.y; 
     }
     
-    //retourne la valuer d'une case
+    /**
+     * accès en lecture au vide 
+     * @return vide si la case est vide 
+     */
     public boolean getVide(){
         return this.vide; 
     }
     
-    //modifie le x par la valeur newx 
+    /**
+     *  accès en écriture à la valeur  x
+     * @param newx nouvelle coord en x 
+     */
     public void setCoordx (int newx){
         this.x=newx; 
     }
     
-    //modifie le y par la valeur newy 
+    /**
+     * accès en écriture à la valeur  y 
+     * @param new y nouvelle coord en y 
+     */
     public void setCoordy(int newy){
         this.y=newy; 
     }
     
-    /*
-    methode qui modifie l'attribut vide avec la valeur v en parametre
+    /**
+     * accès en ecriture au booleen  vide 
+     * @param v nouvelle valeur 
     */
     public void setVide(boolean v){
         this.vide=v;
     }
+    /**
+     * accès en écriture au numéro du bloc  
+     * @param newBloc nouveau bloc 
+    */
     
     public void setBloc(Bloc newBloc){
         this.b=newBloc;
     }
     
+    /**
+     * accès en lecture au numéro du bloc  
+     * @return le bloc  
+    */
     public Bloc getBloc(){
         return this.b;
     }
     
   
-
+ /**
+  * redéfinition de la méthode toString de la classe Object qui permet l’affichage de l’objet Case 
+  * @return affichage de la case 
+  */
     @Override
     public String toString() {
         if (this.getVide()){

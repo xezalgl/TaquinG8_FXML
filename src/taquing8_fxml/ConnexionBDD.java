@@ -27,7 +27,9 @@ public class ConnexionBDD {
         this.password = p;
         
     }
-    //Fermeture de la connexion 
+    /**Fermeture de la connexion 
+     * 
+     */
     public void closeConnexion() {
         if(con != null){
             try{
@@ -38,7 +40,9 @@ public class ConnexionBDD {
         }
     }
     
-    //Connexion avec la base de donnée taquin 
+    /**Connexion avec la base de donnée taquin 
+     * 
+     */
     public void openConnexion() {
         String connectUrl = "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.dbname;
         if (con != null) {
@@ -61,7 +65,11 @@ public class ConnexionBDD {
         }
     }
     
-    //Méthode qui permet de créer un nouveau joueur dans la base de donnée
+    /**
+     * Méthode qui permet de créer un nouveau joueur dans la base de donnée 
+     * @param pseudo recupere le pseudo 
+     * @param mdp recupere le mot de passe 
+     */
     public void insertUsers(String pseudo, String mdp) {
         try {
             this.openConnexion();
@@ -85,7 +93,12 @@ public class ConnexionBDD {
     
     
     
-    // Méthode qui recherche un joueur dans la BDD
+    /** 
+     * Méthode qui recherche un joueur dans la BDD
+     * @param pseudo recupere le pseudo 
+     * @param mdp    recupere le mot de passe 
+     * @return  si l'utilisateur existe 
+     */
     public boolean getUsers(String pseudo, String mdp){
         boolean existe = false;
         
@@ -118,7 +131,11 @@ public class ConnexionBDD {
         return existe;
 }
     
-    //Affichage des informartions concernant le joueur , le nombre de partie jouée et le meilleur score
+    /**Affichage des informartions concernant le joueur , le nombre de partie jouée et le meilleur score
+     * 
+     * @param pseudo recupère le pseudo 
+     * @param mdp  recupère le mot de passe 
+     */
     public void afficheInformation(String pseudo, String mdp){
         int nb_p = 5;
         int meilleur_score = 4;
@@ -139,7 +156,10 @@ public class ConnexionBDD {
         
     }
     
-   // si le joueur gagne 
+   /** Si le joueur gagne 
+    * 
+    * @param pseudo recupere le pseudo du joueur 
+    */
     public void updateVictoire(String pseudo) {
         int valeur;
         System.out.println("Résultat base de donnée : ");
@@ -161,12 +181,55 @@ public class ConnexionBDD {
         } catch (Exception e) {
             System.out.println("Probleme avec l'insertion ");
         }
+        
     }
 
     
     
     
+   /**
+    * changement de pseudo 
+    * @param pseudo
+    * @param mdp
+    * @param newPseudo 
+    */
     
+    
+    public void updatePseudoBDD(String pseudo, String mdp, String newPseudo){
+        try {
+            this.openConnexion();
+            Statement stmt = con.createStatement();
+            String query = " UPDATE joueur SET pseudo = '" + newPseudo + "' WHERE pseudo='" + pseudo + "' AND mdp = '" + mdp + "' "; 
+              stmt.executeUpdate(query);
+            }catch (SQLException e){
+            System.out.println("problème avec le nouveau pseudo");
+    }
+
+    }
+
+  /**
+   * changement de mot de passe 
+   * @param pseudo
+   * @param mdp
+   * @param newMdp 
+   */
+
+    //changement de mot de passe
+    public void updateMdpBDD(String pseudo, String mdp, String newMdp){
+
+        try {
+            this.openConnexion();
+            Statement stmt = con.createStatement();
+            String query = " UPDATE joueur SET mdp = '" + newMdp + "' WHERE pseudo='" + pseudo + "' AND mdp = '" + mdp + "' ";
+              stmt.executeUpdate(query);
+
+
+
+            }catch (SQLException e){
+            System.out.println("problème avec le nouveau pseudo");
+    }
+
+    }
     
     
     

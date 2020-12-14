@@ -17,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -28,29 +29,35 @@ import javafx.stage.Stage;
 //
 public class DeuxiemeFenetreController implements Initializable {
    //connexion
-    
+    Joueur j = new Joueur(); 
     @FXML
     private Button accesPage;
      @FXML
     private TextField saisiePseudo;
-    @FXML
-    private TextField saisieMdp;
+   
     @FXML
     private Button accesI;
+    @FXML
+    private PasswordField saisieMdp;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }   
+    } 
+     /**
+     * passage à la fenetre de jeu si le joueur est bien connecté et présent dans la base de données 
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     public void passageDeuxiemeF (ActionEvent event ) throws IOException{
         String ps;
         String mdp ; 
         //conexion base de donees 
         String host = "localhost";
-        String port = "3309";
+        String port = "3306";
         String dbname = "taquin";
         String username = "root";
         String password ="";
@@ -59,13 +66,14 @@ public class DeuxiemeFenetreController implements Initializable {
         //recupérer pseudo 
         ps= saisiePseudo.getText(); 
         //recuperer mdp 
-       mdp= saisieMdp.getText(); 
-        System.out.println("coucoun"+ps+mdp);
+         mdp= saisieMdp.getText(); 
+        System.out.println("saisie du pseudo connexion"+ps+mdp);
      
         //verifie si la personne existe 
         if(c.getUsers(ps, mdp)==true){
              //ouverture fenetre 
-        Parent deuxieme  = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
+        
+         Parent deuxieme  = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeFe = new Scene (deuxieme); //creation scene deuxieme fenetre 
          Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          window.setScene(deuxiemeFe); //on affiche la deuxieme fenetre 
@@ -81,6 +89,11 @@ public class DeuxiemeFenetreController implements Initializable {
         
        
     }
+     /**
+     * passage à la fenetre inscription si le joueur n'a pas de compte 
+     * @param event
+     * @throws IOException 
+     */
     @FXML 
      public void passageInscription (ActionEvent event ) throws IOException{
         Parent inscription  = FXMLLoader.load(getClass().getResource("Inscription.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
@@ -89,10 +102,14 @@ public class DeuxiemeFenetreController implements Initializable {
          inscriptionF.setScene(inscr); //on affiche la deuxieme fenetre 
          inscriptionF.show();
     }
-     @FXML
-     //conexion à la bdd 
-     public void connexionBdd(ActionEvent event){
-    
-        
+     public void connexionBdd(ActionEvent event){ 
      }
+      @FXML 
+     public void passageProfil (ActionEvent event ) throws IOException{
+        Parent profil  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
+         Scene prof = new Scene (profil); //creation scene deuxieme fenetre 
+         Stage profilP = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
+         profilP.setScene(prof); //on affiche la deuxieme fenetre 
+         profilP.show();
+    }
 }
