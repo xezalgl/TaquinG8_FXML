@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -13,8 +13,6 @@ import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
 import com.sun.javafx.jmx.MXNodeAlgorithmContext;
 import com.sun.javafx.sg.prism.NGNode;
-import javafx.geometry.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -30,10 +28,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -41,7 +41,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -49,26 +48,28 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import static javax.swing.text.StyleConstants.Background;
-import java.lang.Cloneable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
+import static taquing8_fxml.Parametres.colCerisier;
+import static taquing8_fxml.Parametres.colDragon;
+import static taquing8_fxml.Parametres.colElectro;
+import static taquing8_fxml.Parametres.urlCerisier;
+import static taquing8_fxml.Parametres.urlDragon;
+import static taquing8_fxml.Parametres.urlElectro;
+
 
 /**
  *
- * @author groupe 8
+ * @author hazal
  */
 
-public class FXMLDocumentController implements Parametres {
 
+public class FXMLDocumentController {
     //Initialisation des chrono,grille et joueur
     Chrono chronos = new Chrono(); 
     //deserilize la taille selsctionné par le joueur
-    //Grille g = new Grille(4); //Pour faire des tests
-    Grille g = new Grille(choixTailleGrille()); //Création de la grille avec pour taille celle choisie dans l'interface
+    Grille g = new Grille(4);
     Joueur j1 = new Joueur();
     int size = g.getTaille();
 
@@ -105,44 +106,20 @@ public class FXMLDocumentController implements Parametres {
    */  
     @FXML
     private GridPane grille;
-    
-
-    @FXML 
-    private Label deplacementLabel; 
-     @FXML
-    private MenuButton optionDeJeu;
-    
+    @FXML
+    private MenuItem console;
     
     @FXML
     private ComboBox selectTheme;
     
     @FXML
     private ComboBox selectTaille;
-    
-    //Image à mettre dans l'interface pour jouer
-    Class<?> clazz = FXMLDocumentController.class;
 
-    //InputStream input;
-    InputStream input = clazz.getResourceAsStream(urlCerisier); //Pour test
-    //Image image;
-    Image image = new Image(input); //Pour test
-    
-    @FXML
-    private Pane paneFond;  //Pane de fond, pour changer la couleur en fonction du thème
-    
     @FXML 
-    private CheckBox checkAffNumero;    //Pour que l'utilisateur affiche ou non les numéro des cases
-    
-    private boolean affNumero; //TRUE si checkAffNumero est coché
-        
-    //Thème Graphique
-    private Color colFondCase;  //Couleur de fond des cases
-    private Color colCaseVide;  //Couleur pour la case vide
-    private Color colTexte;     //Couleur des labels
-    
-    //clic sur fichier "jouer dans la console"
-    
-    //Onglet Aide
+    private Label deplacementLabel; 
+     @FXML
+    private MenuButton optionDeJeu;   
+     
     @FXML
     private Label chronoAffiche11;
     @FXML
@@ -161,69 +138,13 @@ public class FXMLDocumentController implements Parametres {
     private Button start1;
 
 
-    //Getteurs et setteurs
-    
-    /**
-     * Renvoie le booléen pour savoir si le joueur veut afficher les numéros des cases
-     * @return le booléen d'affichage des numéros des cases
-     */
-    public boolean getAffNumero () {
-        return this.affNumero;
-    }
-    /**
-     * Renvoie la couleur correspondant à l'élément souhaité
-     * @param objet le type d'élément pour lequel on veut connaitre la couleur
-     * @return la couleur correspondant à l'élément
-     */
-    public Color getCol (String objet) {
-        if (objet == "FondCase"){
-            return this.colFondCase;
-        }
-        else if (objet == "CaseVide"){
-            return this.colCaseVide;
-        }
-        else if (objet == "Texte"){
-            return this.colTexte;
-        }
-        else {
-            return null;
-        }
-    }
-    
-    
-    /**
-     * Changement de la valeur du booléen pour l'affichage des numéros des cases
-     * @param newValue La nouvelle valeur a attribué au booléen
-     */
-    public void setAffNumero (boolean newValue){
-        this.affNumero = newValue;
-    }
-    
-    /**
-     * Modifie la couleur d'un élément 
-     * @param objet l'élément pour lequel on veut changer la couleur
-     * @param newColor la nouvelle couleur a attribué à l'élément
-     */
-    public void setCol (String objet, Color newColor){
-        if (objet == "FondCase"){
-            this.colFondCase = newColor;
-        }
-        else if (objet == "CaseVide"){
-            this.colCaseVide = newColor;
-        }
-        else if (objet == "Texte"){
-            this.colTexte = newColor;
-        }
-    }
-    
-    /**
-     * Modifie le booléen d'affichage des numéro des cases en fonction de la checkBox
-     */
-    public void setAffNumero () {
-        this.affNumero = checkAffNumero.isSelected();
-    }
-    
-    
+        
+    //Image à mettre dans l'interface pour jouer
+    Class<?> clazz = FXMLDocumentController.class;
+    //InputStream input;
+    InputStream input = clazz.getResourceAsStream(urlCerisier); //Pour test
+    //Image image;
+    Image image = new Image(input); //Pour test
     
      /**
       * clic sur fichier "jouer dans la console"
@@ -261,7 +182,7 @@ public class FXMLDocumentController implements Parametres {
     public void changementPage ( ActionEvent event ) throws IOException{
         Parent deuxiemeFenetre  = FXMLLoader.load(getClass().getResource("DeuxiemeFenetre.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene deuxiemeF = new Scene (deuxiemeFenetre); //creation scene deuxieme fenetre 
-         Stage fenetre = (Stage) optionDeJeu.getScene().getWindow(); // creation stage fenetre  
+         Stage fenetre = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          fenetre.setScene(deuxiemeF); //on affiche la deuxieme fenetre 
          fenetre.show(); //ouverture de la
     }
@@ -290,13 +211,12 @@ public class FXMLDocumentController implements Parametres {
         int yVide = caseVide.getCoordy();
         return xVide+1+(yVide*g.taille);
     }
-    
     /**
      * affiche la grille dans le GridPane de l'interface
      * @param g grille 
      * @param grid grille 
-     */
-    private void grilleToGrid(Grille g, GridPane grid){
+     */   
+     private void grilleToGrid(Grille g, GridPane grid){
         //parcours de la grille
         for(int i =0; i<g.getTaille(); i++){
             for (int j = 0;j<g.getTaille();j++){
@@ -308,35 +228,26 @@ public class FXMLDocumentController implements Parametres {
                 }
                 //Si la case n'est pas vide
                 else {
+                    String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc()); //Récupération du numéro du bloc
                     //Récupération des coordonnées du bloc pour insérer l'image
                     int coordxBloc = g.ensCase[j][i].getCoordx();
                     int coordyBloc = g.ensCase[j][i].getCoordy();
-                    
-                    int numBlocTemp = 0;    //Stockage du numéro de la case sous forme de int
-                    
+                    Label label = new Label(value); //Récupération du numéro du bloc dans un label
+                    label.setTextFill(Color.web("#ffffff"));  //Changement de style du label
                     Pane p = new Pane(); //Création d'un pane
+                    int numBlocTemp = Integer.parseInt(value);  //Numéro du bloc en int
                     p.getChildren().add(ajoutImagePane(numBlocTemp, coordxBloc, coordyBloc, grid, g)); //Ajout de la portion de l'image correspondance au bloc sur le pane
-                    
-                    //Si le joueur veut afficher les numéros des cases
-                    if (getAffNumero()) {
-                        String value = String.valueOf(g.ensCase[j][i].getBloc().getNumBloc()); //Récupération du numéro du bloc
-                        Label label = new Label(value); //Récupération du numéro du bloc dans un label
-                        label.setTextFill(Color.web("#ffffff"));  //Changement de style du label
-                        p.getChildren().addAll(label); //Ajout du texte sur le pane
-                        numBlocTemp = Integer.parseInt(value);  //Numéro du bloc en int
-                    }
-                    
+                    p.getChildren().addAll(label); //Ajout du texte sur le pane
                     //p.setStyle("-fx-background-color:black"); //couleur de fond si pas d'image
                     grid.add(p, i, j); //Ajout du pane au grid pane
-
-                }
                 }
             }
+        }
         //Affichage de la grille avec des espaces entre les colonnes et lignes
         grid.setHgap(3.0);
         grid.setVgap(3.0);
     }
-      
+             
     /**
      * Ajout d'une portion de l'image au bloc souhaité
      * @param numBloc   le numéro du bloc sur lequel placer un morceau de l'image
@@ -365,7 +276,7 @@ public class FXMLDocumentController implements Parametres {
                 break;
             case 5 :
                 //La grille est en taille 5
-                img = ajoutImageTaille5(img, numBloc, hauteurCase, largCase);
+                //img = ajoutImageTaille5(img, numBloc, hauteurCase, largCase);
                 break;
         }
              
@@ -495,132 +406,6 @@ public class FXMLDocumentController implements Parametres {
         return img;
     }
     
-    private ImageView ajoutImageTaille5(ImageView img, int numBloc, float hauteurCase, float largCase){
-        //Déclaration de la découpe
-        Rectangle2D imgDecoupe = null;
-        //En fonction du numéro du bloc
-        switch (numBloc) {
-            case 1 : 
-                //Découpage de la 2e zone de l'image
-                imgDecoupe = new Rectangle2D(0, 0, largCase, hauteurCase);
-                break;
-            case 2 : 
-                //Découpage de la 2e zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase, 0, largCase, hauteurCase);
-                break;
-            case 3: 
-                //Découpage de la 3e zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase*2, 0, largCase, hauteurCase);
-                break;
-            case 4:
-                //Découpage de la 4 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase*3, 0, largCase, hauteurCase);
-                break;
-            case 5:
-                //Découpage de la 5 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase*4, 0, largCase, hauteurCase);
-                break;
-            case 6:
-                //Découpage de la 6 zone de l'image
-                imgDecoupe = new Rectangle2D(0, hauteurCase, largCase, hauteurCase);
-                break;
-            case 7:
-                //Découpage de la 7 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase, hauteurCase, largCase, hauteurCase);
-                break;
-            case 8:
-                //Découpage de la 8 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase*2, hauteurCase, largCase, hauteurCase);
-                break;
-            case 9:
-                //Découpage de la 9 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase*3, hauteurCase, largCase, hauteurCase);
-                break;
-            case 10:
-                //Découpage de la 10 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase*4, hauteurCase, largCase, hauteurCase);
-                break;
-            case 11:
-                //Découpage de la 6 zone de l'image
-                imgDecoupe = new Rectangle2D(0, hauteurCase*2, largCase, hauteurCase);
-                break;
-            case 12:
-                //Découpage de la 7 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase, hauteurCase*2, largCase, hauteurCase);
-                break;
-            case 13:
-                //Découpage de la 8 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase*2, hauteurCase*2, largCase, hauteurCase);
-                break;
-            case 14:
-                //Découpage de la 9 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase*3, hauteurCase*2, largCase, hauteurCase);
-                break;
-            case 15:
-                //Découpage de la 10 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase*4, hauteurCase*2, largCase, hauteurCase);
-                break;
-            case 16:
-                //Découpage de la 6 zone de l'image
-                imgDecoupe = new Rectangle2D(0, hauteurCase*3, largCase, hauteurCase);
-                break;
-            case 17:
-                //Découpage de la 7 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase*3, hauteurCase*3, largCase, hauteurCase);
-                break;
-            case 18:
-                //Découpage de la 8 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase*2, hauteurCase*3, largCase, hauteurCase);
-                break;
-            case 19:
-                //Découpage de la 9 zone de l'image
-                imgDecoupe = new Rectangle2D(hauteurCase*3, hauteurCase*3, largCase, hauteurCase);
-                break;
-        }
-        
-        img.setViewport(imgDecoupe);
-        
-        return img;
-    }
-             
-    /**
-     * Ajout de l'image à l'interface graphique 
-     * @param numBloc int, numéro du bloc à ajouter
-     * @return Image retourne l'image
-     */    
-    private ImageView ajoutImagePane (int numBloc) { 
-        //On récupère l'image chargé sous forme de ImageView
-        ImageView img = new ImageView (image);
-        //Redimensionnement de l'image à la taille de la grille
-        
-        //Récupréation des dimensions d'une case
-        float hauteurCase = (float) 476 / (float) g.getTaille();  //Récupération de la dimension d'une case
-        float largCase = (float) 476 / (float) g.getTaille();  //Récupération de la dimension d'une case
-
-        //Appel d'une fonction pour avoir la portion de l'image en fonction de la taille de la grille
-        switch (g.taille){
-            case 3 : 
-                //La grille est en taille 3
-                //img = ajoutImageTaille3(img, numBloc, hauteurCase, largCase);
-                break;
-            case 4 :
-                //La grille est en taille 4
-                img = ajoutImageTaille4(img, numBloc, hauteurCase, largCase);
-                break;
-            case 5 :
-                //La grille est en taille 5
-                //img = ajoutImageTaille5(img, numBloc, hauteurCase, largCase);
-                break;
-        }
-             
-        //Redimensionne la portion de l'image à la taille de la case
-        img.setFitWidth(largCase);
-        img.setFitHeight(hauteurCase);
-                
-        //Retourne la portion de l'image du bloc
-        return img;
-    }
-    
     /**
      * Effectue un déplacement sur la grille dans l'interface selon direction
      * @param direction char, lettre du déplacement
@@ -628,7 +413,7 @@ public class FXMLDocumentController implements Parametres {
      */
     private void deplacementFXML(char direction, Joueur j){
         g.deplacement(direction, j);        
-        deplacementLabel.setText(Integer.toString(j.getNbDeplacement()-2));
+        deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()-2));
         grille.getChildren().clear();
         grilleToGrid(g, grille);
     }
@@ -639,19 +424,23 @@ public class FXMLDocumentController implements Parametres {
      * @param event
      * @throws InterruptedException 
      */
-    @FXML 
+    @FXML
     void run(ActionEvent event) throws InterruptedException {
         start.setVisible(false);
-        initComboBoxTheme();    //Initialisation de la combobox A METTRE AILLEURS
-        grille.setPrefSize(476, 476); //Redimensionnement de la grille
-        grille.setGridLinesVisible(false); //Visibilité des ligne de la grille
         navigationBouton(true);
+        //initComboBoxTheme();    //Initialisation de la combobox A METTRE AILLEURS
+        
+        //Redimensionnement de la grille
+        grille.setPrefSize(476, 476);
+        
+        //Visibilité de la grille
+        grille.setGridLinesVisible(false);
         grilleToGrid(g,grille); 
         chronos.setFini(false);
         //deux mouvement consécutif pour eviter une erreur d'affichage
-        deplacementLabel.setText(Integer.toString(this.j1.getNbDeplacement()));
-        g.deplacement("d".charAt(0), this.j1);
-        g.deplacement("q".charAt(0), this.j1);
+        deplacementLabel.setText(Integer.toString(j1.getNbDeplacement()));
+        g.deplacement("d".charAt(0), j1);
+        g.deplacement("q".charAt(0), j1);
 
         grille.getChildren().clear();
         grilleToGrid(g, grille);
@@ -681,9 +470,9 @@ public class FXMLDocumentController implements Parametres {
         th.setDaemon(true); // le Thread s'exécutera en arrière-plan (démon informatique)
         th.start(); // et on exécute le Thread pour mettre à jour la vue (déplacement continu de la tuile horizontalement)
 
-
+        
     }
-    
+
     /**
      * Analyse du choix de la taille de la grille
      * @return la taille choisie sous forme de int
@@ -719,37 +508,20 @@ public class FXMLDocumentController implements Parametres {
      */
     @FXML
     protected void choixTheme () {
-        //Déclaration des couleurs
-        Color colFond = null;
-        Color colTexte = null;
-        Color colVide = null;
-        //Récupération de l'item choisi
+        Color colFond;
         String theme = selectTheme.getSelectionModel().getSelectedItem().toString();
         System.out.println(theme);  //test
-        //Modification des paramètres graphiques 'couleurs et nom de l'image)
         switch (theme){
-            case "Thème par défaut":
-                colFond = colDefaut;
-                colTexte = colTextDefaut;
-                colVide = colVideDefaut;
-                this.input = clazz.getResourceAsStream(urlDefaut);
-                break;
             case "Cerisier" : 
                 colFond = colCerisier;
-                colTexte = colTextCerisier;
-                colVide = colVideCerisier;
                 this.input = clazz.getResourceAsStream(urlCerisier);
                 break;
             case "Electronique" :
                 colFond = colElectro;
-                colTexte = colTextElectro;
-                colVide = colVideElectro;
                 this.input = clazz.getResourceAsStream(urlElectro);
                 break;
             case "Dragons" :
                 colFond = colDragon;
-                colTexte = colTextDragon;
-                colVide = colVideDragon;
                 this.input = clazz.getResourceAsStream(urlDragon);
                 break;
             case "Une image de mon pc" :
@@ -767,64 +539,8 @@ public class FXMLDocumentController implements Parametres {
                 break;
         }
         
-        setCol("FondCase", colFond); //Changement de la couleur de fond du jeu
-        setCol("Texte", colTexte);  //Changement de la couleur de texte
-        setCol("CaseVide", colVide);    //Changement de la couleur de fond de la case vide
-        
         //Changement de l'image en fonction de l'image choisie
         this.image = new Image(input);
-    }
-      
-    
-    /**
-     * clique sur le bouton z qui permet de monter 
-     * @param event action 
-     */
-  
-/**
-     * saisie clavier sur le touche z qui permet de monter 
-     * @param event action 
-     */
-    void Zpress(ActionEvent event) {
-
-    }
-/**
-     * clique sur le bouton q qui permet d'aller à gauche  
-     * @param event action 
-     */
-   
-/**
-     * saisie clavier sur le touche q qui permet d'aller à gauche  
-     * @param event action 
-     */
-    void Qpress(ActionEvent event) {
-
-    }
-    /**
-     * clique  sur le bouton d qui permet de monter 
-     * @param event action 
-     */
-    
-/**
-     * saisie clavier sur le touche d qui permet d'aller à droite 
-     * @param event action 
-     */
-    void Dpress(ActionEvent event) {
-        
-    }
-/**
-     * clique sur le bouton s qui permet de descendre 
-     * @param event action 
-     */
-    
-    /**
-     * saisie clavier sur le touche s qui permet de descendre 
-     * @param event action 
-     */
-
-    void Spress(ActionEvent event) {
-        
-
     }
 
     @FXML
@@ -855,17 +571,14 @@ public class FXMLDocumentController implements Parametres {
     void Zclic(ActionEvent event) {        
         deplacementFXML("z".charAt(0), j1);;
     }
-    
-    public void passageProfi (ActionEvent event ) throws IOException{
+     public void passageProfi (ActionEvent event ) throws IOException{
         Parent profil  = FXMLLoader.load(getClass().getResource("Profil.fxml")); //creation de fenêtre 2 qui va etre relier à celle ci 
          Scene prof = new Scene (profil); //creation scene deuxieme fenetre 
          Stage profilP = (Stage) ((Node)event.getSource()).getScene().getWindow(); // creation stage fenetre  
          profilP.setScene(prof); //on affiche la deuxieme fenetre 
          profilP.show();
 
-    }
-    
-    
+     }
      @FXML
     void Qclic(ActionEvent event) {
         deplacementFXML("q".charAt(0), j1);
@@ -936,4 +649,3 @@ public class FXMLDocumentController implements Parametres {
     
    
 }
-
